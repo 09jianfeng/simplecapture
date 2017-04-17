@@ -7,19 +7,12 @@
 //
 
 #import <VideoToolbox/VideoToolbox.h>
-
+#import "VideoTool.h"
 #import "SCCommon.h"
 #import "VideoEncoder.h"
+#include <sys/time.h>
 
 const int kGOPSeconds = 2;
-
-@interface FrameContext : NSObject
-
-@end
-
-@implementation FrameContext
-
-@end
 
 OSStatus VTSessionSetProperty_int(VTCompressionSessionRef session, CFStringRef name, int val)
 {
@@ -158,6 +151,8 @@ void compressSessionOnEncoded(void *refCon,
     CMSampleBufferGetSampleTimingInfo(sampleBuffer, 0, &timingInfo);
     
     FrameContext *fc = [[FrameContext alloc] init];
+    fc.pts = getTickCount();
+    
     VTEncodeInfoFlags infoFlags = 0;
     CVImageBufferRef imageBuffer = CMSampleBufferGetImageBuffer(sampleBuffer);
     OSStatus status = VTCompressionSessionEncodeFrame(_encoderSession,
@@ -200,7 +195,7 @@ void compressSessionOnEncoded(void *refCon,
          sampleBuf:(CMSampleBufferRef)sampleBuf
 {
     if(compressStatus != noErr) {
-        NSLog(@"Encode failed status=%d", compressStatus);
+        NSLog(@"Encode failed status=%d", (int)compressStatus);
         return;
     }
     
@@ -208,7 +203,7 @@ void compressSessionOnEncoded(void *refCon,
     dispatch_async(_callbackQueue, ^{
         //NSLog(@"frame type %c", [self getFrameType:sampleBuf]);
         
-        [_encoderDelegate encoderOutput:sampleBuf];
+        [_encoderDelegate encoderOutput:sampleBuf frameCont:fc];
         CFRelease(sampleBuf);
     });
 }
@@ -217,6 +212,13 @@ void compressSessionOnEncoded(void *refCon,
 {
     _encoderDelegate = encoderDelegate;
     _callbackQueue = encoderCallbackQueue;
+}
+
+#pragma mark - 
+static uint32_t getTickCount() {
+    struct timeval now;
+    gettimeofday(&now, NULL);
+    return (uint32_t) (((uint64_t)now.tv_sec * USEC_PER_SEC + now.tv_usec) / 1000);
 }
 
 @end

@@ -30,7 +30,13 @@ H264VideoDecoder *globalPointer = nil;
 }
 
 
-void didDecompress( void *decompressionOutputRefCon, void *sourceFrameRefCon, OSStatus status, VTDecodeInfoFlags infoFlags, CVImageBufferRef pixelBuffer, CMTime presentationTimeStamp, CMTime presentationDuration )
+void didDecompress( void *decompressionOutputRefCon,
+                   void *sourceFrameRefCon,
+                   OSStatus status,
+                   VTDecodeInfoFlags infoFlags,
+                   CVImageBufferRef pixelBuffer,
+                   CMTime presentationTimeStamp,
+                   CMTime presentationDuration )
 {
     if (!pixelBuffer) {
         return;
@@ -40,19 +46,10 @@ void didDecompress( void *decompressionOutputRefCon, void *sourceFrameRefCon, OS
         return;
     }
     
-    int64_t outputBufferAddress = (int64_t)sourceFrameRefCon;
-    if (outputBufferAddress < 0x100) {
-        NSLog(@"IOS8VT: invalid output buffer address %08llx", outputBufferAddress);
-        return;
-    }
-    
-    CVPixelBufferRef *outputPixelBuffer = (CVPixelBufferRef *)sourceFrameRefCon;
+    FrameContext *fc = (__bridge FrameContext *)sourceFrameRefCon;
     CVPixelBufferRef output = CVPixelBufferRetain(pixelBuffer);
-    *outputPixelBuffer = output;
-    //NSLog(@"decoder outputPixelBuffer %@",output);
-    
-    if (globalPointer.delegate && [globalPointer.delegate respondsToSelector:@selector(decodedPixelBuffer:)]) {
-        [globalPointer.delegate decodedPixelBuffer:output];
+    if (globalPointer.delegate && [globalPointer.delegate respondsToSelector:@selector(decodedPixelBuffer:frameCont:)]) {
+        [globalPointer.delegate decodedPixelBuffer:output frameCont:fc];
     }
     CVPixelBufferRelease(output);
     
@@ -101,9 +98,7 @@ void didDecompress( void *decompressionOutputRefCon, void *sourceFrameRefCon, OS
     return status == noErr;
 }
 
-- (void)decodeFramCMSamplebufferh264Data:(const uint8_t *)h264Data h264DataSize:(size_t)h264DataSize{
-    
-    CVPixelBufferRef outputPixelBuffer = NULL;
+- (void)decodeFramCMSamplebufferh264Data:(const uint8_t *)h264Data h264DataSize:(size_t)h264DataSize frameCon:(FrameContext *)frameCon;{
     
     CMBlockBufferRef blockBuffer = NULL;
     OSStatus status  = CMBlockBufferCreateWithMemoryBlock(kCFAllocatorDefault,
@@ -125,7 +120,7 @@ void didDecompress( void *decompressionOutputRefCon, void *sourceFrameRefCon, OS
             OSStatus decodeStatus = VTDecompressionSessionDecodeFrame(m_deocderSession,
                                                                       sampleBuffer,
                                                                       flags,
-                                                                      &outputPixelBuffer,
+                                                                      (__bridge void * _Nullable)(frameCon),
                                                                       &flagOut);
             
             if(decodeStatus == kVTInvalidSessionErr) {

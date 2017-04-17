@@ -9,9 +9,10 @@
 #import <Foundation/Foundation.h>
 #import <AVFoundation/AVFoundation.h>
 #import <CoreMedia/CMSampleBuffer.h>
+#import "VideoTool.h"
 
 @protocol VideoEncoderDelegate <NSObject>
-- (void) encoderOutput:(CMSampleBufferRef)sampleBuf;
+- (void) encoderOutput:(CMSampleBufferRef)sampleBuffer frameCont:(FrameContext *)frameCont;
 @end
 
 @interface VideoEncoder : NSObject

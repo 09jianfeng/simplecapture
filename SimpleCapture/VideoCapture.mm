@@ -584,7 +584,7 @@ struct CaptureStat {
     }
 }
 
-- (void) encoderOutput:(CMSampleBufferRef)sampleBuffer
+- (void) encoderOutput:(CMSampleBufferRef)sampleBuffer frameCont:(FrameContext *)frameCont
 {
     _stat.encodeFrameCount++;
     [self printVideoFrameInfo:sampleBuffer];

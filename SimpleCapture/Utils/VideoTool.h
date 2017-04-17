@@ -26,6 +26,11 @@ typedef enum {
     VideoFrameNV21 = 102,
 } VideoFrameTypeIos;
 
+@interface FrameContext : NSObject
+@property(nonatomic, assign) uint32_t pts;
+@property(nonatomic, assign) uint32_t frameType;
+@property(nonatomic, assign) CVPixelBufferRef decodedPixelBuffer;
+@end
 
 @interface VideoTool : NSObject
 

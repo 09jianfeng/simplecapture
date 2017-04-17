@@ -13,6 +13,7 @@
 #import "VideoEncoder.h"
 #import "H264VideoDecoder.h"
 #import "SCCommon.h"
+#import "VideoTool.h"
 
 @interface YUVFileTransform() <VideoEncoderDelegate,H264VideoDecoderDelegate>
 @property(nonatomic, strong) YUVFileReader *yuvfilere;
@@ -22,6 +23,9 @@
 @property(nonatomic, strong) H264VideoDecoder *h264dec;
 @property(nonatomic, copy)   NSString *selectedFileName;
 @property(nonatomic, copy)   NSString *outPutFileName;
+
+@property(nonatomic, retain) NSMutableArray<FrameContext*> *decodePixelbuffers;
+
 @end
 
 @implementation YUVFileTransform{
@@ -44,6 +48,7 @@
         [_videoEncoder setDelegate:self queue:_encodeQueue];
         _h264dec = [H264VideoDecoder new];
         _h264dec.delegate = self;
+        _decodePixelbuffers = [NSMutableArray new];
     }
     return self;
 }
@@ -104,11 +109,16 @@
 
 #pragma mark - VideoEncoderDelegate
 
-- (void) encoderOutput:(CMSampleBufferRef)sampleBuf{
-    
+- (void) encoderOutput:(CMSampleBufferRef)sampleBuf frameCont:(FrameContext *)frameCont{
     NSLog(@"FrameIndexEncode:%d",_farmeIndexEncode++);
     
+    
     [VideoTool printVideoFrameInfo:sampleBuf];
+    char *dataHead = NULL;
+    CMBlockBufferRef blockbuf = CMSampleBufferGetDataBuffer(sampleBuf);
+    CMBlockBufferGetDataPointer(blockbuf, 0, 0, 0, (char**)&dataHead);
+    VideoFrameTypeIos frametype = [VideoTool getFrameType:dataHead[4]];
+    frameCont.frameType = frametype;
     
     // Check if we have got a key frame first
     CMSampleBufferRef sampleBuffer = sampleBuf;
@@ -146,65 +156,109 @@
         }
     }
     
-    //get dts
-    //    CMTime dtstime = CMSampleBufferGetDecodeTimeStamp(sampleBuffer);
-    //    uint32_t dts = CMTimeGetSeconds(dtstime);
-    //get pts
-    //    CMTime ptstime = CMSampleBufferGetPresentationTimeStamp(sampleBuffer);
-    //    uint32_t pts = CMTimeGetSeconds(ptstime);
     
-    CMBlockBufferRef dataBuffer = CMSampleBufferGetDataBuffer(sampleBuffer);
-    
-    size_t length, totalLength;
-    char *dataPointer;
-    OSStatus statusCodeRet = CMBlockBufferGetDataPointer(dataBuffer, 0, &length, &totalLength, &dataPointer);
     NSMutableData* data = nil;
-    if (statusCodeRet == noErr) {
-        size_t bufferOffset = 0;
-        static const int AVCCHeaderLength = 4;
-        VideoFrameTypeIos frameType = VideoFrameUnknow;
-        while (bufferOffset < totalLength - AVCCHeaderLength) {
-            
-            //            NSLog(@"bufferoffset = %lu", bufferOffset);
-            // Read the NAL unit length
-            uint32_t NALUnitLength = 0;
-            memcpy(&NALUnitLength, dataPointer + bufferOffset, AVCCHeaderLength);
-            
-            // Convert the length value from Big-endian to Little-endian
-            NALUnitLength = CFSwapInt32BigToHost(NALUnitLength);
-            
-            if ( data ) {
-                //                char* len = dataPointer+bufferOffset+AVCCHeaderLength;
-                //                VideoFrameTypeIos frameType = [encoder.delegate getFrameType:len[0]];
-                const Byte* lengthString = [VideoTool valueForLengthString:NALUnitLength];
-                NSData *lenField=[[NSData alloc] initWithBytesNoCopy:(void*)lengthString length:4 freeWhenDone:NO];
-                [data appendData:lenField];
-                [data appendBytes:(dataPointer + bufferOffset + AVCCHeaderLength) length:NALUnitLength];
+    {//从cmsampleBuffer中提取nalu，然后从nalu中提取完整的h264data
+        CMBlockBufferRef dataBuffer = CMSampleBufferGetDataBuffer(sampleBuffer);
+        size_t length, totalLength;
+        char *dataPointer;
+        OSStatus statusCodeRet = CMBlockBufferGetDataPointer(dataBuffer, 0, &length, &totalLength, &dataPointer);
+        if (statusCodeRet == noErr) {
+            size_t bufferOffset = 0;
+            static const int AVCCHeaderLength = 4;
+            VideoFrameTypeIos frameType = VideoFrameUnknow;
+            while (bufferOffset < totalLength - AVCCHeaderLength) {
+                
+                //            NSLog(@"bufferoffset = %lu", bufferOffset);
+                // Read the NAL unit length
+                uint32_t NALUnitLength = 0;
+                memcpy(&NALUnitLength, dataPointer + bufferOffset, AVCCHeaderLength);
+                
+                // Convert the length value from Big-endian to Little-endian
+                NALUnitLength = CFSwapInt32BigToHost(NALUnitLength);
+                
+                if ( data ) {
+                    //                char* len = dataPointer+bufferOffset+AVCCHeaderLength;
+                    //                VideoFrameTypeIos frameType = [encoder.delegate getFrameType:len[0]];
+                    const Byte* lengthString = [VideoTool valueForLengthString:NALUnitLength];
+                    NSData *lenField=[[NSData alloc] initWithBytesNoCopy:(void*)lengthString length:4 freeWhenDone:NO];
+                    [data appendData:lenField];
+                    [data appendBytes:(dataPointer + bufferOffset + AVCCHeaderLength) length:NALUnitLength];
+                }
+                else
+                {
+                    char* len = dataPointer+bufferOffset+AVCCHeaderLength;
+                    frameType = [VideoTool getFrameType:len[0]];
+                    const Byte* lengthString = [VideoTool valueForLengthString:NALUnitLength];
+                    NSData *lenField=[[NSData alloc] initWithBytesNoCopy:(void*)lengthString length:4 freeWhenDone:NO];
+                    data = [[NSMutableData alloc] initWithCapacity:0];
+                    [data appendData:lenField];
+                    [data appendBytes:(dataPointer + bufferOffset + AVCCHeaderLength) length:NALUnitLength];
+                }
+                
+                // Move to the next NAL unit in the block buffer
+                bufferOffset += AVCCHeaderLength + NALUnitLength;
             }
-            else
-            {
-                char* len = dataPointer+bufferOffset+AVCCHeaderLength;
-                frameType = [VideoTool getFrameType:len[0]];
-                const Byte* lengthString = [VideoTool valueForLengthString:NALUnitLength];
-                NSData *lenField=[[NSData alloc] initWithBytesNoCopy:(void*)lengthString length:4 freeWhenDone:NO];
-                data = [[NSMutableData alloc] initWithCapacity:0];
-                [data appendData:lenField];
-                [data appendBytes:(dataPointer + bufferOffset + AVCCHeaderLength) length:NALUnitLength];
-            }
-            
-            // Move to the next NAL unit in the block buffer
-            bufferOffset += AVCCHeaderLength + NALUnitLength;
         }
         
-        [self.h264dec decodeFramCMSamplebufferh264Data:[data bytes] h264DataSize:data.length];
-//        [encoder.delegate pushVideoData:data frameType:frameType pts:(uint32_t)(time.value) dts:(uint32_t)(time.value)];
+        [self.h264dec decodeFramCMSamplebufferh264Data:[data bytes] h264DataSize:data.length frameCon:frameCont];
     }
 }
 
 #pragma mark H264VideoDecoderDelegate
 
-- (void)decodedPixelBuffer:(CVPixelBufferRef)pixelBuffer{
+- (void)decodedPixelBuffer:(CVPixelBufferRef)pixelBuffer frameCont:(FrameContext *)frameCon{
     
+    CVPixelBufferRetain(pixelBuffer);
+    frameCon.decodedPixelBuffer = pixelBuffer;
+    [self addFrameToBuffer:frameCon];
+    
+    if ([self haveAvaliableFrame]) {
+        [self pixelBufferToScreenAndToFile:_decodePixelbuffers[0].decodedPixelBuffer];
+        CVPixelBufferRelease(_decodePixelbuffers[0].decodedPixelBuffer);
+        [_decodePixelbuffers removeObjectAtIndex:0];
+    }
+}
+
+- (void)addFrameToBuffer:(FrameContext*)frameContext{
+    if (_decodePixelbuffers.count <= 0) {
+        [_decodePixelbuffers addObject:frameContext];
+        return;
+    }
+    
+    int i = (int)_decodePixelbuffers.count;
+    for (; i > 0; i--) {
+        if (_decodePixelbuffers[i-1].pts < frameContext.pts) {
+            [_decodePixelbuffers insertObject:frameContext atIndex:i];
+            break;
+        }
+    }
+    if (i <= 0) {
+        [_decodePixelbuffers insertObject:frameContext atIndex:0];
+    }
+}
+
+- (BOOL)haveAvaliableFrame{
+    if (_decodePixelbuffers.count <= 0) {
+        return NO;
+    }
+    
+    if (_decodePixelbuffers[0].frameType == VideoFrameI || _decodePixelbuffers[0].frameType == VideoFrameIDR){
+        return YES;
+    }
+    
+    int pframeCount = 0;
+    for (FrameContext *frameCon in _decodePixelbuffers) {
+        if (frameCon.frameType == VideoFrameP) {
+            pframeCount++;
+        }else{
+        }
+    }
+    
+    return pframeCount >= 2;
+}
+
+- (void)pixelBufferToScreenAndToFile:(CVPixelBufferRef)pixelBuffer{
     if (_delegate && [_delegate respondsToSelector:@selector(getYUVPixelBuffer:)]) {
         [_delegate getYUVPixelBuffer:pixelBuffer];
     }

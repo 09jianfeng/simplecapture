@@ -8,9 +8,10 @@
 
 #import <Foundation/Foundation.h>
 #import <CoreMedia/CMSampleBuffer.h>
+#import "VideoTool.h"
 
 @protocol H264VideoDecoderDelegate <NSObject>
-- (void)decodedPixelBuffer:(CVPixelBufferRef)pixelBuffer;
+- (void)decodedPixelBuffer:(CVPixelBufferRef)pixelBuffer frameCont:(FrameContext *)frameCon;
 @end
 
 @interface H264VideoDecoder : NSObject
@@ -18,6 +19,6 @@
 
 - (bool)resetVideoSessionWithsps:(const uint8_t *)sps len:(uint32_t)spsLen pps:(const uint8_t *)pps ppsLen:(uint32_t)ppsLen;
 
-- (void)decodeFramCMSamplebufferh264Data:(const uint8_t *)h264Data h264DataSize:(size_t)h264DataSize;
+- (void)decodeFramCMSamplebufferh264Data:(const uint8_t *)h264Data h264DataSize:(size_t)h264DataSize frameCon:(FrameContext *)frameCon;
 
 @end

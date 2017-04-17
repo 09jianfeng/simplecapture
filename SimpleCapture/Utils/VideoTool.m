@@ -15,6 +15,10 @@
 static const DDLogLevel ddLogLevel = DDLogLevelInfo;
 
 
+@implementation FrameContext
+@end
+
+
 @implementation VideoTool
 
 + (CVPixelBufferRef)allocPixelBufferFromPictureData:(PictureData *)picData
