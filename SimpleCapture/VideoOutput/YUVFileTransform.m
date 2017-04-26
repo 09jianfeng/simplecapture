@@ -109,6 +109,7 @@
         }else{
             [self.videoEncoder endEncode];
             dispatch_cancel(_timer);
+            [self clearBufferAndWriteToFile];
         }
     });
     dispatch_resume(_timer);
@@ -215,6 +216,18 @@
 
 #pragma mark H264VideoDecoderDelegate
 
+- (void)clearBufferAndWriteToFile{
+    //end out pixelbuffer
+    while (!(_frameIndexRead == _frameIndexDecode)) {
+        sleep(40);
+    }
+    
+    for (int i = 0; i < _decodePixelbuffers.count ; i++) {
+        [self pixelBufferToScreenAndToFile:_decodePixelbuffers[i].decodedPixelBuffer];
+    }
+
+}
+
 - (void)decodedPixelBuffer:(CVPixelBufferRef)pixelBuffer frameCont:(FrameContext *)frameCon{
     NSLog(@"FrameIndexDecode:%d",_frameIndexDecode++);
     
@@ -227,13 +240,6 @@
         CVPixelBufferRelease(_decodePixelbuffers[0].decodedPixelBuffer);
         [_decodePixelbuffers removeObjectAtIndex:0];
     }
-    
-    //end out pixelbuffer
-//    if (_isEndReadFile) {
-//        for (int i = 0; i < _decodePixelbuffers.count ; i++) {
-//            [self pixelBufferToScreenAndToFile:_decodePixelbuffers[i].decodedPixelBuffer];
-//        }
-//    }
 }
 
 - (void)addFrameToBuffer:(FrameContext*)frameContext{
