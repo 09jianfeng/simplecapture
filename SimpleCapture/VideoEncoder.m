@@ -163,6 +163,11 @@ void compressSessionOnEncoded(void *refCon,
                                                       &infoFlags);
     
     //NSLog(@"pts %lld, duration %lld", timingInfo.presentationTimeStamp.value, timingInfo.duration.value);
+    
+    CHECK_STATUS(status);
+    
+    //强制输出，这样就不会输出B帧
+    status = VTCompressionSessionCompleteFrames(_encoderSession, kCMTimeInvalid);
     CHECK_STATUS(status);
 }
 
