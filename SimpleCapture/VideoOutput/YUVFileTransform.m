@@ -18,6 +18,7 @@
 @interface YUVFileTransform() <VideoEncoderDelegate,H264VideoDecoderDelegate>
 @property(nonatomic, strong) YUVFileReader *yuvfilere;
 @property(nonatomic, strong) dispatch_queue_t encodeQueue;
+@property(nonatomic, strong) dispatch_queue_t encodeCallBackQueue;
 @property(nonatomic, strong) dispatch_queue_t readFileQueue;
 @property(nonatomic, strong) VideoEncoder *videoEncoder;
 @property(nonatomic, strong) H264VideoDecoder *h264dec;
@@ -25,7 +26,6 @@
 @property(nonatomic, copy)   NSString *outPutFileName;
 
 @property(nonatomic, retain) NSMutableArray<FrameContext*> *decodePixelbuffers;
-
 @end
 
 @implementation YUVFileTransform{
@@ -36,7 +36,9 @@
     int _farmeIndexEncode;
     int _frameIndexDecode;
     int _frameIndexWrite;
-    dispatch_source_t _timer;
+    dispatch_source_t _encoderTimer;
+    dispatch_source_t _fileReaderTimer;
+    NSMutableArray *_fileReaderBuffer;
 }
 
 - (instancetype)init{
@@ -44,13 +46,15 @@
     if (self) {
         _whDenominator = 3;
         _bitrate = 600;
-        _encodeQueue = dispatch_queue_create("encodeYUVQueue", NULL);
+        _encodeQueue = dispatch_queue_create("encodeQueue", NULL);
+        _encodeCallBackQueue = dispatch_queue_create("encodeCallBackYUVQueue", NULL);
         _readFileQueue = dispatch_queue_create("readFileQueue", NULL);
         _videoEncoder = [VideoEncoder new];
-        [_videoEncoder setDelegate:self queue:_encodeQueue];
+        [_videoEncoder setDelegate:self queue:_encodeCallBackQueue];
         _h264dec = [H264VideoDecoder new];
         _h264dec.delegate = self;
         _decodePixelbuffers = [NSMutableArray new];
+        _fileReaderBuffer = [NSMutableArray new];
     }
     return self;
 }
@@ -61,10 +65,35 @@
     _farmeIndexEncode = 0;
     _frameIndexWrite = 0;
     
+    [self readYUVDataFromeFile:inputFile];
+    [self beginEncode];
+    
+}
+
+- (void)readYUVDataFromeFile:(NSString *)inputFile{
     self.selectedFileName = inputFile;
     format = [YUVFileReader analyseVideoFormatWithFileName:inputFile];
-    self.yuvfilere = [[YUVFileReader alloc] initWithFileFormat:format];    
+    self.yuvfilere = [[YUVFileReader alloc] initWithFileFormat:format];
     
+    _fileReaderTimer = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0, _readFileQueue);
+    dispatch_source_set_timer(_fileReaderTimer, DISPATCH_TIME_NOW, 0.01 * NSEC_PER_SEC, 0 * NSEC_PER_SEC);
+    dispatch_source_set_event_handler(_fileReaderTimer, ^{
+        //最多缓存10帧
+        if (_fileReaderBuffer.count < 10) {
+            NSData *yuvData = [self.yuvfilere readOneFrameYUVDataWithFile:inputFile error:nil];
+            if (yuvData && yuvData.length > 0) {
+                [_fileReaderBuffer addObject:yuvData];
+            }else{
+                dispatch_cancel(_fileReaderTimer);
+            }
+        }else{
+            NSLog(@"缓存中超过10帧");
+        }
+    });
+    dispatch_resume(_fileReaderTimer);
+}
+
+- (void)beginEncode{
     CGSize size = CGSizeMake(format.width/_whDenominator, format.heigh/_whDenominator);
     self.outPutFileName = [NSString stringWithFormat:@"%dx%d_%@_%@",(int)size.width,(int)size.height,self.selectedFileName,[NSDate date]];
     self.videoEncoder.videoSize = size;
@@ -72,12 +101,17 @@
     self.videoEncoder.bitrate = _bitrate;
     [self.videoEncoder beginEncode];
     
+    while (_fileReaderBuffer.count < 10) {
+        NSLog(@"等待缓存文件中");
+        usleep(1000);
+    }
     
-    _timer = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0, _readFileQueue);
-    dispatch_source_set_timer(_timer, DISPATCH_TIME_NOW, 0.1 * NSEC_PER_SEC, 0 * NSEC_PER_SEC);
-    dispatch_source_set_event_handler(_timer, ^{
-        NSData *yuvData = [self.yuvfilere readOneFrameYUVDataWithFile:inputFile error:nil];
-        if (yuvData && yuvData.length > 0) {
+    _encoderTimer = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0, _encodeQueue);
+    dispatch_source_set_timer(_encoderTimer, DISPATCH_TIME_NOW, 0.04 * NSEC_PER_SEC, 0 * NSEC_PER_SEC);
+    dispatch_source_set_event_handler(_encoderTimer, ^{
+        if (_fileReaderBuffer && _fileReaderBuffer.count > 0) {
+            NSData *yuvData = _fileReaderBuffer[0];
+            [_fileReaderBuffer removeObjectAtIndex:0];
             uint8_t *picBytes= (uint8_t *)[yuvData bytes];
             
             PictureData picData;
@@ -107,13 +141,12 @@
             CVPixelBufferRelease(pixelBuffer);
             NSLog(@"FrameIndexRead:%d",_frameIndexRead++);
         }else{
+            dispatch_cancel(_encoderTimer);
             [self.videoEncoder endEncode];
-            dispatch_cancel(_timer);
             [self clearBufferAndWriteToFile];
         }
     });
-    dispatch_resume(_timer);
-    
+    dispatch_resume(_encoderTimer);
 }
 
 #pragma mark - VideoEncoderDelegate
