@@ -59,6 +59,11 @@ static NSString *directoryNameTransformInDoc = @"transform";
     }
     
     NSFileManager *defaultFile = [NSFileManager defaultManager];
+    NSString *dir = [[YUVFileReader documentPath] stringByAppendingPathComponent:directoryNameTransformInDoc];
+    if (![defaultFile fileExistsAtPath:dir]) {
+        [defaultFile createDirectoryAtPath:dir withIntermediateDirectories:YES attributes:nil error:nil];
+    }
+    
     if (![defaultFile fileExistsAtPath:_writeFilePath isDirectory:nil]) {
         [defaultFile createFileAtPath:_writeFilePath contents:nil attributes:nil];
     }

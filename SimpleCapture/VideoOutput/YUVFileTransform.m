@@ -35,6 +35,8 @@
     int _frameIndexRead;
     int _farmeIndexEncode;
     int _frameIndexDecode;
+    int _frameIndexWrite;
+    dispatch_source_t _timer;
 }
 
 - (instancetype)init{
@@ -54,6 +56,11 @@
 }
 
 - (void)encoderStartWithInputFileName:(NSString *)inputFile{
+    _frameIndexRead = 0;
+    _frameIndexDecode = 0;
+    _farmeIndexEncode = 0;
+    _frameIndexWrite = 0;
+    
     self.selectedFileName = inputFile;
     format = [YUVFileReader analyseVideoFormatWithFileName:inputFile];
     self.yuvfilere = [[YUVFileReader alloc] initWithFileFormat:format];    
@@ -65,46 +72,47 @@
     self.videoEncoder.bitrate = _bitrate;
     [self.videoEncoder beginEncode];
     
-    dispatch_async(_readFileQueue, ^{
-        
+    
+    _timer = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0, _readFileQueue);
+    dispatch_source_set_timer(_timer, DISPATCH_TIME_NOW, 0.04 * NSEC_PER_SEC, 0 * NSEC_PER_SEC);
+    dispatch_source_set_event_handler(_timer, ^{
         NSData *yuvData = [self.yuvfilere readOneFrameYUVDataWithFile:inputFile error:nil];
-
-        while (yuvData && yuvData.length > 0) {
-            @autoreleasepool {
-                uint8_t *picBytes= (uint8_t *)[yuvData bytes];
-                
-                PictureData picData;
-                picData.iWidth = format.width;
-                picData.iHeight = format.heigh;
-                picData.pixelFormat = kCVPixelFormatType_420YpCbCr8BiPlanarFullRange;
-                picData.matrixKey = kCVImageBufferYCbCrMatrix_ITU_R_601_4;
-                picData.iPlaneData = picBytes;
-                picData.dataType = kMediaLibraryPictureDataPlaneData;
-                picData.iStrides[0] = format.width;
-                picData.iPlaneOffset[0] = 0;
-                picData.iStrides[1] = format.width/2;
-                picData.iPlaneOffset[1] = format.width*format.heigh;
-                picData.iStrides[2] = format.width/2;
-                picData.iPlaneOffset[2] = format.width*format.heigh+format.width/2*format.heigh/2;
-                
-                CVPixelBufferRef pixelBuffer = [VideoTool allocPixelBufferFromPictureData:&picData];
-                CMSampleBufferRef sampleBuffer = [VideoTool allocSampleBufRefFromPixelBuffer:pixelBuffer];
-                [self.videoEncoder encode:sampleBuffer];
-                
-                /*// 从文件读取的
-                if (_delegate && [_delegate respondsToSelector:@selector(getYUVPixelBuffer:)]) {
-                    [_delegate getYUVPixelBuffer:pixelBuffer];
-                }*/
-                
-                CFRelease(sampleBuffer);
-                CVPixelBufferRelease(pixelBuffer);
-                NSLog(@"FrameIndexRead:%d",_frameIndexRead++);
-                yuvData = [self.yuvfilere readOneFrameYUVDataWithFile:inputFile error:nil];
-            }
+        if (yuvData && yuvData.length > 0) {
+            uint8_t *picBytes= (uint8_t *)[yuvData bytes];
+            
+            PictureData picData;
+            picData.iWidth = format.width;
+            picData.iHeight = format.heigh;
+            picData.pixelFormat = kCVPixelFormatType_420YpCbCr8BiPlanarFullRange;
+            picData.matrixKey = kCVImageBufferYCbCrMatrix_ITU_R_601_4;
+            picData.iPlaneData = picBytes;
+            picData.dataType = kMediaLibraryPictureDataPlaneData;
+            picData.iStrides[0] = format.width;
+            picData.iPlaneOffset[0] = 0;
+            picData.iStrides[1] = format.width/2;
+            picData.iPlaneOffset[1] = format.width*format.heigh;
+            picData.iStrides[2] = format.width/2;
+            picData.iPlaneOffset[2] = format.width*format.heigh+format.width/2*format.heigh/2;
+            
+            CVPixelBufferRef pixelBuffer = [VideoTool allocPixelBufferFromPictureData:&picData];
+            CMSampleBufferRef sampleBuffer = [VideoTool allocSampleBufRefFromPixelBuffer:pixelBuffer];
+            [self.videoEncoder encode:sampleBuffer];
+            
+            /*// 从文件读取的
+             if (_delegate && [_delegate respondsToSelector:@selector(getYUVPixelBuffer:)]) {
+             [_delegate getYUVPixelBuffer:pixelBuffer];
+             }*/
+            
+            CFRelease(sampleBuffer);
+            CVPixelBufferRelease(pixelBuffer);
+            NSLog(@"FrameIndexRead:%d",_frameIndexRead++);
+        }else{
+            [self.videoEncoder endEncode];
+            dispatch_cancel(_timer);
         }
-        
-        [self.videoEncoder endEncode];
     });
+    dispatch_resume(_timer);
+    
 }
 
 #pragma mark - VideoEncoderDelegate
@@ -208,6 +216,7 @@
 #pragma mark H264VideoDecoderDelegate
 
 - (void)decodedPixelBuffer:(CVPixelBufferRef)pixelBuffer frameCont:(FrameContext *)frameCon{
+    NSLog(@"FrameIndexDecode:%d",_frameIndexDecode++);
     
     CVPixelBufferRetain(pixelBuffer);
     frameCon.decodedPixelBuffer = pixelBuffer;
@@ -218,6 +227,13 @@
         CVPixelBufferRelease(_decodePixelbuffers[0].decodedPixelBuffer);
         [_decodePixelbuffers removeObjectAtIndex:0];
     }
+    
+    //end out pixelbuffer
+//    if (_isEndReadFile) {
+//        for (int i = 0; i < _decodePixelbuffers.count ; i++) {
+//            [self pixelBufferToScreenAndToFile:_decodePixelbuffers[i].decodedPixelBuffer];
+//        }
+//    }
 }
 
 - (void)addFrameToBuffer:(FrameContext*)frameContext{
@@ -275,7 +291,6 @@
     
     NSData *yuv420Data = [NSData dataWithBytes:yuv420Pointer length:yuv420Length];
     
-    NSLog(@"FrameIndexDecode:%d",_frameIndexDecode++);
     [self.yuvfilere writeYUVDataToFile:self.outPutFileName data:yuv420Data error:nil];
     free(yuv420Pointer);
 }
