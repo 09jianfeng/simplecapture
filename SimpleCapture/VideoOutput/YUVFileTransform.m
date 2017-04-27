@@ -99,6 +99,7 @@
     self.videoEncoder.videoSize = size;
     self.videoEncoder.frameRate = 24;
     self.videoEncoder.bitrate = _bitrate;
+    [self.videoEncoder setTargetBitrate:_bitrate];
     [self.videoEncoder beginEncode];
     
     while (_fileReaderBuffer.count < 10) {
@@ -243,6 +244,8 @@
             }
         }
         
+        NSString *h264fileName = [NSString stringWithFormat:@"%@_%@_h.264",self.selectedFileName,[NSDate date]];
+        [self.yuvfilere writeYUVDataToFile:h264fileName data:data error:nil];
         [self.h264dec decodeFramCMSamplebufferh264Data:[data bytes] h264DataSize:data.length frameCon:frameCont];
     }
 }
