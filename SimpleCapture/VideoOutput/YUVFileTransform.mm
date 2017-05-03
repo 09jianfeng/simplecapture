@@ -259,7 +259,9 @@
         }
         
         NSString *h264fileName = [NSString stringWithFormat:@"%dkb_%@_%@_h.264",_bitrate,self.selectedFileName,[NSDate date]];
-        [self.yuvfilere writeH264DataToFile:h264fileName data:data error:nil];
+        NSData *naluData = [NSData dataWithBytes:dataPointer length:length];
+        [self.yuvfilere writeH264DataToFile:h264fileName data:naluData error:nil];
+        
         [self.h264dec decodeFramCMSamplebufferh264Data:(const uint8_t *)[data bytes] h264DataSize:data.length frameCon:frameCont];
     }
 }
