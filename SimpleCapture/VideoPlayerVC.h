@@ -25,6 +25,8 @@
 @property(nonatomic, strong) VideoFileDecoder *fileDeco;
 @property(nonatomic, strong) FBKVOController *kvoController;
 @property(nonatomic, strong) YUVFileTransform *fileHandler;
+@property(nonatomic, strong) UILabel *labelBitRate;
+@property(nonatomic, strong) UILabel *labelFrameRate;
 
 @property(nonatomic, assign) int bitRate;
 @property(nonatomic, assign) int whnomen;

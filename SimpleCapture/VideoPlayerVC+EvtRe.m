@@ -94,4 +94,9 @@
     });
 }
 
+- (void)actuallyBitrate:(int)bitrate frameRate:(int)frameRate{
+    self.labelBitRate.text = [NSString stringWithFormat:@"实际码率：%dkb",bitrate];
+    self.labelFrameRate.text = [NSString stringWithFormat:@"帧率：%d",frameRate];
+}
+
 @end

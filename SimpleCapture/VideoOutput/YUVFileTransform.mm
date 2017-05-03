@@ -174,7 +174,9 @@
         _bitrateMonitor.appendDataSize((int)sampleSize);
         _actuallyBitrate = _bitrateMonitor.actuallyBitrate();
         _actuallyFps = _bitrateMonitor.actuallyFps();
-        NSLog(@"_actuallyBitrate: %dkb   _actuallyFps:%d",_actuallyBitrate/1000,_actuallyFps);
+        if ([self.delegate respondsToSelector:@selector(actuallyBitrate:frameRate:)]){
+            [self.delegate actuallyBitrate:_actuallyBitrate/1000 frameRate:_actuallyFps];
+        }
     });
     
     // Check if we have got a key frame first

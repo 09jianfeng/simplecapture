@@ -21,6 +21,7 @@ typedef struct _VTSourceFrameFlags
 @protocol YUVFileTransformDelegate <NSObject>
 
 - (void)getYUVPixelBuffer:(CVPixelBufferRef)pixelBuffer;
+- (void)actuallyBitrate:(int)bitrate frameRate:(int)frameRate;
 
 @end
 

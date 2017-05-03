@@ -174,6 +174,27 @@
         make.right.equalTo(self.view.mas_right).mas_offset(-10);
     }];
     
+    _labelBitRate = [[UILabel alloc] init];
+    _labelBitRate.text = @"实际码率:";
+    _labelBitRate.textAlignment = NSTextAlignmentCenter;
+    [self.view addSubview:_labelBitRate];
+    [_labelBitRate mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(self.view);
+        make.bottom.equalTo(webSeverBtn.mas_top);
+        make.height.mas_equalTo(50);
+        make.width.equalTo(self.view).multipliedBy(0.5);
+    }];
+
+    _labelFrameRate = [UILabel new];
+    _labelFrameRate.text = @"实际帧率:";
+    _labelFrameRate.textAlignment = NSTextAlignmentCenter;
+    [self.view addSubview:_labelFrameRate];
+    [_labelFrameRate mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.right.equalTo(self.view);
+        make.bottom.equalTo(webSeverBtn.mas_top);
+        make.height.mas_equalTo(50);
+        make.width.equalTo(self.view).multipliedBy(0.5);
+    }];
 }
 
 - (void)viewDidLayoutSubviews{
