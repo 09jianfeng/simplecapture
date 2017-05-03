@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		780818441E8E0571002E0C0B /* VideoTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 780818431E8E0571002E0C0B /* VideoTool.m */; };
-		7837825F1E8E34FE00DED271 /* YUVFileTransform.m in Sources */ = {isa = PBXBuildFile; fileRef = 7837825E1E8E34FE00DED271 /* YUVFileTransform.m */; };
+		7837825F1E8E34FE00DED271 /* YUVFileTransform.mm in Sources */ = {isa = PBXBuildFile; fileRef = 7837825E1E8E34FE00DED271 /* YUVFileTransform.mm */; };
 		783782651E8E531100DED271 /* H264VideoDecoder.m in Sources */ = {isa = PBXBuildFile; fileRef = 783782641E8E531100DED271 /* H264VideoDecoder.m */; };
 		783782671E8E654E00DED271 /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 783782661E8E654E00DED271 /* libc++.tbd */; };
 		78796B701E88EDDE00F93853 /* YUVFileReader.m in Sources */ = {isa = PBXBuildFile; fileRef = 78796B6F1E88EDDE00F93853 /* YUVFileReader.m */; };
@@ -67,7 +67,7 @@
 		780818421E8E0571002E0C0B /* VideoTool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VideoTool.h; sourceTree = "<group>"; };
 		780818431E8E0571002E0C0B /* VideoTool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VideoTool.m; sourceTree = "<group>"; };
 		7837825D1E8E34FE00DED271 /* YUVFileTransform.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YUVFileTransform.h; sourceTree = "<group>"; };
-		7837825E1E8E34FE00DED271 /* YUVFileTransform.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YUVFileTransform.m; sourceTree = "<group>"; };
+		7837825E1E8E34FE00DED271 /* YUVFileTransform.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = YUVFileTransform.mm; sourceTree = "<group>"; };
 		783782631E8E531100DED271 /* H264VideoDecoder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = H264VideoDecoder.h; sourceTree = "<group>"; };
 		783782641E8E531100DED271 /* H264VideoDecoder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = H264VideoDecoder.m; sourceTree = "<group>"; };
 		783782661E8E654E00DED271 /* libc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++.tbd"; path = "usr/lib/libc++.tbd"; sourceTree = SDKROOT; };
@@ -292,7 +292,7 @@
 				78AE42551E821E5E00D84304 /* VideoFileDecoder.h */,
 				78AE42561E821E5E00D84304 /* VideoFileDecoder.m */,
 				7837825D1E8E34FE00DED271 /* YUVFileTransform.h */,
-				7837825E1E8E34FE00DED271 /* YUVFileTransform.m */,
+				7837825E1E8E34FE00DED271 /* YUVFileTransform.mm */,
 				783782631E8E531100DED271 /* H264VideoDecoder.h */,
 				783782641E8E531100DED271 /* H264VideoDecoder.m */,
 			);
@@ -675,7 +675,7 @@
 					};
 					DA0E7AF31C128164003A8C25 = {
 						CreatedOnToolsVersion = 7.1.1;
-						DevelopmentTeam = RUDNP34A78;
+						DevelopmentTeam = 3M3KGDMP2K;
 					};
 				};
 			};
@@ -748,7 +748,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
 		DBA5EB0B5FD8E578D1F3795C /* [CP] Copy Pods Resources */ = {
@@ -786,7 +786,7 @@
 				78AE426A1E82271600D84304 /* VideoPlayerVC.m in Sources */,
 				DA315F9E1C6F57AD008B9AF3 /* AudioCapture.m in Sources */,
 				DAA20BF21C52278E008DB5AA /* VideoCapture.mm in Sources */,
-				7837825F1E8E34FE00DED271 /* YUVFileTransform.m in Sources */,
+				7837825F1E8E34FE00DED271 /* YUVFileTransform.mm in Sources */,
 				DA5B1BF61C6743F7005890B1 /* VideoProcessor.m in Sources */,
 				78796B701E88EDDE00F93853 /* YUVFileReader.m in Sources */,
 				DA0E7AFF1C128164003A8C25 /* ViewController.m in Sources */,
@@ -958,7 +958,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = RUDNP34A78;
+				DEVELOPMENT_TEAM = 3M3KGDMP2K;
 				ENABLE_BITCODE = NO;
 				HEADER_SEARCH_PATHS = (
 					"${PODS_ROOT}/gpuimagesdk/include",
@@ -988,7 +988,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = RUDNP34A78;
+				DEVELOPMENT_TEAM = 3M3KGDMP2K;
 				ENABLE_BITCODE = NO;
 				HEADER_SEARCH_PATHS = (
 					"${PODS_ROOT}/gpuimagesdk/include",

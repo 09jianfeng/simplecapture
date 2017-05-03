@@ -14,6 +14,7 @@
 #import "H264VideoDecoder.h"
 #import "SCCommon.h"
 #import "VideoTool.h"
+#import "BitrateMonitor.h"
 
 @interface YUVFileTransform() <VideoEncoderDelegate,H264VideoDecoderDelegate>
 @property(nonatomic, strong) YUVFileReader *yuvfilere;
@@ -39,6 +40,11 @@
     dispatch_source_t _encoderTimer;
     dispatch_source_t _fileReaderTimer;
     NSMutableArray *_fileReaderBuffer;
+    
+    //bitrate and fps
+    BitrateMonitor _bitrateMonitor;
+    int _actuallyBitrate;
+    int _actuallyFps;
 }
 
 - (instancetype)init{
@@ -163,9 +169,17 @@
     VideoFrameTypeIos frametype = [VideoTool getFrameType:dataHead[4]];
     frameCont.frameType = frametype;
     
+    size_t sampleSize = CMSampleBufferGetTotalSampleSize(sampleBuf);
+    dispatch_async(dispatch_get_main_queue(), ^{
+        _bitrateMonitor.appendDataSize((int)sampleSize);
+        _actuallyBitrate = _bitrateMonitor.actuallyBitrate();
+        _actuallyFps = _bitrateMonitor.actuallyFps();
+        NSLog(@"_actuallyBitrate: %dkb   _actuallyFps:%d",_actuallyBitrate/1000,_actuallyFps);
+    });
+    
     // Check if we have got a key frame first
     CMSampleBufferRef sampleBuffer = sampleBuf;
-    bool isKeyframe = !CFDictionaryContainsKey( (CFArrayGetValueAtIndex(CMSampleBufferGetSampleAttachmentsArray(sampleBuf, true), 0)), kCMSampleAttachmentKey_NotSync);
+    bool isKeyframe = !CFDictionaryContainsKey( (CFDictionaryRef)(CFArrayGetValueAtIndex(CMSampleBufferGetSampleAttachmentsArray(sampleBuf, true), 0)), kCMSampleAttachmentKey_NotSync);
     if (isKeyframe)
     {
         CMFormatDescriptionRef viformat = CMSampleBufferGetFormatDescription(sampleBuffer);
@@ -192,7 +206,7 @@
                 
                 if (!_isNoFirstT) {
                     _isNoFirstT = true;
-                    [self.h264dec resetVideoSessionWithsps:[sps bytes] len:(uint32_t)sps.length pps:[pps bytes] ppsLen:(uint32_t)pps.length];
+                    [self.h264dec resetVideoSessionWithsps:(const uint8_t *)[sps bytes] len:(uint32_t)sps.length pps:(const uint8_t *)[pps bytes] ppsLen:(uint32_t)pps.length];
                 }
                 //[encoder.delegate pushVideoPPS:pps SPS:sps pts:(uint32_t)(time.value)];
             }
@@ -244,9 +258,9 @@
             }
         }
         
-        NSString *h264fileName = [NSString stringWithFormat:@"%@_%@_h.264",self.selectedFileName,[NSDate date]];
-        [self.yuvfilere writeYUVDataToFile:h264fileName data:data error:nil];
-        [self.h264dec decodeFramCMSamplebufferh264Data:[data bytes] h264DataSize:data.length frameCon:frameCont];
+        NSString *h264fileName = [NSString stringWithFormat:@"%dkb_%@_%@_h.264",_bitrate,self.selectedFileName,[NSDate date]];
+        [self.yuvfilere writeH264DataToFile:h264fileName data:data error:nil];
+        [self.h264dec decodeFramCMSamplebufferh264Data:(const uint8_t *)[data bytes] h264DataSize:data.length frameCon:frameCont];
     }
 }
 
@@ -332,7 +346,6 @@
                                 yuvLength:&yuv420Length];
     
     NSData *yuv420Data = [NSData dataWithBytes:yuv420Pointer length:yuv420Length];
-    
     [self.yuvfilere writeYUVDataToFile:self.outPutFileName data:yuv420Data error:nil];
     free(yuv420Pointer);
 }

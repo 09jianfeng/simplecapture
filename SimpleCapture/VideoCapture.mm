@@ -570,6 +570,7 @@ struct CaptureStat {
             [_processor process:sampleBuffer];
         }
     }
+    
 }
 
 - (void) processorOutput:(CMSampleBufferRef)sampleBuf

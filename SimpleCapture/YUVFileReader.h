@@ -26,6 +26,8 @@ typedef struct VideoFormat{
 - (instancetype)initWithFileFormat:(VideoFormat)format NS_DESIGNATED_INITIALIZER;
 
 - (void)writeYUVDataToFile:(NSString *)fileName data:(NSData *)data error:(NSError *)error;
+- (void)writeH264DataToFile:(NSString *)fileName data:(NSData *)data error:(NSError *)error;
+
 - (NSData *)readOneFrameYUVDataWithFile:(NSString *)fileName error:(NSError *)error;
 
 @end

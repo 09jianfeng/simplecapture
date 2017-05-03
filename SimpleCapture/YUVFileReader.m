@@ -14,10 +14,12 @@ static NSString *directoryNameInOri = @"origin";
 static NSString *directoryNameTransformInDoc = @"transform";
 
 @interface YUVFileReader()
-@property (nonatomic, copy) NSString *writeFilePath;
+@property (nonatomic, copy) NSString *writeYUVFilePath;
+@property (nonatomic, copy) NSString *writeH264FilePath;
 @property (nonatomic, copy) NSString *readFilePath;
 @property (nonatomic, strong) NSFileHandle *readFileHandle;
-@property (nonatomic, strong) NSFileHandle *writeFileHandle;
+@property (nonatomic, strong) NSFileHandle *writeYUVFileHandle;
+@property (nonatomic, strong) NSFileHandle *writeH264FileHandle;
 @end
 
 @implementation YUVFileReader{
@@ -54,8 +56,8 @@ static NSString *directoryNameTransformInDoc = @"transform";
 }
 
 - (void)writeYUVDataToFile:(NSString *)fileName data:(NSData *)data error:(NSError *)error{
-    if (!_writeFilePath) {
-        self.writeFilePath = [[[YUVFileReader documentPath] stringByAppendingPathComponent:directoryNameTransformInDoc] stringByAppendingPathComponent:fileName];
+    if (!_writeYUVFilePath) {
+        self.writeYUVFilePath = [[[YUVFileReader documentPath] stringByAppendingPathComponent:directoryNameTransformInDoc] stringByAppendingPathComponent:fileName];
     }
     
     NSFileManager *defaultFile = [NSFileManager defaultManager];
@@ -64,21 +66,48 @@ static NSString *directoryNameTransformInDoc = @"transform";
         [defaultFile createDirectoryAtPath:dir withIntermediateDirectories:YES attributes:nil error:nil];
     }
     
-    if (![defaultFile fileExistsAtPath:_writeFilePath isDirectory:nil]) {
-        [defaultFile createFileAtPath:_writeFilePath contents:nil attributes:nil];
+    if (![defaultFile fileExistsAtPath:_writeYUVFilePath isDirectory:nil]) {
+        [defaultFile createFileAtPath:_writeYUVFilePath contents:nil attributes:nil];
     }
     
     NSLog(@"FrameIndexWrite:%d",frameidWrite++);
-    [self appendDataToFilePath:_writeFilePath data:data];
+    [self appendYUVDataToFilePath:_writeYUVFilePath data:data];
 }
 
-- (void)appendDataToFilePath:(NSString *)filePath data:(NSData *)data{
-    if (!self.writeFileHandle) {
-        self.writeFileHandle = [NSFileHandle fileHandleForWritingAtPath:filePath];
+- (void)writeH264DataToFile:(NSString *)fileName data:(NSData *)data error:(NSError *)error{
+    if (!_writeH264FilePath) {
+        self.writeH264FilePath = [[[YUVFileReader documentPath] stringByAppendingPathComponent:directoryNameTransformInDoc] stringByAppendingPathComponent:fileName];
     }
     
-    [self.writeFileHandle seekToEndOfFile];
-    [self.writeFileHandle writeData:data];
+    NSFileManager *defaultFile = [NSFileManager defaultManager];
+    NSString *dir = [[YUVFileReader documentPath] stringByAppendingPathComponent:directoryNameTransformInDoc];
+    if (![defaultFile fileExistsAtPath:dir]) {
+        [defaultFile createDirectoryAtPath:dir withIntermediateDirectories:YES attributes:nil error:nil];
+    }
+    
+    if (![defaultFile fileExistsAtPath:_writeH264FilePath isDirectory:nil]) {
+        [defaultFile createFileAtPath:_writeH264FilePath contents:nil attributes:nil];
+    }
+    
+    [self appendH264DataToFilePath:_writeH264FilePath data:data];
+}
+
+- (void)appendYUVDataToFilePath:(NSString *)filePath data:(NSData *)data{
+    if (!self.writeYUVFileHandle) {
+        self.writeYUVFileHandle = [NSFileHandle fileHandleForWritingAtPath:filePath];
+    }
+    
+    [self.writeYUVFileHandle seekToEndOfFile];
+    [self.writeYUVFileHandle writeData:data];
+}
+
+- (void)appendH264DataToFilePath:(NSString *)filePath data:(NSData *)data{
+    if (!self.writeH264FileHandle) {
+        self.writeH264FileHandle = [NSFileHandle fileHandleForWritingAtPath:filePath];
+    }
+    
+    [self.writeH264FileHandle seekToEndOfFile];
+    [self.writeH264FileHandle writeData:data];
 }
 
 #pragma mark - read file
