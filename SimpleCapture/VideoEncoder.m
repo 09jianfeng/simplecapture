@@ -12,7 +12,7 @@
 #import "VideoEncoder.h"
 #include <sys/time.h>
 
-const int kGOPSeconds = 2;
+const int kGOPSeconds = 3;
 
 OSStatus VTSessionSetProperty_int(VTCompressionSessionRef session, CFStringRef name, int val)
 {
@@ -123,10 +123,37 @@ void compressSessionOnEncoded(void *refCon,
     CFDictionarySetValue(sessionAttributes, kVTCompressionPropertyKey_MaxKeyFrameInterval, gopNum);
     CFRelease(gopNum);
 
+    int gopn = kGOPSeconds;
+    CFNumberRef gopref = CFNumberCreate(NULL,kCFNumberSInt32Type,&gopn);
+    CFDictionarySetValue(sessionAttributes,kVTCompressionPropertyKey_MaxKeyFrameIntervalDuration,gopref);
+    CFRelease(gopref);
+    
+    status = VTSessionSetProperty(_encoderSession,
+                                  kVTCompressionPropertyKey_ColorPrimaries,
+                                  kCVImageBufferColorPrimaries_ITU_R_709_2);
+    
+    status = VTSessionSetProperty(_encoderSession,
+                                  kVTCompressionPropertyKey_TransferFunction,
+                                  kCVImageBufferTransferFunction_ITU_R_709_2);
+    
+    status = VTSessionSetProperty(_encoderSession,
+                                  kVTCompressionPropertyKey_YCbCrMatrix,
+                                  kCVImageBufferYCbCrMatrix_ITU_R_601_4);
+    
     status = VTSessionSetProperties(_encoderSession, sessionAttributes);
     
+    [self VTSessionSetPropertyDataRateLimits:bitrate];
     CHECK_STATUS(status);
 }
+
+- (OSStatus)VTSessionSetPropertyDataRateLimits:(uint32_t)datarate
+{
+    uint32_t rate = datarate*(kGOPSeconds == 3 ?700:400);
+    //    CFNumberRef data = CFNumberCreate(NULL, kCFNumberSInt32Type, &rate);
+    OSStatus status = VTSessionSetProperty(_encoderSession, kVTCompressionPropertyKey_DataRateLimits, (__bridge CFArrayRef)@[@(rate),@(kGOPSeconds)]);
+    return status;
+}
+
 
 - (void) endEncode;
 {
