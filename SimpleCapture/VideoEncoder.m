@@ -142,7 +142,8 @@ void compressSessionOnEncoded(void *refCon,
     
     status = VTSessionSetProperties(_encoderSession, sessionAttributes);
     
-    [self VTSessionSetPropertyDataRateLimits:bitrate];
+    //[self VTSessionSetPropertyDataRateLimits:bitrate];
+    [self VTSessionSetDataLimit];
     CHECK_STATUS(status);
 }
 
@@ -154,6 +155,28 @@ void compressSessionOnEncoded(void *refCon,
     return status;
 }
 
+
+- (void)VTSessionSetDataLimit{
+    
+    OSStatus status = VTSessionSetProperty_int(_encoderSession,
+                                               kVTCompressionPropertyKey_AverageBitRate,
+                                               _bitrate * 1024 * 1.0 * 1.0);
+    
+    int bytesLimit = _bitrate * 1024 * kGOPSeconds / 8;
+    int secondLimit = kGOPSeconds;
+    CFNumberRef n1 = CFNumberCreate(kCFAllocatorDefault, kCFNumberIntType, &bytesLimit);
+    CFNumberRef n2 = CFNumberCreate(kCFAllocatorDefault, kCFNumberIntType, &secondLimit);
+    const void *values[] = {n1, n2};
+    CFArrayRef dataRateLimits = CFArrayCreate(kCFAllocatorDefault,
+                                              (const void**)&values,
+                                              sizeof(values)/sizeof(values[0]),
+                                              NULL);
+    status = VTSessionSetProperty(_encoderSession, kVTCompressionPropertyKey_DataRateLimits,                                        dataRateLimits);
+    
+    CFRelease(dataRateLimits);
+    CFRelease(n1);
+    CFRelease(n2);
+}
 
 - (void) endEncode;
 {
@@ -182,6 +205,20 @@ void compressSessionOnEncoded(void *refCon,
     
     VTEncodeInfoFlags infoFlags = 0;
     CVImageBufferRef imageBuffer = CMSampleBufferGetImageBuffer(sampleBuffer);
+    
+    CVBufferSetAttachment(imageBuffer,
+                          kCVImageBufferYCbCrMatrixKey,
+                          kCVImageBufferYCbCrMatrix_ITU_R_601_4,
+                          kCVAttachmentMode_ShouldPropagate);
+    CVBufferSetAttachment(imageBuffer,
+                          kCVImageBufferColorPrimariesKey,
+                          kCVImageBufferColorPrimaries_ITU_R_709_2,
+                          kCVAttachmentMode_ShouldPropagate);
+    CVBufferSetAttachment(imageBuffer,
+                          kCVImageBufferTransferFunctionKey,
+                          kCVImageBufferTransferFunction_ITU_R_709_2,
+                          kCVAttachmentMode_ShouldPropagate);
+    
     OSStatus status = VTCompressionSessionEncodeFrame(_encoderSession,
                                                       imageBuffer,
                                                       timingInfo.presentationTimeStamp, timingInfo.duration,
