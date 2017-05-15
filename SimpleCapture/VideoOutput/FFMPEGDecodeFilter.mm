@@ -24,6 +24,9 @@ extern "C" {
 }
 #endif
 
+@implementation MediaSample
+@end
+
 @implementation FFMPEGDecodeFilter{
     int _width;
     int _height;
@@ -35,6 +38,7 @@ extern "C" {
     uint8_t *_extraData;
     int _extraDataSize;
     int _frameCount;
+    BOOL _isNoFirstT;
 }
 
 - (instancetype)init{
@@ -46,101 +50,88 @@ extern "C" {
     return self;
 }
 
-- (int)processMediaSample:(MediaSample *)mediaSample from:(id)upstream{
-    return 0;
-}
-
-- (int)processFlvData:(uint8_t *)pData len:(uint32_t)nDataLen des:(FrameDesc *)pInDes{
-    if (!pData || nDataLen == 0) {
-        NSLog(@"AVCodecID(%d) pData is null", _codecId);
-        return -1;
-    }
-    
-    if (!pInDes) {
-        NSLog(@"AVCodecID(%d) pInDes is null", _codecId);
-        return -1;
-    }
-    
-    uint8_t *videoHeaderData = NULL;
-    uint8_t *h264VideoData = NULL;
-    uint32_t videoHeaderLen = 0;
-    uint32_t flvDataSize = 0;
-    if (pInDes.iFrameType == kVideoIFrame) {
-        videoHeaderLen = *(uint32_t*)pData;
-        if (videoHeaderLen > nDataLen) {
-            NSLog(@"AVCoderID(%u) videoHeaderLen(%u) > nDataLen(%u)", _codecId, videoHeaderLen, nDataLen);
-            return -1;
-        }
-        
-        pData += sizeof(unsigned int);
-        videoHeaderData = (unsigned char*)pData;
-        pData += videoHeaderLen;
-        //flvDataSize
-        flvDataSize = [self getFlvDataLen:pData];
-        //h264Data
-        h264VideoData = (unsigned char*)pData + 16; //skip flv tag
-    }else{
-        //一般的video tag,flvDataSize
-        flvDataSize = [self getFlvDataLen:pData];
-        //h264Data
-        h264VideoData = (unsigned char*)pData + 16; //skip flv tag
-    }
-    
-    if (flvDataSize > nDataLen) {
-        NSLog(@"VideoDataLen > nDataLen");
-        return -1;
-    }
-    
-    // if the vps/sps/pps has changed, we need to reopen the decoder too.
-    if (_context == NULL || [self isExtraDataChanged:videoHeaderData len:videoHeaderLen]) {
-        [self closeAll];
-        
-        // open the decoder with extra data
-        _context = [self openDecoder:videoHeaderData len:videoHeaderLen];
-        if (_codec == NULL) {
-            NSLog(@"AVCodecID(%d) can not open codec", _codecId);
-            return -1;
-        }
-        
-        if (_extraData) {
-            free(_extraData);
-        }
-        _extraData = (uint8_t *)malloc(videoHeaderLen);
-        _extraDataSize = videoHeaderLen;
-        memcpy(_extraData, videoHeaderData, videoHeaderLen);
-    }
-    
-    _avPacket.data = h264VideoData;
-    _avPacket.size = flvDataSize;
-    _avPacket.dts = pInDes.iPts;
-    
-    int gotFrame = 0;
-    int len = avcodec_decode_video2(_context, _avFrame, &gotFrame, &_avPacket);
-    if (len < 0) {
-        NSLog(@"AVCodecID(%d) Error while decoding frame %d", _codecId, _frameCount);
-        return -1;
-    }
-    
-    if (!gotFrame) {
-        NSLog(@"AVCodecID(%d) decoder got nothing, frameCount %d", _codecId, _frameCount);
-        return -1;
-    }
-    
-    ++_frameCount;
-    _width = _avFrame->width;
-    _height = _avFrame->height;
-    
-    int pictureDataSize = _height * (_avFrame->linesize[0] + _avFrame->linesize[1] + _avFrame->linesize[2]);
-    uint8_t *pictureData = (uint8_t *)malloc(pictureDataSize);
-    if (!pictureData) {
-        NSLog(@"failed to allocate memory for new frame.");
-        return -1;
-    }
-    
-    return 0;
-}
-
 #pragma mark - handle primitive h264 Data
+- (int)processMediaSample:(MediaSample *)mediaSample from:(id)upstream{
+    
+    // Check if we have got a key frame first
+    CMSampleBufferRef sampleBuffer = mediaSample.sampleBuffer;
+    bool isKeyframe = !CFDictionaryContainsKey( (CFDictionaryRef)(CFArrayGetValueAtIndex(CMSampleBufferGetSampleAttachmentsArray(sampleBuffer, true), 0)), kCMSampleAttachmentKey_NotSync);
+    if (isKeyframe)
+    {
+        CMFormatDescriptionRef viformat = CMSampleBufferGetFormatDescription(sampleBuffer);
+        // CFDictionaryRef extensionDict = CMFormatDescriptionGetExtensions(format);
+        // Get the extensions
+        // From the extensions get the dictionary with key "SampleDescriptionExtensionAtoms"
+        // From the dict, get the value for the key "avcC"
+        
+        //get sps
+        size_t sparameterSetSize, sparameterSetCount;
+        const uint8_t *sparameterSet;
+        OSStatus statusCode = CMVideoFormatDescriptionGetH264ParameterSetAtIndex(viformat, 0, &sparameterSet, &sparameterSetSize, &sparameterSetCount, 0 );
+        if (statusCode == noErr)
+        {
+            // Found sps and now check for pps
+            size_t pparameterSetSize, pparameterSetCount;
+            const uint8_t *pparameterSet;
+            OSStatus statusCode = CMVideoFormatDescriptionGetH264ParameterSetAtIndex(viformat, 1, &pparameterSet, &pparameterSetSize, &pparameterSetCount, 0 );
+            if (statusCode == noErr)
+            {
+                // Found pps
+                NSData *sps = [NSData dataWithBytes:sparameterSet length:sparameterSetSize];
+                NSData *pps = [NSData dataWithBytes:pparameterSet length:pparameterSetSize];
+                
+                if (!_isNoFirstT) {
+                    _isNoFirstT = true;
+                    [self updateSPSPPS:(uint8_t *)[sps bytes] spsLen:(int)sps.length pps:(uint8_t *)[pps bytes] ppsLen:(int)pps.length];
+                }
+            }
+        }
+    }
+    
+    
+    NSMutableData* data = nil;
+    {//从cmsampleBuffer中提取nalu，然后从nalu中提取完整的h264data
+        CMBlockBufferRef dataBuffer = CMSampleBufferGetDataBuffer(sampleBuffer);
+        size_t length, totalLength;
+        char *dataPointer;
+        OSStatus statusCodeRet = CMBlockBufferGetDataPointer(dataBuffer, 0, &length, &totalLength, &dataPointer);
+        if (statusCodeRet == noErr) {
+            size_t bufferOffset = 0;
+            static const int AVCCHeaderLength = 4;
+            while (bufferOffset < totalLength - AVCCHeaderLength) {
+                
+                //            NSLog(@"bufferoffset = %lu", bufferOffset);
+                // Read the NAL unit length
+                uint32_t NALUnitLength = 0;
+                memcpy(&NALUnitLength, dataPointer + bufferOffset, AVCCHeaderLength);
+                
+                // Convert the length value from Big-endian to Little-endian
+                NALUnitLength = CFSwapInt32BigToHost(NALUnitLength);
+                
+                if ( data ) {
+                    const Byte* lengthString = [FFMPEGDecodeFilter valueForLengthString:NALUnitLength];
+                    NSData *lenField=[[NSData alloc] initWithBytesNoCopy:(void*)lengthString length:4 freeWhenDone:NO];
+                    [data appendData:lenField];
+                    [data appendBytes:(dataPointer + bufferOffset + AVCCHeaderLength) length:NALUnitLength];
+                }
+                else
+                {
+                    const Byte* lengthString = [FFMPEGDecodeFilter valueForLengthString:NALUnitLength];
+                    NSData *lenField=[[NSData alloc] initWithBytesNoCopy:(void*)lengthString length:4 freeWhenDone:NO];
+                    data = [[NSMutableData alloc] initWithCapacity:0];
+                    [data appendData:lenField];
+                    [data appendBytes:(dataPointer + bufferOffset + AVCCHeaderLength) length:NALUnitLength];
+                }
+                
+                // Move to the next NAL unit in the block buffer
+                bufferOffset += AVCCHeaderLength + NALUnitLength;
+            }
+        }
+    }
+    
+    [self processH264Data:(uint8_t *)[data bytes] h264DataLen:(int)data.length pts:mediaSample.pts];
+    return 0;
+}
 
 - (BOOL)updateSPSPPS:(uint8_t *)sps spsLen:(int)spsLen pps:(uint8_t *)pps ppsLen:(int)ppsLen{
     int extraDataLen;
@@ -159,7 +150,7 @@ extern "C" {
 }
 
 // befor call precessH264Data, please call updateSPSPPS function first
-- (int)processH264Data:(uint8_t *)h264Data h264DataLen:(int)h264Len pts:(int)pts{
+- (int)processH264Data:(uint8_t *)h264Data h264DataLen:(int)h264Len pts:(uint64_t)pts{
     
     if (_context == NULL) {
         _context = [self openDecoder:_extraData len:_extraDataSize];
@@ -193,7 +184,7 @@ extern "C" {
     if ([_delegate respondsToSelector:@selector(decodedPixelBuffer:)]) {
         [_delegate decodedPixelBuffer:pixelBuffer];
     }
-    
+    CVPixelBufferRelease(pixelBuffer);
     return 0;
 }
 
@@ -293,11 +284,11 @@ extern "C" {
     int offset = 0;
     //AVCDecoderConfigurationRecord
     extradata[0] = 0x01;
-    extradata[1] = 0x64; //avc profile
+    extradata[1] = sps[0]; //avc profile 等于sps NALU里面的第1字节
     extradata[2] = 0x00;
-    extradata[3] = 0x1f; //avc level
+    extradata[3] = sps[2]; //avc level 等于sps NALU里面的第3字节
     extradata[4] = 0xff;
-    extradata[5] = 0xe1; //sps count
+    extradata[5] = 0xe1; //低5比特是sps count，一般为1个0xe1
     
     offset += 6;
     //紧接着两个字节表示sps的长度
@@ -438,5 +429,15 @@ extern "C" {
     CFRelease(optionsDictionary);
     
     return _pixelBuffer;
+}
+
++ (const Byte*)valueForLengthString:(unsigned long)length {
+    static Byte lengthValue[5];
+    memset(lengthValue, 0, sizeof(lengthValue));
+    
+    for (int i=0; i<4; ++i) {
+        lengthValue[4-1-i] = length % (int)pow(0x100, i+1) / (int)pow(0x100,i);
+    }
+    return lengthValue;
 }
 @end

@@ -162,7 +162,33 @@
 
 #pragma mark - VideoEncoderDelegate
 
-- (void) encoderOutput:(CMSampleBufferRef)sampleBuf frameCont:(FrameContext *)frameCont{
+- (void) encoderOutput:(CMSampleBufferRef)sampleBuffer frameCont:(FrameContext *)frameCont{
+    BOOL isHardDecode = NO;
+    if (isHardDecode) {
+        [self encoderOutputWithHardDecode:sampleBuffer frameCont:frameCont];
+    }else{
+        [self encoderOutputWithSoftDecode:sampleBuffer frameCont:frameCont];
+    }
+}
+
+- (void) encoderOutputWithSoftDecode:(CMSampleBufferRef)sampleBuffer frameCont:(FrameContext *)frameCont{
+    MediaSample *sample = [MediaSample new];
+    sample.sampleBuffer = sampleBuffer;
+    sample.pts = frameCont.pts;
+    [self.ffmpegH264Decode processMediaSample:sample from:nil];
+    
+    size_t sampleSize = CMSampleBufferGetTotalSampleSize(sampleBuffer);
+    dispatch_async(dispatch_get_main_queue(), ^{
+        _bitrateMonitor.appendDataSize((int)sampleSize);
+        _actuallyBitrate = _bitrateMonitor.actuallyBitrate();
+        _actuallyFps = _bitrateMonitor.actuallyFps();
+        if ([self.delegate respondsToSelector:@selector(actuallyBitrate:frameRate:)]){
+            [self.delegate actuallyBitrate:_actuallyBitrate/1000 frameRate:_actuallyFps];
+        }
+    });
+}
+
+- (void) encoderOutputWithHardDecode:(CMSampleBufferRef)sampleBuf frameCont:(FrameContext *)frameCont{
     NSLog(@"FrameIndexEncode:%d",_farmeIndexEncode++);
     
     
@@ -212,10 +238,9 @@
                 
                 if (!_isNoFirstT) {
                     _isNoFirstT = true;
-//                    [self.h264dec resetVideoSessionWithsps:(const uint8_t *)[sps bytes] len:(uint32_t)sps.length pps:(const uint8_t *)[pps bytes] ppsLen:(uint32_t)pps.length];
-                    [self.ffmpegH264Decode updateSPSPPS:(uint8_t *)[sps bytes] spsLen:(int)sps.length pps:(uint8_t *)[pps bytes] ppsLen:(int)pps.length];
+                    [self.h264dec resetVideoSessionWithsps:(const uint8_t *)[sps bytes] len:(uint32_t)sps.length pps:(const uint8_t *)[pps bytes] ppsLen:(uint32_t)pps.length];
                 }
-                //[encoder.delegate pushVideoPPS:pps SPS:sps pts:(uint32_t)(time.value)];
+//                [encoder.delegate pushVideoPPS:pps SPS:sps pts:(uint32_t)(time.value)];
             }
         }
     }
@@ -269,8 +294,7 @@
         NSData *naluData = [NSData dataWithBytes:dataPointer length:length];
         [self.yuvfilere writeH264DataToFile:h264fileName data:naluData error:nil];
         
-//        [self.h264dec decodeFramCMSamplebufferh264Data:(const uint8_t *)[data bytes] h264DataSize:data.length frameCon:frameCont];
-        [self.ffmpegH264Decode processH264Data:(uint8_t *)[data bytes] h264DataLen:(int)data.length pts:frameCont.pts];
+        [self.h264dec decodeFramCMSamplebufferh264Data:(const uint8_t *)[data bytes] h264DataSize:data.length frameCon:frameCont];
     }
 }
 
