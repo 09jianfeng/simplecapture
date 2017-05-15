@@ -15,14 +15,16 @@
 #import "SCCommon.h"
 #import "VideoTool.h"
 #import "BitrateMonitor.h"
+#import "FFMPEGDecodeFilter.h"
 
-@interface YUVFileTransform() <VideoEncoderDelegate,H264VideoDecoderDelegate>
+@interface YUVFileTransform() <VideoEncoderDelegate,H264VideoDecoderDelegate,FFMPEGDecodeFilterDelegate>
 @property(nonatomic, strong) YUVFileReader *yuvfilere;
 @property(nonatomic, strong) dispatch_queue_t encodeQueue;
 @property(nonatomic, strong) dispatch_queue_t encodeCallBackQueue;
 @property(nonatomic, strong) dispatch_queue_t readFileQueue;
 @property(nonatomic, strong) VideoEncoder *videoEncoder;
 @property(nonatomic, strong) H264VideoDecoder *h264dec;
+@property(nonatomic, strong) FFMPEGDecodeFilter *ffmpegH264Decode;
 @property(nonatomic, copy)   NSString *selectedFileName;
 @property(nonatomic, copy)   NSString *outPutFileName;
 
@@ -59,6 +61,8 @@
         [_videoEncoder setDelegate:self queue:_encodeCallBackQueue];
         _h264dec = [H264VideoDecoder new];
         _h264dec.delegate = self;
+        _ffmpegH264Decode = [FFMPEGDecodeFilter new];
+        _ffmpegH264Decode.delegate = self;
         _decodePixelbuffers = [NSMutableArray new];
         _fileReaderBuffer = [NSMutableArray new];
     }
@@ -208,7 +212,8 @@
                 
                 if (!_isNoFirstT) {
                     _isNoFirstT = true;
-                    [self.h264dec resetVideoSessionWithsps:(const uint8_t *)[sps bytes] len:(uint32_t)sps.length pps:(const uint8_t *)[pps bytes] ppsLen:(uint32_t)pps.length];
+//                    [self.h264dec resetVideoSessionWithsps:(const uint8_t *)[sps bytes] len:(uint32_t)sps.length pps:(const uint8_t *)[pps bytes] ppsLen:(uint32_t)pps.length];
+                    [self.ffmpegH264Decode updateSPSPPS:(uint8_t *)[sps bytes] spsLen:(int)sps.length pps:(uint8_t *)[pps bytes] ppsLen:(int)pps.length];
                 }
                 //[encoder.delegate pushVideoPPS:pps SPS:sps pts:(uint32_t)(time.value)];
             }
@@ -264,7 +269,8 @@
         NSData *naluData = [NSData dataWithBytes:dataPointer length:length];
         [self.yuvfilere writeH264DataToFile:h264fileName data:naluData error:nil];
         
-        [self.h264dec decodeFramCMSamplebufferh264Data:(const uint8_t *)[data bytes] h264DataSize:data.length frameCon:frameCont];
+//        [self.h264dec decodeFramCMSamplebufferh264Data:(const uint8_t *)[data bytes] h264DataSize:data.length frameCon:frameCont];
+        [self.ffmpegH264Decode processH264Data:(uint8_t *)[data bytes] h264DataLen:(int)data.length pts:frameCont.pts];
     }
 }
 
@@ -294,6 +300,10 @@
         CVPixelBufferRelease(_decodePixelbuffers[0].decodedPixelBuffer);
         [_decodePixelbuffers removeObjectAtIndex:0];
     }
+}
+
+- (void)decodedPixelBuffer:(CVPixelBufferRef)pixelBuffer{
+    [self pixelBufferToScreenAndToFile:pixelBuffer];
 }
 
 - (void)addFrameToBuffer:(FrameContext*)frameContext{

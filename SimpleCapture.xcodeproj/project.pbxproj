@@ -14,6 +14,7 @@
 		78796B701E88EDDE00F93853 /* YUVFileReader.m in Sources */ = {isa = PBXBuildFile; fileRef = 78796B6F1E88EDDE00F93853 /* YUVFileReader.m */; };
 		78796B7C1E89010900F93853 /* SimpleCaptureTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 78796B7B1E89010900F93853 /* SimpleCaptureTests.m */; };
 		78796B871E89016700F93853 /* YUVFileReaderTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 78796B861E89016700F93853 /* YUVFileReaderTest.m */; };
+		7888278D1EC45AE2002090DA /* FFMPEGDecodeFilter.mm in Sources */ = {isa = PBXBuildFile; fileRef = 7888278C1EC45AE2002090DA /* FFMPEGDecodeFilter.mm */; };
 		78AE42571E821E5E00D84304 /* VideoFileDecoder.m in Sources */ = {isa = PBXBuildFile; fileRef = 78AE42561E821E5E00D84304 /* VideoFileDecoder.m */; };
 		78AE42621E8220F800D84304 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 78AE42611E8220F800D84304 /* libz.tbd */; };
 		78AE426A1E82271600D84304 /* VideoPlayerVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 78AE42691E82271600D84304 /* VideoPlayerVC.m */; };
@@ -77,6 +78,8 @@
 		78796B7B1E89010900F93853 /* SimpleCaptureTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SimpleCaptureTests.m; sourceTree = "<group>"; };
 		78796B7D1E89010900F93853 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		78796B861E89016700F93853 /* YUVFileReaderTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YUVFileReaderTest.m; sourceTree = "<group>"; };
+		7888278B1EC45AE2002090DA /* FFMPEGDecodeFilter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FFMPEGDecodeFilter.h; sourceTree = "<group>"; };
+		7888278C1EC45AE2002090DA /* FFMPEGDecodeFilter.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = FFMPEGDecodeFilter.mm; sourceTree = "<group>"; };
 		78AE42551E821E5E00D84304 /* VideoFileDecoder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VideoFileDecoder.h; sourceTree = "<group>"; };
 		78AE42561E821E5E00D84304 /* VideoFileDecoder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VideoFileDecoder.m; sourceTree = "<group>"; };
 		78AE42611E8220F800D84304 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
@@ -295,6 +298,8 @@
 				7837825E1E8E34FE00DED271 /* YUVFileTransform.mm */,
 				783782631E8E531100DED271 /* H264VideoDecoder.h */,
 				783782641E8E531100DED271 /* H264VideoDecoder.m */,
+				7888278B1EC45AE2002090DA /* FFMPEGDecodeFilter.h */,
+				7888278C1EC45AE2002090DA /* FFMPEGDecodeFilter.mm */,
 			);
 			path = VideoOutput;
 			sourceTree = "<group>";
@@ -783,6 +788,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				DA71E0851C56276100080493 /* BitrateMonitor.cpp in Sources */,
+				7888278D1EC45AE2002090DA /* FFMPEGDecodeFilter.mm in Sources */,
 				78AE426A1E82271600D84304 /* VideoPlayerVC.m in Sources */,
 				DA315F9E1C6F57AD008B9AF3 /* AudioCapture.m in Sources */,
 				DAA20BF21C52278E008DB5AA /* VideoCapture.mm in Sources */,
