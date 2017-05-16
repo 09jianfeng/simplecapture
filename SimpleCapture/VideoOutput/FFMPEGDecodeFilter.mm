@@ -8,6 +8,7 @@
 
 #import "FFMPEGDecodeFilter.h"
 #import <libyuv/libyuv.h>
+#import <VideoToolbox/VideoToolbox.h>
 
 #include <string>
 #ifdef __cplusplus
@@ -39,6 +40,11 @@ extern "C" {
     int _extraDataSize;
     int _frameCount;
     BOOL _isNoFirstT;
+    
+    uint8_t *_sps;
+    uint8_t *_pps;
+    size_t _spsSize;
+    size_t _ppsSize;
 }
 
 - (instancetype)init{
@@ -50,11 +56,10 @@ extern "C" {
     return self;
 }
 
-#pragma mark - handle primitive h264 Data
 - (int)processMediaSample:(MediaSample *)mediaSample from:(id)upstream{
     
     // Check if we have got a key frame first
-    CMSampleBufferRef sampleBuffer = mediaSample.sampleBuffer;
+    CMSampleBufferRef sampleBuffer = [self processSampleBuffer:mediaSample.sampleBuffer];
     bool isKeyframe = !CFDictionaryContainsKey( (CFDictionaryRef)(CFArrayGetValueAtIndex(CMSampleBufferGetSampleAttachmentsArray(sampleBuffer, true), 0)), kCMSampleAttachmentKey_NotSync);
     if (isKeyframe)
     {
@@ -440,4 +445,238 @@ extern "C" {
     }
     return lengthValue;
 }
+
+
+#pragma mark - 处理sampleBuffer
+
+- (CMSampleBufferRef)processSampleBuffer:(CMSampleBufferRef)sampleBuffer{
+    // Check if we have got a key frame first
+    bool isKeyframe = !CFDictionaryContainsKey( (CFDictionaryRef)(CFArrayGetValueAtIndex(CMSampleBufferGetSampleAttachmentsArray(sampleBuffer, true), 0)), kCMSampleAttachmentKey_NotSync);
+    if (isKeyframe)
+    {
+        CMFormatDescriptionRef viformat = CMSampleBufferGetFormatDescription(sampleBuffer);
+        // CFDictionaryRef extensionDict = CMFormatDescriptionGetExtensions(format);
+        // Get the extensions
+        // From the extensions get the dictionary with key "SampleDescriptionExtensionAtoms"
+        // From the dict, get the value for the key "avcC"
+        
+        //get sps
+        size_t sparameterSetSize, sparameterSetCount;
+        const uint8_t *sparameterSet;
+        OSStatus statusCode = CMVideoFormatDescriptionGetH264ParameterSetAtIndex(viformat, 0, &sparameterSet, &sparameterSetSize, &sparameterSetCount, 0 );
+        if (statusCode == noErr)
+        {
+            // Found sps and now check for pps
+            size_t pparameterSetSize, pparameterSetCount;
+            const uint8_t *pparameterSet;
+            OSStatus statusCode = CMVideoFormatDescriptionGetH264ParameterSetAtIndex(viformat, 1, &pparameterSet, &pparameterSetSize, &pparameterSetCount, 0 );
+            if (statusCode == noErr)
+            {
+                // Found pps
+                NSData *sps = [NSData dataWithBytes:sparameterSet length:sparameterSetSize];
+                NSData *pps = [NSData dataWithBytes:pparameterSet length:pparameterSetSize];
+                [self updateSpsAndPps:(uint8_t *)[sps bytes] spsLen:(int)sps.length pps:(uint8_t *)[pps bytes] ppsLen:(int)pps.length];
+            }
+        }
+    }
+    
+    
+    NSMutableData* data = nil;
+    {//从cmsampleBuffer中提取nalu，然后从nalu中提取完整的h264data
+        CMBlockBufferRef dataBuffer = CMSampleBufferGetDataBuffer(sampleBuffer);
+        size_t length, totalLength;
+        char *dataPointer;
+        OSStatus statusCodeRet = CMBlockBufferGetDataPointer(dataBuffer, 0, &length, &totalLength, &dataPointer);
+        if (statusCodeRet == noErr) {
+            size_t bufferOffset = 0;
+            static const int AVCCHeaderLength = 4;
+            while (bufferOffset < totalLength - AVCCHeaderLength) {
+                
+                //            NSLog(@"bufferoffset = %lu", bufferOffset);
+                // Read the NAL unit length
+                uint32_t NALUnitLength = 0;
+                memcpy(&NALUnitLength, dataPointer + bufferOffset, AVCCHeaderLength);
+                
+                // Convert the length value from Big-endian to Little-endian
+                NALUnitLength = CFSwapInt32BigToHost(NALUnitLength);
+                
+                if ( data ) {
+                    const Byte* lengthString = [FFMPEGDecodeFilter valueForLengthString:NALUnitLength];
+                    NSData *lenField=[[NSData alloc] initWithBytesNoCopy:(void*)lengthString length:4 freeWhenDone:NO];
+                    [data appendData:lenField];
+                    [data appendBytes:(dataPointer + bufferOffset + AVCCHeaderLength) length:NALUnitLength];
+                }
+                else
+                {
+                    const Byte* lengthString = [FFMPEGDecodeFilter valueForLengthString:NALUnitLength];
+                    NSData *lenField=[[NSData alloc] initWithBytesNoCopy:(void*)lengthString length:4 freeWhenDone:NO];
+                    data = [[NSMutableData alloc] initWithCapacity:0];
+                    [data appendData:lenField];
+                    [data appendBytes:(dataPointer + bufferOffset + AVCCHeaderLength) length:NALUnitLength];
+                }
+                
+                // Move to the next NAL unit in the block buffer
+                bufferOffset += AVCCHeaderLength + NALUnitLength;
+            }
+        }
+    }
+    
+    CMSampleBufferRef sample = [self handleH264VideoData:(uint8_t *)[data bytes] h264DataLen:(int)data.length];
+    
+    return sample;
+}
+
+
+#pragma mark - handle primitive h264 Data
+static void freeBlockBufferData(void *o, void *block, size_t size)
+{
+    free(o);
+}
+
+- (int)intToBigEndia:(int)data{
+    uint8_t * bytes = (uint8_t*)&data;
+    uint8_t output[4];
+    
+    output[0] = bytes[0];
+    output[1] = bytes[1];
+    output[2] = bytes[2];
+    output[3] = bytes[3];
+    
+    int dataOut = (output[0] << 24) + (output[1] << 16) + (output[2] << 8) + output[3];
+    return dataOut;
+}
+
+- (CMSampleBufferRef)createSampleBufferRefFromFlvData:(uint8_t *)pData len:(uint32_t)nDataLen des:(FrameDesc *)pInDes{
+    
+    uint8_t *videoHeaderData = NULL;
+    uint8_t *h264VideoData = NULL;
+    uint32_t videoHeaderLen = 0;
+    uint32_t allNALUSize = 0;
+    if (pInDes.iFrameType == kVideoIFrame) {
+        videoHeaderLen = *(uint32_t*)pData;
+        if (videoHeaderLen > nDataLen) {
+            NSLog(@"AVCoderID(%u) videoHeaderLen(%u) > nDataLen(%u)", _codecId, videoHeaderLen, nDataLen);
+            return NULL;
+        }
+        
+        pData += sizeof(unsigned int);
+        //videoHeaderData is sps and pps
+        videoHeaderData = (unsigned char*)pData;
+        pData += videoHeaderLen;
+        
+        {//获取sps pps的数据
+            uint8_t *sps = videoHeaderData + 8;
+            size_t spsSize = (videoHeaderData[6] << 8) + videoHeaderData[7];
+            uint8_t *pps = _sps + _spsSize + 3;
+            size_t ppsSize = (*(_pps - 2) << 8) + *(_pps - 1);
+            
+            [self updateSPSPPS:sps spsLen:(int)spsSize pps:pps ppsLen:(int)ppsSize];
+        }
+        
+        //flvDataSize
+        allNALUSize = [self getFlvDataLen:pData];
+        //h264Data
+        h264VideoData = (unsigned char*)pData + 16; //skip flv tag
+    }else{
+        //一般的video tag,flvDataSize
+        allNALUSize = [self getFlvDataLen:pData];
+        //h264Data
+        h264VideoData = (unsigned char*)pData + 16; //skip flv tag
+    }
+    
+    if (allNALUSize > nDataLen) {
+        NSLog(@"VideoDataLen > nDataLen");
+        return NULL;
+    }
+    
+    CMSampleBufferRef samp= [self handleH264VideoData:h264VideoData h264DataLen:allNALUSize];
+    return samp;
+}
+
+- (void)updateSpsAndPps:(uint8_t *)sps spsLen:(int)spsLen pps:(uint8_t *)pps ppsLen:(int)ppsLen{
+    if (_sps) {
+        free(_sps);
+        free(_pps);
+    }
+    _sps = (uint8_t *)malloc(spsLen);
+    _spsSize = spsLen;
+    memcpy(_sps, sps, spsLen);
+    _pps = (uint8_t *)malloc(ppsLen);
+    _ppsSize = ppsLen;
+    memcpy(_pps, pps, ppsLen);
+}
+
+- (CMSampleBufferRef)handleH264VideoData:(uint8_t *)h264Data h264DataLen:(int)h264DataLen{
+    uint8_t *blockData = (uint8_t *)malloc(h264DataLen);
+    size_t totalLength = h264DataLen;
+    uint8_t *dataPointer = h264Data;
+    
+    size_t bufferOffset = 0;
+    static const int AVCCHeaderLength = 4;
+    while (bufferOffset < totalLength - AVCCHeaderLength) {
+        
+        uint32_t NALUnitLength = 0;
+        memcpy(&NALUnitLength, dataPointer + bufferOffset, AVCCHeaderLength);
+        
+        // Convert the length value from Little-endian to Big-endian
+        int len = [self intToBigEndia:NALUnitLength];
+        const Byte* lengthString = [FFMPEGDecodeFilter valueForLengthString:len];
+        memcpy(blockData+bufferOffset, lengthString, AVCCHeaderLength);
+        bufferOffset += AVCCHeaderLength;
+        
+        memcpy(blockData+bufferOffset, dataPointer+bufferOffset, len);
+        bufferOffset += len;
+    }
+    
+    size_t blockDataLength = h264DataLen;
+    CMBlockBufferRef blockBuffer = NULL;
+    CMBlockBufferCustomBlockSource blockSource =
+    {
+        .version       = kCMBlockBufferCustomBlockSourceVersion,
+        .AllocateBlock = NULL,
+        .FreeBlock     = &freeBlockBufferData,
+        .refCon        = blockData,
+    };
+    
+    OSStatus status  = CMBlockBufferCreateWithMemoryBlock(kCFAllocatorDefault,
+                                                          (void*)blockData,
+                                                          blockDataLength,
+                                                          kCFAllocatorNull,
+                                                          &blockSource,
+                                                          0,
+                                                          blockDataLength,
+                                                          0,
+                                                          &blockBuffer);
+    
+    CMFormatDescriptionRef formatDescription;
+    const uint8_t* const parameterSetPointers[2] = { _sps, _pps };
+    const size_t parameterSetSizes[2] = {_spsSize, _ppsSize };
+    status = CMVideoFormatDescriptionCreateFromH264ParameterSets(kCFAllocatorDefault,
+                                                                 2, //param count
+                                                                 parameterSetPointers,
+                                                                 parameterSetSizes,
+                                                                 4, //nal start code size
+                                                                 &formatDescription);
+    
+    
+    CMSampleBufferRef sampleBuffer;
+    CMSampleTimingInfo timing;
+    timing.duration = kCMTimeInvalid;
+    timing.presentationTimeStamp = kCMTimeInvalid;
+    timing.decodeTimeStamp = kCMTimeInvalid;
+    
+    size_t blockSize = CMBlockBufferGetDataLength(blockBuffer);
+    
+    CMSampleBufferCreateReady(kCFAllocatorDefault,
+                              blockBuffer,
+                              formatDescription,
+                              1,
+                              1,
+                              &timing,
+                              1,
+                              &blockSize,
+                              &sampleBuffer);
+    return sampleBuffer;
+}
+
 @end
