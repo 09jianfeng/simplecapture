@@ -64,7 +64,9 @@ void compressSessionOnEncoded(void *refCon,
     CFRelease(sourceFrameRefCon);
 }
 
-@implementation VideoEncoder
+@implementation VideoEncoder{
+    int _frameIndex;
+}
 
 - (id) init
 {    
@@ -78,6 +80,7 @@ void compressSessionOnEncoded(void *refCon,
 
 - (void) beginEncode
 {
+    _frameIndex = 0;
     // create a dictionary for creation
     CFMutableDictionaryRef pixbuf_attrs = CFDictionaryCreateMutable(NULL, 0,
                                                                     &kCFTypeDictionaryKeyCallBacks,
@@ -111,7 +114,7 @@ void compressSessionOnEncoded(void *refCon,
                                                                          0,
                                                                          &kCFTypeDictionaryKeyCallBacks,
                                                                          &kCFTypeDictionaryValueCallBacks);
-    int bitrate = self.bitrate * 1000;
+    int bitrate = self.bitrate * 1024;
     CFNumberRef bitrateNum = CFNumberCreate(NULL, kCFNumberSInt32Type, &bitrate);
     CFDictionarySetValue(sessionAttributes, kVTCompressionPropertyKey_AverageBitRate, bitrateNum);
     CFRelease(bitrateNum);
@@ -142,19 +145,9 @@ void compressSessionOnEncoded(void *refCon,
     
     status = VTSessionSetProperties(_encoderSession, sessionAttributes);
     
-    //[self VTSessionSetPropertyDataRateLimits:bitrate];
     [self VTSessionSetDataLimit];
     CHECK_STATUS(status);
 }
-
-- (OSStatus)VTSessionSetPropertyDataRateLimits:(uint32_t)datarate
-{
-    uint32_t rate = datarate*(kGOPSeconds == 3 ?700:400);
-    //    CFNumberRef data = CFNumberCreate(NULL, kCFNumberSInt32Type, &rate);
-    OSStatus status = VTSessionSetProperty(_encoderSession, kVTCompressionPropertyKey_DataRateLimits, (__bridge CFArrayRef)@[@(rate),@(kGOPSeconds)]);
-    return status;
-}
-
 
 - (void)VTSessionSetDataLimit{
     
@@ -192,7 +185,7 @@ void compressSessionOnEncoded(void *refCon,
 
 - (void) setTargetBitrate:(int)bitrateInKbps
 {
-    VTSessionSetProperty_int(_encoderSession, kVTCompressionPropertyKey_AverageBitRate, bitrateInKbps * 1000);
+    VTSessionSetProperty_int(_encoderSession, kVTCompressionPropertyKey_AverageBitRate, bitrateInKbps * 1024);
 }
 
 - (void) encode:(CMSampleBufferRef)sampleBuffer
@@ -221,7 +214,7 @@ void compressSessionOnEncoded(void *refCon,
     
     OSStatus status = VTCompressionSessionEncodeFrame(_encoderSession,
                                                       imageBuffer,
-                                                      timingInfo.presentationTimeStamp, timingInfo.duration,
+                                                      CMTimeMake( _frameIndex*40,1), CMTimeMake(40, 1),
                                                       NULL,
                                                       (__bridge_retained void * _Nullable)(fc),
                                                       &infoFlags);

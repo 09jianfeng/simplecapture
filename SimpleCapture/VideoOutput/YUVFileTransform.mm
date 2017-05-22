@@ -45,6 +45,8 @@
     BitrateMonitor _bitrateMonitor;
     int _actuallyBitrate;
     int _actuallyFps;
+    
+    int _sampleTotalSize;
 }
 
 - (instancetype)init{
@@ -100,6 +102,7 @@
 }
 
 - (void)beginEncode{
+    _sampleTotalSize = 0;
     CGSize size = CGSizeMake(format.width/_whDenominator, format.heigh/_whDenominator);
     self.outPutFileName = [NSString stringWithFormat:@"%dx%d_%@_%@",(int)size.width,(int)size.height,self.selectedFileName,[NSDate date]];
     self.videoEncoder.videoSize = size;
@@ -170,14 +173,7 @@
     frameCont.frameType = frametype;
     
     size_t sampleSize = CMSampleBufferGetTotalSampleSize(sampleBuf);
-    dispatch_async(dispatch_get_main_queue(), ^{
-        _bitrateMonitor.appendDataSize((int)sampleSize);
-        _actuallyBitrate = _bitrateMonitor.actuallyBitrate();
-        _actuallyFps = _bitrateMonitor.actuallyFps();
-        if ([self.delegate respondsToSelector:@selector(actuallyBitrate:frameRate:)]){
-            [self.delegate actuallyBitrate:_actuallyBitrate/1000 frameRate:_actuallyFps];
-        }
-    });
+    _sampleTotalSize += (int)sampleSize;
     
     // Check if we have got a key frame first
     CMSampleBufferRef sampleBuffer = sampleBuf;
@@ -339,6 +335,7 @@
         [_delegate getYUVPixelBuffer:pixelBuffer];
     }
     
+    _frameIndexWrite++;
     uint8_t *yuv420Pointer = NULL;
     int yuv420Length = 0;
     int width = (int)CVPixelBufferGetWidth(pixelBuffer);
@@ -352,6 +349,15 @@
     NSData *yuv420Data = [NSData dataWithBytes:yuv420Pointer length:yuv420Length];
     [self.yuvfilere writeYUVDataToFile:self.outPutFileName data:yuv420Data error:nil];
     free(yuv420Pointer);
+    
+    if (_frameIndexWrite == _frameIndexRead && _frameIndexWrite == _frameIndexDecode) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            _actuallyBitrate = _sampleTotalSize/(_frameIndexWrite/25.0) * 8;
+            if ([self.delegate respondsToSelector:@selector(actuallyBitrate:frameRate:)]){
+                [self.delegate actuallyBitrate:_actuallyBitrate/1000 frameRate:25];
+            }
+        });
+    }
 }
 
 @end
