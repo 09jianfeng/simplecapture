@@ -13,6 +13,7 @@ pod 'CocoaLumberjack', '3.1.0'
 pod 'Masonry', '1.0.2'
 pod 'GCDWebServer/WebDAV', '~> 3.0'
 pod 'KVOController'
+pod 'NSLogger'
 end
 
 post_install do |installer|

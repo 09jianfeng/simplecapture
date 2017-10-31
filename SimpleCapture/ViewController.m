@@ -16,6 +16,7 @@
 #import "VideoViewController.h"
 #import "VideoCapture.h"
 #import "ViewController.h"
+#import	"KXMovieController.h"
 
 @interface ViewController ()
 {
@@ -95,6 +96,10 @@
 
 - (IBAction)btnVideoPlayerPressed:(id)sender {
     
+}
+- (IBAction)kxmoviePlayBtnPressed:(id)sender {
+    KXMovieController *kxmov = [KXMovieController new];
+    [self presentViewController:kxmov animated:YES completion:nil];
 }
 
 -(IBAction)onStartVideoCaptureClicked:(id)sender
