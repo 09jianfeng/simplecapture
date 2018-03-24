@@ -765,6 +765,7 @@ static int interrupt_callback(void *ctx);
     return YES;
 }
 
+// setup AVFormatContext
 - (kxMovieError) openInput: (NSString *) path
 {
     AVFormatContext *formatCtx = NULL;
