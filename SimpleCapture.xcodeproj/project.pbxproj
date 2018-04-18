@@ -7,10 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		780448942086E49E00FAE1DF /* TextureViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 780448932086E49E00FAE1DF /* TextureViewController.m */; };
 		780448972086E60E00FAE1DF /* TextureEAGLLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 780448962086E60E00FAE1DF /* TextureEAGLLayer.m */; };
 		7804489A2086F44C00FAE1DF /* container.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 780448992086F44B00FAE1DF /* container.jpg */; };
 		7804489D2086F5E800FAE1DF /* MGLCommon.m in Sources */ = {isa = PBXBuildFile; fileRef = 7804489B2086F5E800FAE1DF /* MGLCommon.m */; };
+		780448A0208749C300FAE1DF /* OpenGLTestVCBase.m in Sources */ = {isa = PBXBuildFile; fileRef = 7804489F208749C300FAE1DF /* OpenGLTestVCBase.m */; };
+		780448A320874A4700FAE1DF /* TabOpenGLViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 780448A220874A4700FAE1DF /* TabOpenGLViewController.m */; };
 		780818441E8E0571002E0C0B /* VideoTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 780818431E8E0571002E0C0B /* VideoTool.m */; };
 		78293F9D1F4EE96500A1DE7C /* gongsi.gpx in Resources */ = {isa = PBXBuildFile; fileRef = 78293F9C1F4EE96500A1DE7C /* gongsi.gpx */; };
 		7837825F1E8E34FE00DED271 /* YUVFileTransform.mm in Sources */ = {isa = PBXBuildFile; fileRef = 7837825E1E8E34FE00DED271 /* YUVFileTransform.mm */; };
@@ -83,13 +84,16 @@
 /* Begin PBXFileReference section */
 		1A9E6D278A1582539FFAB121 /* Pods-SimpleCapture.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SimpleCapture.release.xcconfig"; path = "Pods/Target Support Files/Pods-SimpleCapture/Pods-SimpleCapture.release.xcconfig"; sourceTree = "<group>"; };
 		3D2B17E96E0507E76F3E857C /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		780448922086E49E00FAE1DF /* TextureViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TextureViewController.h; sourceTree = "<group>"; };
-		780448932086E49E00FAE1DF /* TextureViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TextureViewController.m; sourceTree = "<group>"; };
 		780448952086E60E00FAE1DF /* TextureEAGLLayer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TextureEAGLLayer.h; sourceTree = "<group>"; };
 		780448962086E60E00FAE1DF /* TextureEAGLLayer.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TextureEAGLLayer.m; sourceTree = "<group>"; };
 		780448992086F44B00FAE1DF /* container.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = container.jpg; sourceTree = "<group>"; };
 		7804489B2086F5E800FAE1DF /* MGLCommon.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGLCommon.m; sourceTree = "<group>"; };
 		7804489C2086F5E800FAE1DF /* MGLCommon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGLCommon.h; sourceTree = "<group>"; };
+		7804489E208749C300FAE1DF /* OpenGLTestVCBase.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OpenGLTestVCBase.h; sourceTree = "<group>"; };
+		7804489F208749C300FAE1DF /* OpenGLTestVCBase.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OpenGLTestVCBase.m; sourceTree = "<group>"; };
+		780448A120874A4700FAE1DF /* TabOpenGLViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TabOpenGLViewController.h; sourceTree = "<group>"; };
+		780448A220874A4700FAE1DF /* TabOpenGLViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TabOpenGLViewController.m; sourceTree = "<group>"; };
+		780448A420874CE200FAE1DF /* OpenGLContianerDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OpenGLContianerDelegate.h; sourceTree = "<group>"; };
 		780818421E8E0571002E0C0B /* VideoTool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VideoTool.h; sourceTree = "<group>"; };
 		780818431E8E0571002E0C0B /* VideoTool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VideoTool.m; sourceTree = "<group>"; };
 		78293F9C1F4EE96500A1DE7C /* gongsi.gpx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = gongsi.gpx; sourceTree = "<group>"; };
@@ -330,8 +334,6 @@
 			isa = PBXGroup;
 			children = (
 				780448992086F44B00FAE1DF /* container.jpg */,
-				780448922086E49E00FAE1DF /* TextureViewController.h */,
-				780448932086E49E00FAE1DF /* TextureViewController.m */,
 				780448952086E60E00FAE1DF /* TextureEAGLLayer.h */,
 				780448962086E60E00FAE1DF /* TextureEAGLLayer.m */,
 			);
@@ -432,6 +434,8 @@
 		78AE42671E8226A600D84304 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				7804489C2086F5E800FAE1DF /* MGLCommon.h */,
+				7804489B2086F5E800FAE1DF /* MGLCommon.m */,
 				78DB576C1E83A07900FBBD99 /* ffmpeg */,
 				DAA20BF71C535713008DB5AA /* SCCommon.h */,
 			);
@@ -460,8 +464,11 @@
 		78DB0C6F2064DB75005F87DA /* OpenGLTest */ = {
 			isa = PBXGroup;
 			children = (
-				7804489C2086F5E800FAE1DF /* MGLCommon.h */,
-				7804489B2086F5E800FAE1DF /* MGLCommon.m */,
+				780448A420874CE200FAE1DF /* OpenGLContianerDelegate.h */,
+				780448A120874A4700FAE1DF /* TabOpenGLViewController.h */,
+				780448A220874A4700FAE1DF /* TabOpenGLViewController.m */,
+				7804489E208749C300FAE1DF /* OpenGLTestVCBase.h */,
+				7804489F208749C300FAE1DF /* OpenGLTestVCBase.m */,
 				780448912086E1E000FAE1DF /* Texture */,
 				78DB0C7D2064DD6D005F87DA /* Camera */,
 			);
@@ -930,7 +937,6 @@
 			files = (
 				DA71E0851C56276100080493 /* BitrateMonitor.cpp in Sources */,
 				7888278D1EC45AE2002090DA /* FFMPEGDecodeFilter.mm in Sources */,
-				780448942086E49E00FAE1DF /* TextureViewController.m in Sources */,
 				7804489D2086F5E800FAE1DF /* MGLCommon.m in Sources */,
 				78AE426A1E82271600D84304 /* VideoPlayerVC.m in Sources */,
 				DA315F9E1C6F57AD008B9AF3 /* AudioCapture.m in Sources */,
@@ -943,6 +949,7 @@
 				787F33C51FA8AA38009A5C5F /* KxMovieViewController.m in Sources */,
 				78DB0C8C2064DE3D005F87DA /* CameraEAGLLayer.m in Sources */,
 				78DB57ED1E83BFD100FBBD99 /* AAPLEAGLLayer.m in Sources */,
+				780448A320874A4700FAE1DF /* TabOpenGLViewController.m in Sources */,
 				78D62EFD1E85045600D8629C /* VideoPlayerVC+EvtRe.m in Sources */,
 				787F33C41FA8AA38009A5C5F /* KxMovieGLView.m in Sources */,
 				DA0E7AFC1C128164003A8C25 /* AppDelegate.m in Sources */,
@@ -958,6 +965,7 @@
 				787F33C31FA8AA38009A5C5F /* KxMovieDecoder.m in Sources */,
 				780448972086E60E00FAE1DF /* TextureEAGLLayer.m in Sources */,
 				DA0E7AF91C128164003A8C25 /* main.m in Sources */,
+				780448A0208749C300FAE1DF /* OpenGLTestVCBase.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

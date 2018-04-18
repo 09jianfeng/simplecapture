@@ -1,40 +1,42 @@
 //
-//  TextureViewController.m
+//  TabOpenGLViewController.m
 //  SimpleCapture
 //
 //  Created by JFChen on 2018/4/18.
 //  Copyright © 2018年 duowan. All rights reserved.
 //
 
-#import "TextureViewController.h"
-#import "TextureEAGLLayer.h"
+#import "TabOpenGLViewController.h"
+#import "OpenGLTestVCBase.h"
 
-@interface TextureViewController ()
-@property(nonatomic, strong) TextureEAGLLayer *textureLayer;
+@interface TabOpenGLViewController ()
+
 @end
 
-@implementation TextureViewController
+@implementation TabOpenGLViewController{
+    OpenGLTestVCBase *_openglVC;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
-    self.edgesForExtendedLayout = UIRectEdgeNone;
-    
-    _textureLayer = [TextureEAGLLayer new];
-    _textureLayer.frame = self.view.bounds;
-    [self.view.layer addSublayer:_textureLayer];
-}
-
-- (void)viewDidAppear:(BOOL)animated{
-    [super viewDidAppear:animated];
-    _textureLayer.frame = self.view.bounds;
-    [_textureLayer setUpGLWithFrame:self.view.bounds];
+    _openglVC = [OpenGLTestVCBase new];
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (IBAction)coordinateBtnPressed:(id)sender {
+    [_openglVC useOpenGLTestType:OpenGLTestTypeCoordinate];
+    [self.navigationController pushViewController:_openglVC animated:NO];
+}
+
+- (IBAction)textureBtnPressed:(id)sender {
+    [_openglVC useOpenGLTestType:OpenGLTestTypeTexture];
+    [self.navigationController pushViewController:_openglVC animated:NO];
 }
 
 /*

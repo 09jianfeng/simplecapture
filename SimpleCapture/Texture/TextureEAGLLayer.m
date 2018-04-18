@@ -9,8 +9,8 @@
 #import "TextureEAGLLayer.h"
 #import <UIKit/UIKit.h>
 #include <OpenGLES/EAGL.h>
-#include <OpenGLES/ES3/gl.h>
-#include <OpenGLES/ES3/glext.h>
+#include <OpenGLES/ES2/gl.h>
+#include <OpenGLES/ES2/glext.h>
 #import "GLProgram.h"
 #import "MGLCommon.h"
 
@@ -72,7 +72,7 @@ static NSString *const TextureRGBFS = SHADER_STRING
 - (instancetype)init{
     self = [super init];
     if(self){
-        _context = [[EAGLContext alloc] initWithAPI:kEAGLRenderingAPIOpenGLES3];
+        _context = [[EAGLContext alloc] initWithAPI:kEAGLRenderingAPIOpenGLES2];
         CGFloat scale = [[UIScreen mainScreen] scale];
         self.contentsScale = scale;
         self.opaque = TRUE;
@@ -137,11 +137,11 @@ static NSString *const TextureRGBFS = SHADER_STRING
     };
     
     
-    glGenVertexArrays(1, &VAO);
+    glGenVertexArraysOES(1, &VAO);
     glGenBuffers(1, &VBO);
     glGenBuffers(1, &EBO);
     
-    glBindVertexArray(VAO);
+    glBindVertexArrayOES(VAO);
     
     glBindBuffer(GL_ARRAY_BUFFER, VBO);
     glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
@@ -197,7 +197,7 @@ static NSString *const TextureRGBFS = SHADER_STRING
     
     // render container
     [_program use];
-    glBindVertexArray(VAO);
+    glBindVertexArrayOES(VAO);
     glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
     
     glBindRenderbuffer(GL_RENDERBUFFER, _renderBufferID);
@@ -210,6 +210,19 @@ static NSString *const TextureRGBFS = SHADER_STRING
     glDeleteBuffers(1, &VAO);
     glDeleteBuffers(1, &VBO);
     glDeleteBuffers(1, &EBO);
+}
+
+#pragma mark - openglcontainerDelegate
+- (void)setContianerFrame:(CGRect)rect{
+    self.frame = rect;
+}
+
+- (void)openGLRender{
+    [self setUpGLWithFrame:self.frame];
+}
+
+- (void)removeFromSuperContainer{
+    [self removeFromSuperlayer];
 }
 
 @end

@@ -7,9 +7,8 @@
 //
 
 #import <QuartzCore/QuartzCore.h>
+#import "OpenGLContianerDelegate.h"
 
-@interface TextureEAGLLayer : CAEAGLLayer
-
-- (void)setUpGLWithFrame:(CGRect)rect;
+@interface TextureEAGLLayer : CAEAGLLayer<OpenGLContianerDelegate>
 
 @end

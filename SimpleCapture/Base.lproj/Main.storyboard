@@ -250,7 +250,7 @@
         <!--图像处理-->
         <scene sceneID="KF7-TW-IPi">
             <objects>
-                <viewController id="pId-kp-d74" sceneMemberID="viewController">
+                <viewController id="pId-kp-d74" customClass="TabOpenGLViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="WnT-7r-Fj6"/>
                         <viewControllerLayoutGuide type="bottom" id="EKJ-gl-WEp"/>
@@ -263,14 +263,14 @@
                                 <rect key="frame" x="16" y="135" width="62" height="30"/>
                                 <state key="normal" title="坐标空间"/>
                                 <connections>
-                                    <segue destination="WCl-9M-wb2" kind="show" id="QFP-B3-oxB"/>
+                                    <action selector="coordinateBtnPressed:" destination="pId-kp-d74" eventType="touchUpInside" id="tGl-iJ-968"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="T52-YL-edK">
                                 <rect key="frame" x="15" y="183" width="64" height="30"/>
                                 <state key="normal" title="gles 纹理"/>
                                 <connections>
-                                    <segue destination="kBP-RS-KGv" kind="show" id="wKq-rQ-B4j"/>
+                                    <action selector="textureBtnPressed:" destination="pId-kp-d74" eventType="touchUpInside" id="DfV-aR-Uew"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -287,42 +287,6 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="HKh-6U-w2i" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-812" y="2188"/>
-        </scene>
-        <!--Texture View Controller-->
-        <scene sceneID="rM5-xU-FKZ">
-            <objects>
-                <viewController id="kBP-RS-KGv" customClass="TextureViewController" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="6IK-Ed-U85"/>
-                        <viewControllerLayoutGuide type="bottom" id="4Yq-Fl-zsg"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="Qzi-Ce-0Ax">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                    </view>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="qaX-Pd-7cz" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="33" y="2044"/>
-        </scene>
-        <!--Camera View Controller-->
-        <scene sceneID="CwX-F9-xgs">
-            <objects>
-                <viewController id="WCl-9M-wb2" customClass="CameraViewController" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="ers-JW-FW8"/>
-                        <viewControllerLayoutGuide type="bottom" id="JXX-bT-uEP"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="g1s-8I-fAc">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                    </view>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="V8B-td-M55" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="33" y="1374"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="alE-RC-wWd">

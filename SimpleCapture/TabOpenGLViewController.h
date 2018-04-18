@@ -1,5 +1,5 @@
 //
-//  TextureViewController.h
+//  TabOpenGLViewController.h
 //  SimpleCapture
 //
 //  Created by JFChen on 2018/4/18.
@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface TextureViewController : UIViewController
+@interface TabOpenGLViewController : UIViewController
 
 @end
