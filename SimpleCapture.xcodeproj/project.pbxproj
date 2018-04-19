@@ -12,6 +12,8 @@
 		7804489D2086F5E800FAE1DF /* MGLCommon.m in Sources */ = {isa = PBXBuildFile; fileRef = 7804489B2086F5E800FAE1DF /* MGLCommon.m */; };
 		780448A0208749C300FAE1DF /* OpenGLTestVCBase.m in Sources */ = {isa = PBXBuildFile; fileRef = 7804489F208749C300FAE1DF /* OpenGLTestVCBase.m */; };
 		780448A320874A4700FAE1DF /* TabOpenGLViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 780448A220874A4700FAE1DF /* TabOpenGLViewController.m */; };
+		780448AA208833DC00FAE1DF /* TextureGLKView.m in Sources */ = {isa = PBXBuildFile; fileRef = 780448A9208833DC00FAE1DF /* TextureGLKView.m */; };
+		780448AC20883B0F00FAE1DF /* GLKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 780448AB20883B0F00FAE1DF /* GLKit.framework */; };
 		780818441E8E0571002E0C0B /* VideoTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 780818431E8E0571002E0C0B /* VideoTool.m */; };
 		78293F9D1F4EE96500A1DE7C /* gongsi.gpx in Resources */ = {isa = PBXBuildFile; fileRef = 78293F9C1F4EE96500A1DE7C /* gongsi.gpx */; };
 		7837825F1E8E34FE00DED271 /* YUVFileTransform.mm in Sources */ = {isa = PBXBuildFile; fileRef = 7837825E1E8E34FE00DED271 /* YUVFileTransform.mm */; };
@@ -94,6 +96,9 @@
 		780448A120874A4700FAE1DF /* TabOpenGLViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TabOpenGLViewController.h; sourceTree = "<group>"; };
 		780448A220874A4700FAE1DF /* TabOpenGLViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TabOpenGLViewController.m; sourceTree = "<group>"; };
 		780448A420874CE200FAE1DF /* OpenGLContianerDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OpenGLContianerDelegate.h; sourceTree = "<group>"; };
+		780448A8208833DB00FAE1DF /* TextureGLKView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TextureGLKView.h; sourceTree = "<group>"; };
+		780448A9208833DC00FAE1DF /* TextureGLKView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TextureGLKView.m; sourceTree = "<group>"; };
+		780448AB20883B0F00FAE1DF /* GLKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLKit.framework; path = System/Library/Frameworks/GLKit.framework; sourceTree = SDKROOT; };
 		780818421E8E0571002E0C0B /* VideoTool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VideoTool.h; sourceTree = "<group>"; };
 		780818431E8E0571002E0C0B /* VideoTool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VideoTool.m; sourceTree = "<group>"; };
 		78293F9C1F4EE96500A1DE7C /* gongsi.gpx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = gongsi.gpx; sourceTree = "<group>"; };
@@ -297,6 +302,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				780448AC20883B0F00FAE1DF /* GLKit.framework in Frameworks */,
 				78D62EFA1E84CB5600D8629C /* PhotosUI.framework in Frameworks */,
 				78D62EF81E84CB4B00D8629C /* Photos.framework in Frameworks */,
 				78DB57E91E83B9E000FBBD99 /* CoreVideo.framework in Frameworks */,
@@ -336,6 +342,8 @@
 				780448992086F44B00FAE1DF /* container.jpg */,
 				780448952086E60E00FAE1DF /* TextureEAGLLayer.h */,
 				780448962086E60E00FAE1DF /* TextureEAGLLayer.m */,
+				780448A8208833DB00FAE1DF /* TextureGLKView.h */,
+				780448A9208833DC00FAE1DF /* TextureGLKView.m */,
 			);
 			path = Texture;
 			sourceTree = "<group>";
@@ -695,6 +703,7 @@
 		91F7F595AF800493DF65C790 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				780448AB20883B0F00FAE1DF /* GLKit.framework */,
 				783782661E8E654E00DED271 /* libc++.tbd */,
 				78D62EF91E84CB5600D8629C /* PhotosUI.framework */,
 				78D62EF71E84CB4B00D8629C /* Photos.framework */,
@@ -956,6 +965,7 @@
 				78AE42571E821E5E00D84304 /* VideoFileDecoder.m in Sources */,
 				78DB0C722064DBEF005F87DA /* CameraViewController.m in Sources */,
 				783782651E8E531100DED271 /* H264VideoDecoder.m in Sources */,
+				780448AA208833DC00FAE1DF /* TextureGLKView.m in Sources */,
 				780818441E8E0571002E0C0B /* VideoTool.m in Sources */,
 				787F33C11FA8AA38009A5C5F /* KxAudioManager.m in Sources */,
 				78EE3B861E8A371D00B66CE1 /* FileChooseVC.m in Sources */,

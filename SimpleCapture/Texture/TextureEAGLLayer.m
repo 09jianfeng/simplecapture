@@ -164,6 +164,7 @@ static NSString *const TextureRGBFS = SHADER_STRING
     
     // load and create a texture
     // -------------------------
+    glActiveTexture(GL_TEXTURE0); //GL_TEXTURE0对应着片段着色器里面的第一个声明的uniform sampler2D采样器
     glGenTextures(1, &texture);
     glBindTexture(GL_TEXTURE_2D, texture); // all upcoming GL_TEXTURE_2D operations now have effect on this texture object
     // set the texture wrapping parameters
@@ -210,6 +211,8 @@ static NSString *const TextureRGBFS = SHADER_STRING
     glDeleteBuffers(1, &VAO);
     glDeleteBuffers(1, &VBO);
     glDeleteBuffers(1, &EBO);
+    
+    NSLog(@"TextureEaGlLayer dealloc");
 }
 
 #pragma mark - openglcontainerDelegate

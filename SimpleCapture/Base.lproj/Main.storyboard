@@ -260,14 +260,14 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uKV-5h-xkW">
-                                <rect key="frame" x="16" y="135" width="62" height="30"/>
-                                <state key="normal" title="坐标空间"/>
+                                <rect key="frame" x="16" y="135" width="87" height="30"/>
+                                <state key="normal" title="glkview 纹理"/>
                                 <connections>
                                     <action selector="coordinateBtnPressed:" destination="pId-kp-d74" eventType="touchUpInside" id="tGl-iJ-968"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="T52-YL-edK">
-                                <rect key="frame" x="15" y="183" width="64" height="30"/>
+                                <rect key="frame" x="27" y="183" width="64" height="30"/>
                                 <state key="normal" title="gles 纹理"/>
                                 <connections>
                                     <action selector="textureBtnPressed:" destination="pId-kp-d74" eventType="touchUpInside" id="DfV-aR-Uew"/>

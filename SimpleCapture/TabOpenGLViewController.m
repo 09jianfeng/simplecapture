@@ -14,14 +14,12 @@
 @end
 
 @implementation TabOpenGLViewController{
-    OpenGLTestVCBase *_openglVC;
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
-    _openglVC = [OpenGLTestVCBase new];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -30,13 +28,16 @@
 }
 
 - (IBAction)coordinateBtnPressed:(id)sender {
-    [_openglVC useOpenGLTestType:OpenGLTestTypeCoordinate];
-    [self.navigationController pushViewController:_openglVC animated:NO];
+    OpenGLTestVCBase *openglVC = [OpenGLTestVCBase new];
+    [openglVC useOpenGLTestType:OpenGLTestTypeGLKViewTexture];
+    [self.navigationController pushViewController:openglVC animated:NO];
+
 }
 
 - (IBAction)textureBtnPressed:(id)sender {
-    [_openglVC useOpenGLTestType:OpenGLTestTypeTexture];
-    [self.navigationController pushViewController:_openglVC animated:NO];
+    OpenGLTestVCBase *openglVC = [OpenGLTestVCBase new];
+    [openglVC useOpenGLTestType:OpenGLTestTypeTexture];
+    [self.navigationController pushViewController:openglVC animated:NO];
 }
 
 /*

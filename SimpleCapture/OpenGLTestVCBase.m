@@ -9,6 +9,7 @@
 #import "OpenGLTestVCBase.h"
 #import "OpenGLContianerDelegate.h"
 #import "TextureEAGLLayer.h"
+#import "TextureGLKView.h"
 
 @interface OpenGLTestVCBase ()
 @property(nonatomic, strong) id<OpenGLContianerDelegate> openglDelegate;
@@ -40,7 +41,11 @@
     [self.openglDelegate removeFromSuperContainer];
     
     switch (type) {
-        case OpenGLTestTypeCoordinate:
+        case OpenGLTestTypeGLKViewTexture:{
+            TextureGLKView *textureView = [TextureGLKView new];
+            [self.view addSubview:textureView];
+            self.openglDelegate = textureView;
+        }
         break;
         
         case OpenGLTestTypeTexture:
