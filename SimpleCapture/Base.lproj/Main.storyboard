@@ -273,13 +273,22 @@
                                     <action selector="textureBtnPressed:" destination="pId-kp-d74" eventType="touchUpInside" id="DfV-aR-Uew"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BB2-VK-2i8">
+                                <rect key="frame" x="0.0" y="97" width="176" height="30"/>
+                                <state key="normal" title="glkview frame buffer 纹理"/>
+                                <connections>
+                                    <action selector="glkviewFramebuffer:" destination="pId-kp-d74" eventType="touchUpInside" id="aiD-RS-7VW"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="uKV-5h-xkW" firstAttribute="leading" secondItem="cdA-1F-Ndu" secondAttribute="leadingMargin" id="2Ju-tq-P8O"/>
-                            <constraint firstItem="uKV-5h-xkW" firstAttribute="centerX" secondItem="T52-YL-edK" secondAttribute="centerX" id="2fp-XZ-jdd"/>
-                            <constraint firstItem="T52-YL-edK" firstAttribute="top" secondItem="uKV-5h-xkW" secondAttribute="bottom" constant="18" id="BmC-X3-fGf"/>
-                            <constraint firstItem="uKV-5h-xkW" firstAttribute="top" secondItem="WnT-7r-Fj6" secondAttribute="bottom" constant="71" id="sWV-qE-hJi"/>
+                            <constraint firstItem="uKV-5h-xkW" firstAttribute="centerX" secondItem="T52-YL-edK" secondAttribute="centerX" id="2d0-bK-I38"/>
+                            <constraint firstItem="BB2-VK-2i8" firstAttribute="leading" secondItem="cdA-1F-Ndu" secondAttribute="leading" id="2nI-yq-bbY"/>
+                            <constraint firstItem="T52-YL-edK" firstAttribute="top" secondItem="uKV-5h-xkW" secondAttribute="bottom" constant="18" id="GOU-pf-6Hk"/>
+                            <constraint firstItem="uKV-5h-xkW" firstAttribute="leading" secondItem="cdA-1F-Ndu" secondAttribute="leadingMargin" id="Vfc-Ri-6aA"/>
+                            <constraint firstItem="BB2-VK-2i8" firstAttribute="top" secondItem="WnT-7r-Fj6" secondAttribute="bottom" constant="33" id="eME-xZ-GO3"/>
+                            <constraint firstItem="uKV-5h-xkW" firstAttribute="top" secondItem="BB2-VK-2i8" secondAttribute="bottom" constant="8" symbolic="YES" id="zmP-mS-EcA"/>
                         </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="图像处理" id="HXh-JJ-fO9"/>

@@ -27,6 +27,12 @@
     // Dispose of any resources that can be recreated.
 }
 
+- (IBAction)glkviewFramebuffer:(id)sender {
+    OpenGLTestVCBase *openglVC = [OpenGLTestVCBase new];
+    [openglVC useOpenGLTestType:OpenGLTestTypeGLKViewTextureFB];
+    [self.navigationController pushViewController:openglVC animated:NO];
+}
+
 - (IBAction)coordinateBtnPressed:(id)sender {
     OpenGLTestVCBase *openglVC = [OpenGLTestVCBase new];
     [openglVC useOpenGLTestType:OpenGLTestTypeGLKViewTexture];
