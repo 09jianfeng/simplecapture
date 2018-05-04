@@ -19,6 +19,9 @@
 		7837825F1E8E34FE00DED271 /* YUVFileTransform.mm in Sources */ = {isa = PBXBuildFile; fileRef = 7837825E1E8E34FE00DED271 /* YUVFileTransform.mm */; };
 		783782651E8E531100DED271 /* H264VideoDecoder.m in Sources */ = {isa = PBXBuildFile; fileRef = 783782641E8E531100DED271 /* H264VideoDecoder.m */; };
 		783782671E8E654E00DED271 /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 783782661E8E654E00DED271 /* libc++.tbd */; };
+		785650FE2098481200382E80 /* AudioViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 785650FD2098481200382E80 /* AudioViewController.m */; };
+		7856510320984B3C00382E80 /* AACPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 7856510020984B3C00382E80 /* AACPlayer.m */; };
+		7856510420984B3C00382E80 /* abc.aac in Resources */ = {isa = PBXBuildFile; fileRef = 7856510120984B3C00382E80 /* abc.aac */; };
 		78796B701E88EDDE00F93853 /* YUVFileReader.m in Sources */ = {isa = PBXBuildFile; fileRef = 78796B6F1E88EDDE00F93853 /* YUVFileReader.m */; };
 		78796B7C1E89010900F93853 /* SimpleCaptureTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 78796B7B1E89010900F93853 /* SimpleCaptureTests.m */; };
 		78796B871E89016700F93853 /* YUVFileReaderTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 78796B861E89016700F93853 /* YUVFileReaderTest.m */; };
@@ -108,6 +111,11 @@
 		783782631E8E531100DED271 /* H264VideoDecoder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = H264VideoDecoder.h; sourceTree = "<group>"; };
 		783782641E8E531100DED271 /* H264VideoDecoder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = H264VideoDecoder.m; sourceTree = "<group>"; };
 		783782661E8E654E00DED271 /* libc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++.tbd"; path = "usr/lib/libc++.tbd"; sourceTree = SDKROOT; };
+		785650FC2098481200382E80 /* AudioViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AudioViewController.h; sourceTree = "<group>"; };
+		785650FD2098481200382E80 /* AudioViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AudioViewController.m; sourceTree = "<group>"; };
+		7856510020984B3C00382E80 /* AACPlayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AACPlayer.m; sourceTree = "<group>"; };
+		7856510120984B3C00382E80 /* abc.aac */ = {isa = PBXFileReference; lastKnownFileType = file; path = abc.aac; sourceTree = "<group>"; };
+		7856510220984B3C00382E80 /* AACPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AACPlayer.h; sourceTree = "<group>"; };
 		78796B6E1E88EDDE00F93853 /* YUVFileReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = YUVFileReader.h; path = ../YUVFileReader.h; sourceTree = "<group>"; };
 		78796B6F1E88EDDE00F93853 /* YUVFileReader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = YUVFileReader.m; path = ../YUVFileReader.m; sourceTree = "<group>"; };
 		78796B791E89010900F93853 /* SimpleCaptureTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SimpleCaptureTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -380,6 +388,25 @@
 			path = VideoOutput;
 			sourceTree = "<group>";
 		};
+		785650FB2098479400382E80 /* Audio */ = {
+			isa = PBXGroup;
+			children = (
+				785650FC2098481200382E80 /* AudioViewController.h */,
+				785650FD2098481200382E80 /* AudioViewController.m */,
+			);
+			name = Audio;
+			sourceTree = "<group>";
+		};
+		785650FF20984B3C00382E80 /* audio */ = {
+			isa = PBXGroup;
+			children = (
+				7856510220984B3C00382E80 /* AACPlayer.h */,
+				7856510020984B3C00382E80 /* AACPlayer.m */,
+				7856510120984B3C00382E80 /* abc.aac */,
+			);
+			path = audio;
+			sourceTree = "<group>";
+		};
 		78796B7A1E89010900F93853 /* SimpleCaptureTests */ = {
 			isa = PBXGroup;
 			children = (
@@ -411,6 +438,7 @@
 		78AE42631E82264500D84304 /* ViewController */ = {
 			isa = PBXGroup;
 			children = (
+				785650FB2098479400382E80 /* Audio */,
 				78DB0C6F2064DB75005F87DA /* OpenGLTest */,
 				78DB0C6E2064DA48005F87DA /* Show */,
 			);
@@ -420,6 +448,7 @@
 		78AE42641E82265400D84304 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				785650FF20984B3C00382E80 /* audio */,
 				780818411E8DF615002E0C0B /* Utils */,
 				78AE42661E82268F00D84304 /* VideoInput */,
 				781833541E80FAD000AC768F /* VideoOutput */,
@@ -870,6 +899,7 @@
 				DA0E7B071C128164003A8C25 /* LaunchScreen.storyboard in Resources */,
 				DA0E7B041C128164003A8C25 /* Assets.xcassets in Resources */,
 				78DB576B1E8375B000FBBD99 /* resource.bundle in Resources */,
+				7856510420984B3C00382E80 /* abc.aac in Resources */,
 				78293F9D1F4EE96500A1DE7C /* gongsi.gpx in Resources */,
 				7804489A2086F44C00FAE1DF /* container.jpg in Resources */,
 				DA0E7B021C128164003A8C25 /* Main.storyboard in Resources */,
@@ -956,6 +986,7 @@
 				DA315F9E1C6F57AD008B9AF3 /* AudioCapture.m in Sources */,
 				DAA20BF21C52278E008DB5AA /* VideoCapture.mm in Sources */,
 				7837825F1E8E34FE00DED271 /* YUVFileTransform.mm in Sources */,
+				785650FE2098481200382E80 /* AudioViewController.m in Sources */,
 				DA5B1BF61C6743F7005890B1 /* VideoProcessor.m in Sources */,
 				78796B701E88EDDE00F93853 /* YUVFileReader.m in Sources */,
 				DA0E7AFF1C128164003A8C25 /* ViewController.m in Sources */,
@@ -965,6 +996,7 @@
 				78DB57ED1E83BFD100FBBD99 /* AAPLEAGLLayer.m in Sources */,
 				780448A320874A4700FAE1DF /* TabOpenGLViewController.m in Sources */,
 				78D62EFD1E85045600D8629C /* VideoPlayerVC+EvtRe.m in Sources */,
+				7856510320984B3C00382E80 /* AACPlayer.m in Sources */,
 				787F33C41FA8AA38009A5C5F /* KxMovieGLView.m in Sources */,
 				DA0E7AFC1C128164003A8C25 /* AppDelegate.m in Sources */,
 				78AE42571E821E5E00D84304 /* VideoFileDecoder.m in Sources */,

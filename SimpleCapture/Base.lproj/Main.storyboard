@@ -326,6 +326,7 @@
                     <connections>
                         <segue destination="BYZ-38-t0r" kind="relationship" relationship="viewControllers" id="L8M-FN-zYJ"/>
                         <segue destination="pId-kp-d74" kind="relationship" relationship="viewControllers" id="iYT-PS-128"/>
+                        <segue destination="E86-9U-5G5" kind="relationship" relationship="viewControllers" id="FDp-nV-gMH"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="rzx-yc-S2H" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -362,6 +363,35 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ij1-Ka-Zuj" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="129" y="720"/>
+        </scene>
+        <!--音频-->
+        <scene sceneID="EiE-gl-f51">
+            <objects>
+                <tableViewController storyboardIdentifier="AudioViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="E86-9U-5G5" customClass="AudioViewController" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="iZZ-cL-pQw">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="audioVCTableCell" rowHeight="55" id="cUE-wT-qCZ">
+                                <rect key="frame" x="0.0" y="28" width="375" height="55"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="cUE-wT-qCZ" id="Y6W-UT-7Zc">
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="54.5"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="E86-9U-5G5" id="LG2-UJ-FJH"/>
+                            <outlet property="delegate" destination="E86-9U-5G5" id="3f7-Lf-FQz"/>
+                        </connections>
+                    </tableView>
+                    <tabBarItem key="tabBarItem" title="音频" id="Ayy-Bz-BmN"/>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="FRH-30-LYc" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="128.80000000000001" y="1449.6251874062971"/>
         </scene>
         <!--File ChooseVC-->
         <scene sceneID="eb4-30-CeZ">

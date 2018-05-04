@@ -175,6 +175,12 @@ static NSString *const ScreenTextureRGBFS = SHADER_STRING
         glActiveTexture ( GL_TEXTURE0 );
         glBindTexture ( GL_TEXTURE_2D, shadowMapTextureId );
         
+        GLuint depthRenderbuffer;
+        glGenRenderbuffers(1, &depthRenderbuffer);
+        glBindRenderbuffer(GL_RENDERBUFFER, depthRenderbuffer);
+        glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT16, shadowMapTextureWidth, shadowMapTextureHeight);
+        glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, depthRenderbuffer);
+        
         if ( GL_FRAMEBUFFER_COMPLETE != glCheckFramebufferStatus ( GL_FRAMEBUFFER ) )
         {
             NSLog(@"Failed to make complete framebuffer object %x", glCheckFramebufferStatus(GL_FRAMEBUFFER));
