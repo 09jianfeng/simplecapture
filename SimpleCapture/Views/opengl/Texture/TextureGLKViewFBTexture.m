@@ -6,7 +6,7 @@
 //  Copyright © 2018年 duowan. All rights reserved.
 //
 
-#import "TextureGLKViewFB.h"
+#import "TextureGLKViewFBTexture.h"
 #import "GLProgram.h"
 #import "MGLCommon.h"
 #import <OpenGLES/ES3/gl.h>
@@ -79,12 +79,12 @@ static NSString *const ScreenTextureRGBFS = SHADER_STRING
  );
 
 
-@interface TextureGLKViewFB()<GLKViewDelegate>
+@interface TextureGLKViewFBTexture()<GLKViewDelegate>
 @property (nonatomic, strong) GLKView *glkView;
 @property (nonatomic, strong) EAGLContext *context;
 @end
 
-@implementation TextureGLKViewFB{
+@implementation TextureGLKViewFBTexture{
     GLProgram *_program;
     GLProgram *_screenProgram;
     

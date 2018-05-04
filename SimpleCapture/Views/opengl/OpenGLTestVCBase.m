@@ -10,7 +10,7 @@
 #import "OpenGLContianerDelegate.h"
 #import "TextureEAGLLayer.h"
 #import "TextureGLKView.h"
-#import "TextureGLKViewFB.h"
+#import "TextureGLKViewFBTexture.h"
 
 @interface OpenGLTestVCBase ()
 @property(nonatomic, strong) id<OpenGLContianerDelegate> openglDelegate;
@@ -43,7 +43,7 @@
     
     switch (type) {
         case OpenGLTestTypeGLKViewTextureFB:{
-            TextureGLKViewFB *textureView = [TextureGLKViewFB new];
+            TextureGLKViewFBTexture *textureView = [TextureGLKViewFBTexture new];
             [self.view addSubview:textureView];
             self.openglDelegate = textureView;
 

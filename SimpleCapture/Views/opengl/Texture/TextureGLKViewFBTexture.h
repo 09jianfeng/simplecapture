@@ -9,6 +9,6 @@
 #import <UIKit/UIKit.h>
 #import "OpenGLContianerDelegate.h"
 
-@interface TextureGLKViewFB : UIView <OpenGLContianerDelegate>
+@interface TextureGLKViewFBTexture : UIView <OpenGLContianerDelegate>
 
 @end
