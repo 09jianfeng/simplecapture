@@ -11,7 +11,6 @@
 		7804489A2086F44C00FAE1DF /* container.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 780448992086F44B00FAE1DF /* container.jpg */; };
 		7804489D2086F5E800FAE1DF /* MGLCommon.m in Sources */ = {isa = PBXBuildFile; fileRef = 7804489B2086F5E800FAE1DF /* MGLCommon.m */; };
 		780448A0208749C300FAE1DF /* OpenGLTestVCBase.m in Sources */ = {isa = PBXBuildFile; fileRef = 7804489F208749C300FAE1DF /* OpenGLTestVCBase.m */; };
-		780448A320874A4700FAE1DF /* TabOpenGLViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 780448A220874A4700FAE1DF /* TabOpenGLViewController.m */; };
 		780448AA208833DC00FAE1DF /* TextureGLKView.m in Sources */ = {isa = PBXBuildFile; fileRef = 780448A9208833DC00FAE1DF /* TextureGLKView.m */; };
 		780448AC20883B0F00FAE1DF /* GLKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 780448AB20883B0F00FAE1DF /* GLKit.framework */; };
 		780818441E8E0571002E0C0B /* VideoTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 780818431E8E0571002E0C0B /* VideoTool.m */; };
@@ -33,6 +32,7 @@
 		787F33C81FA8AAF1009A5C5F /* KXMovieController.m in Sources */ = {isa = PBXBuildFile; fileRef = 787F33C71FA8AAF1009A5C5F /* KXMovieController.m */; };
 		787F33D11FA8AF7C009A5C5F /* test in Resources */ = {isa = PBXBuildFile; fileRef = 787F33D01FA8AF7C009A5C5F /* test */; };
 		7888278D1EC45AE2002090DA /* FFMPEGDecodeFilter.mm in Sources */ = {isa = PBXBuildFile; fileRef = 7888278C1EC45AE2002090DA /* FFMPEGDecodeFilter.mm */; };
+		78A21EFA209C069700918C6D /* OpenglTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A21EF9209C069700918C6D /* OpenglTableViewController.m */; };
 		78AE42571E821E5E00D84304 /* VideoFileDecoder.m in Sources */ = {isa = PBXBuildFile; fileRef = 78AE42561E821E5E00D84304 /* VideoFileDecoder.m */; };
 		78AE42621E8220F800D84304 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 78AE42611E8220F800D84304 /* libz.tbd */; };
 		78AE426A1E82271600D84304 /* VideoPlayerVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 78AE42691E82271600D84304 /* VideoPlayerVC.m */; };
@@ -97,8 +97,6 @@
 		7804489C2086F5E800FAE1DF /* MGLCommon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGLCommon.h; sourceTree = "<group>"; };
 		7804489E208749C300FAE1DF /* OpenGLTestVCBase.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OpenGLTestVCBase.h; sourceTree = "<group>"; };
 		7804489F208749C300FAE1DF /* OpenGLTestVCBase.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OpenGLTestVCBase.m; sourceTree = "<group>"; };
-		780448A120874A4700FAE1DF /* TabOpenGLViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TabOpenGLViewController.h; sourceTree = "<group>"; };
-		780448A220874A4700FAE1DF /* TabOpenGLViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TabOpenGLViewController.m; sourceTree = "<group>"; };
 		780448A420874CE200FAE1DF /* OpenGLContianerDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OpenGLContianerDelegate.h; sourceTree = "<group>"; };
 		780448A8208833DB00FAE1DF /* TextureGLKView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TextureGLKView.h; sourceTree = "<group>"; };
 		780448A9208833DC00FAE1DF /* TextureGLKView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TextureGLKView.m; sourceTree = "<group>"; };
@@ -138,6 +136,8 @@
 		787F33D01FA8AF7C009A5C5F /* test */ = {isa = PBXFileReference; lastKnownFileType = folder; path = test; sourceTree = "<group>"; };
 		7888278B1EC45AE2002090DA /* FFMPEGDecodeFilter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FFMPEGDecodeFilter.h; sourceTree = "<group>"; };
 		7888278C1EC45AE2002090DA /* FFMPEGDecodeFilter.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = FFMPEGDecodeFilter.mm; sourceTree = "<group>"; };
+		78A21EF8209C069700918C6D /* OpenglTableViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OpenglTableViewController.h; sourceTree = "<group>"; };
+		78A21EF9209C069700918C6D /* OpenglTableViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OpenglTableViewController.m; sourceTree = "<group>"; };
 		78AE42551E821E5E00D84304 /* VideoFileDecoder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VideoFileDecoder.h; sourceTree = "<group>"; };
 		78AE42561E821E5E00D84304 /* VideoFileDecoder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VideoFileDecoder.m; sourceTree = "<group>"; };
 		78AE42611E8220F800D84304 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
@@ -506,13 +506,8 @@
 		78DB0C6F2064DB75005F87DA /* OpenGLTest */ = {
 			isa = PBXGroup;
 			children = (
-				780448A420874CE200FAE1DF /* OpenGLContianerDelegate.h */,
-				780448A120874A4700FAE1DF /* TabOpenGLViewController.h */,
-				780448A220874A4700FAE1DF /* TabOpenGLViewController.m */,
-				7804489E208749C300FAE1DF /* OpenGLTestVCBase.h */,
-				7804489F208749C300FAE1DF /* OpenGLTestVCBase.m */,
-				780448912086E1E000FAE1DF /* Texture */,
-				78DB0C7D2064DD6D005F87DA /* Camera */,
+				78A21EF8209C069700918C6D /* OpenglTableViewController.h */,
+				78A21EF9209C069700918C6D /* OpenglTableViewController.m */,
 			);
 			name = OpenGLTest;
 			sourceTree = "<group>";
@@ -728,6 +723,11 @@
 		78DB57EA1E83BFB800FBBD99 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				780448912086E1E000FAE1DF /* Texture */,
+				78DB0C7D2064DD6D005F87DA /* Camera */,
+				780448A420874CE200FAE1DF /* OpenGLContianerDelegate.h */,
+				7804489E208749C300FAE1DF /* OpenGLTestVCBase.h */,
+				7804489F208749C300FAE1DF /* OpenGLTestVCBase.m */,
 				78DB57EB1E83BFD100FBBD99 /* AAPLEAGLLayer.h */,
 				78DB57EC1E83BFD100FBBD99 /* AAPLEAGLLayer.m */,
 			);
@@ -993,8 +993,8 @@
 				78DB0C892064DDF6005F87DA /* CameraView.m in Sources */,
 				787F33C51FA8AA38009A5C5F /* KxMovieViewController.m in Sources */,
 				78DB0C8C2064DE3D005F87DA /* CameraEAGLLayer.m in Sources */,
+				78A21EFA209C069700918C6D /* OpenglTableViewController.m in Sources */,
 				78DB57ED1E83BFD100FBBD99 /* AAPLEAGLLayer.m in Sources */,
-				780448A320874A4700FAE1DF /* TabOpenGLViewController.m in Sources */,
 				78D62EFD1E85045600D8629C /* VideoPlayerVC+EvtRe.m in Sources */,
 				7856510320984B3C00382E80 /* AACPlayer.m in Sources */,
 				787F33C41FA8AA38009A5C5F /* KxMovieGLView.m in Sources */,
