@@ -35,6 +35,8 @@
 		789914AC20B7A96400F0E665 /* abc.pcm in Resources */ = {isa = PBXBuildFile; fileRef = 789914AB20B7A94700F0E665 /* abc.pcm */; };
 		7899155D20B7B6FC00F0E665 /* libGPUImage.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7899155C20B7B6FB00F0E665 /* libGPUImage.a */; };
 		7899157720B7B71A00F0E665 /* libyuv.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7899157620B7B71A00F0E665 /* libyuv.a */; };
+		7899157B20B7FFC300F0E665 /* AccompanimentPlay.m in Sources */ = {isa = PBXBuildFile; fileRef = 7899157A20B7FFC300F0E665 /* AccompanimentPlay.m */; };
+		7899157D20B7FFE800F0E665 /* test.pcm in Resources */ = {isa = PBXBuildFile; fileRef = 7899157C20B7FFCF00F0E665 /* test.pcm */; };
 		78A21EFA209C069700918C6D /* OpenglTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A21EF9209C069700918C6D /* OpenglTableViewController.m */; };
 		78A21EFF209C0A0600918C6D /* TextureEAGLLayerFBTexture.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A21EFE209C0A0600918C6D /* TextureEAGLLayerFBTexture.m */; };
 		78AE42571E821E5E00D84304 /* VideoFileDecoder.m in Sources */ = {isa = PBXBuildFile; fileRef = 78AE42561E821E5E00D84304 /* VideoFileDecoder.m */; };
@@ -335,6 +337,9 @@
 		7899157320B7B71A00F0E665 /* rotate_argb.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = rotate_argb.h; sourceTree = "<group>"; };
 		7899157420B7B71A00F0E665 /* row.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = row.h; sourceTree = "<group>"; };
 		7899157620B7B71A00F0E665 /* libyuv.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libyuv.a; sourceTree = "<group>"; };
+		7899157920B7FFC300F0E665 /* AccompanimentPlay.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AccompanimentPlay.h; sourceTree = "<group>"; };
+		7899157A20B7FFC300F0E665 /* AccompanimentPlay.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AccompanimentPlay.m; sourceTree = "<group>"; };
+		7899157C20B7FFCF00F0E665 /* test.pcm */ = {isa = PBXFileReference; lastKnownFileType = file; path = test.pcm; sourceTree = "<group>"; };
 		78A21EF8209C069700918C6D /* OpenglTableViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OpenglTableViewController.h; sourceTree = "<group>"; };
 		78A21EF9209C069700918C6D /* OpenglTableViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OpenglTableViewController.m; sourceTree = "<group>"; };
 		78A21EFD209C0A0600918C6D /* TextureEAGLLayerFBTexture.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TextureEAGLLayerFBTexture.h; sourceTree = "<group>"; };
@@ -611,6 +616,9 @@
 				789914A820B7A93100F0E665 /* PCMPlayer.h */,
 				789914A920B7A93100F0E665 /* PCMPlayer.m */,
 				789914AB20B7A94700F0E665 /* abc.pcm */,
+				7899157920B7FFC300F0E665 /* AccompanimentPlay.h */,
+				7899157A20B7FFC300F0E665 /* AccompanimentPlay.m */,
+				7899157C20B7FFCF00F0E665 /* test.pcm */,
 			);
 			path = audio;
 			sourceTree = "<group>";
@@ -1365,6 +1373,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7899157D20B7FFE800F0E665 /* test.pcm in Resources */,
 				789914AC20B7A96400F0E665 /* abc.pcm in Resources */,
 				78DB0C862064DDCA005F87DA /* awesomeface.png in Resources */,
 				787F33C21FA8AA38009A5C5F /* kxmovie.bundle in Resources */,
@@ -1458,6 +1467,7 @@
 				DA315F9E1C6F57AD008B9AF3 /* AudioCapture.m in Sources */,
 				DAA20BF21C52278E008DB5AA /* VideoCapture.mm in Sources */,
 				7837825F1E8E34FE00DED271 /* YUVFileTransform.mm in Sources */,
+				7899157B20B7FFC300F0E665 /* AccompanimentPlay.m in Sources */,
 				785650FE2098481200382E80 /* AudioViewController.m in Sources */,
 				DA5B1BF61C6743F7005890B1 /* VideoProcessor.m in Sources */,
 				78796B701E88EDDE00F93853 /* YUVFileReader.m in Sources */,

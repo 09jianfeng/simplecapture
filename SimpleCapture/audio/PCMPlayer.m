@@ -52,22 +52,23 @@ static const uint32_t CONST_BUFFER_SIZE = 0x10000;
         [inputSteam open];
     }
     
-    NSError *error = nil;
     OSStatus status = noErr;
-    
     // set audio session
-//    AVAudioSession *audioSession = [AVAudioSession sharedInstance];
-//    [audioSession setCategory:AVAudioSessionCategoryPlayback error:&error];
+    NSError *error = nil;
+    AVAudioSession *audioSession = [AVAudioSession sharedInstance];
+    [audioSession setCategory:AVAudioSessionCategoryPlayback error:&error];
     
-    AudioComponentDescription audioDesc;
-    audioDesc.componentType = kAudioUnitType_Output;
-    audioDesc.componentSubType = kAudioUnitSubType_RemoteIO;
-    audioDesc.componentManufacturer = kAudioUnitManufacturer_Apple;
-    audioDesc.componentFlags = 0;
-    audioDesc.componentFlagsMask = 0;
-    
-    AudioComponent inputComponent = AudioComponentFindNext(NULL, &audioDesc);
-    AudioComponentInstanceNew(inputComponent, &audioUnit);
+    {// 设置 audioUnit， remoteIO类型
+        AudioComponentDescription audioDesc;
+        audioDesc.componentType = kAudioUnitType_Output;
+        audioDesc.componentSubType = kAudioUnitSubType_RemoteIO;
+        audioDesc.componentManufacturer = kAudioUnitManufacturer_Apple;
+        audioDesc.componentFlags = 0;
+        audioDesc.componentFlagsMask = 0;
+        
+        AudioComponent inputComponent = AudioComponentFindNext(NULL, &audioDesc);
+        AudioComponentInstanceNew(inputComponent, &audioUnit);
+    }
     
     // buffer
     buffList = (AudioBufferList *)malloc(sizeof(AudioBufferList));
@@ -76,7 +77,7 @@ static const uint32_t CONST_BUFFER_SIZE = 0x10000;
     buffList->mBuffers[0].mDataByteSize = CONST_BUFFER_SIZE;
     buffList->mBuffers[0].mData = malloc(CONST_BUFFER_SIZE);
     
-    //audio property
+    //audio property。 声音输出
     UInt32 flag = 1;
     if (flag) {
         status = AudioUnitSetProperty(audioUnit,
@@ -90,13 +91,13 @@ static const uint32_t CONST_BUFFER_SIZE = 0x10000;
         NSLog(@"AudioUnitSetProperty error with status:%d", status);
     }
     
-    // format
+    // format 设置输入的声音格式
     AudioStreamBasicDescription outputFormat;
     memset(&outputFormat, 0, sizeof(outputFormat));
     outputFormat.mSampleRate       = 44100; // 采样率
     outputFormat.mFormatID         = kAudioFormatLinearPCM; // PCM格式
     outputFormat.mFormatFlags      = kLinearPCMFormatFlagIsSignedInteger; // 整形
-    outputFormat.mFramesPerPacket  = 1; // 每帧只有1个packet
+    outputFormat.mFramesPerPacket  = 1; // 每packet只有1个帧
     outputFormat.mChannelsPerFrame = 1; // 声道数
     outputFormat.mBytesPerFrame    = 2; // 每帧只有2个byte 声道*位深*Packet数
     outputFormat.mBytesPerPacket   = 2; // 每个Packet只有2个byte
