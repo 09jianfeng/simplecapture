@@ -13,7 +13,7 @@
 #include <libswscale/swscale.h>
 #import <CocoaLumberjack/CocoaLumberjack.h>
 #import <CoreVideo/CoreVideo.h>
-#import <libyuv/libyuv.h>
+#import "libyuv.h"
 #import "YUVFileReader.h"
 #import "VideoTool.h"
 

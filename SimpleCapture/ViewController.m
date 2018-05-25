@@ -16,6 +16,7 @@
 #import "VideoViewController.h"
 #import "VideoCapture.h"
 #import "ViewController.h"
+#import	"KXMovieController.h"
 
 @interface ViewController ()
 {
@@ -53,6 +54,9 @@
     _stabilizationSwitch.on = NO;
     
     [self updateControlStatus];
+    [self requestCameraPermissionWithCompletion:^(BOOL granted) {
+        
+    }];
 }
 
 - (void) updateControlStatus
@@ -96,9 +100,30 @@
 - (IBAction)btnVideoPlayerPressed:(id)sender {
     
 }
+- (IBAction)kxmoviePlayBtnPressed:(id)sender {
+    KXMovieController *kxmov = [KXMovieController new];
+    [self presentViewController:kxmov animated:YES completion:nil];
+}
+
+- (void)requestCameraPermissionWithCompletion:(void(^)(BOOL granted))completionBlock {
+    AVAuthorizationStatus authStatus = [AVCaptureDevice authorizationStatusForMediaType:AVMediaTypeVideo];
+    if(authStatus == AVAuthorizationStatusNotDetermined) {
+        [AVCaptureDevice requestAccessForMediaType:AVMediaTypeVideo completionHandler:^(BOOL granted){
+            dispatch_async( dispatch_get_main_queue(), ^{
+                completionBlock(granted);
+            });
+        }];
+    } else if (authStatus == AVAuthorizationStatusDenied || authStatus == AVAuthorizationStatusRestricted) {
+        completionBlock(NO);
+    } else if (authStatus == AVAuthorizationStatusAuthorized) {
+        completionBlock(YES);
+    }
+}
+
 
 -(IBAction)onStartVideoCaptureClicked:(id)sender
 {
+    
     VideoConfig config;
     config.cameraPosition = (int)_cameraPositionOption.selectedSegmentIndex;
     config.orientation = VideoOrientationPortrait;

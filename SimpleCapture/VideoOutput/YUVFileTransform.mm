@@ -15,14 +15,16 @@
 #import "SCCommon.h"
 #import "VideoTool.h"
 #import "BitrateMonitor.h"
+#import "FFMPEGDecodeFilter.h"
 
-@interface YUVFileTransform() <VideoEncoderDelegate,H264VideoDecoderDelegate>
+@interface YUVFileTransform() <VideoEncoderDelegate,H264VideoDecoderDelegate,FFMPEGDecodeFilterDelegate>
 @property(nonatomic, strong) YUVFileReader *yuvfilere;
 @property(nonatomic, strong) dispatch_queue_t encodeQueue;
 @property(nonatomic, strong) dispatch_queue_t encodeCallBackQueue;
 @property(nonatomic, strong) dispatch_queue_t readFileQueue;
 @property(nonatomic, strong) VideoEncoder *videoEncoder;
 @property(nonatomic, strong) H264VideoDecoder *h264dec;
+@property(nonatomic, strong) FFMPEGDecodeFilter *ffmpegH264Decode;
 @property(nonatomic, copy)   NSString *selectedFileName;
 @property(nonatomic, copy)   NSString *outPutFileName;
 
@@ -61,6 +63,8 @@
         [_videoEncoder setDelegate:self queue:_encodeCallBackQueue];
         _h264dec = [H264VideoDecoder new];
         _h264dec.delegate = self;
+        _ffmpegH264Decode = [FFMPEGDecodeFilter new];
+        _ffmpegH264Decode.delegate = self;
         _decodePixelbuffers = [NSMutableArray new];
         _fileReaderBuffer = [NSMutableArray new];
     }
@@ -161,7 +165,33 @@
 
 #pragma mark - VideoEncoderDelegate
 
-- (void) encoderOutput:(CMSampleBufferRef)sampleBuf frameCont:(FrameContext *)frameCont{
+- (void) encoderOutput:(CMSampleBufferRef)sampleBuffer frameCont:(FrameContext *)frameCont{
+    BOOL isHardDecode = NO;
+    if (isHardDecode) {
+        [self encoderOutputWithHardDecode:sampleBuffer frameCont:frameCont];
+    }else{
+        [self encoderOutputWithSoftDecode:sampleBuffer frameCont:frameCont];
+    }
+}
+
+- (void) encoderOutputWithSoftDecode:(CMSampleBufferRef)sampleBuffer frameCont:(FrameContext *)frameCont{
+    MediaSample *sample = [MediaSample new];
+    sample.sampleBuffer = sampleBuffer;
+    sample.pts = frameCont.pts;
+    [self.ffmpegH264Decode processMediaSample:sample from:nil];
+    
+    size_t sampleSize = CMSampleBufferGetTotalSampleSize(sampleBuffer);
+    dispatch_async(dispatch_get_main_queue(), ^{
+        _bitrateMonitor.appendDataSize((int)sampleSize);
+        _actuallyBitrate = _bitrateMonitor.actuallyBitrate();
+        _actuallyFps = _bitrateMonitor.actuallyFps();
+        if ([self.delegate respondsToSelector:@selector(actuallyBitrate:frameRate:)]){
+            [self.delegate actuallyBitrate:_actuallyBitrate/1000 frameRate:_actuallyFps];
+        }
+    });
+}
+
+- (void) encoderOutputWithHardDecode:(CMSampleBufferRef)sampleBuf frameCont:(FrameContext *)frameCont{
     NSLog(@"FrameIndexEncode:%d",_farmeIndexEncode++);
     
     
@@ -206,7 +236,7 @@
                     _isNoFirstT = true;
                     [self.h264dec resetVideoSessionWithsps:(const uint8_t *)[sps bytes] len:(uint32_t)sps.length pps:(const uint8_t *)[pps bytes] ppsLen:(uint32_t)pps.length];
                 }
-                //[encoder.delegate pushVideoPPS:pps SPS:sps pts:(uint32_t)(time.value)];
+//                [encoder.delegate pushVideoPPS:pps SPS:sps pts:(uint32_t)(time.value)];
             }
         }
     }
@@ -290,6 +320,10 @@
         CVPixelBufferRelease(_decodePixelbuffers[0].decodedPixelBuffer);
         [_decodePixelbuffers removeObjectAtIndex:0];
     }
+}
+
+- (void)decodedPixelBuffer:(CVPixelBufferRef)pixelBuffer{
+    [self pixelBufferToScreenAndToFile:pixelBuffer];
 }
 
 - (void)addFrameToBuffer:(FrameContext*)frameContext{
