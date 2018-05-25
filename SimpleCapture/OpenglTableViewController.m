@@ -58,7 +58,7 @@
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
     OpenGLTestVCBase *openglVC = [OpenGLTestVCBase new];
-    [openglVC useOpenGLTestType:(OpenGLTestType)indexPath.row];
+    [openglVC useOpenGLTestType:indexPath.row];
     [self.navigationController pushViewController:openglVC animated:NO];
 }
 

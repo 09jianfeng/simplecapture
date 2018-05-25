@@ -7,7 +7,7 @@
 //
 
 #import "FFMPEGDecodeFilter.h"
-#import <libyuv/libyuv.h>
+#import "libyuv.h"
 #import <VideoToolbox/VideoToolbox.h>
 
 #include <string>

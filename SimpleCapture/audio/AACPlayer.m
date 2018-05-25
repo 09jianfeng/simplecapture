@@ -8,8 +8,8 @@
 
 #import "AACPlayer.h"
 
-const uint32_t CONST_BUFFER_COUNT = 3;
-const uint32_t CONST_BUFFER_SIZE = 0x10000;
+static const uint32_t CONST_BUFFER_COUNT = 3;
+static const uint32_t CONST_BUFFER_SIZE = 0x10000;
 
 
 @implementation AACPlayer

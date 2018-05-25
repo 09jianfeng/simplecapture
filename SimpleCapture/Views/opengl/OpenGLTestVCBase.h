@@ -8,14 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
-typedef NS_ENUM(int,OpenGLTestType){
-    OpenGLTestTypeGLKViewTextureFB,
-    OpenGLTestTypeGLKViewTexture,
-    OpenGLTestTypeTexture
-};
-
 @interface OpenGLTestVCBase : UIViewController
 
-- (void)useOpenGLTestType:(OpenGLTestType)type;
+- (void)useOpenGLTestType:(int)type;
 
 @end

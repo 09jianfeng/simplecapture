@@ -7,7 +7,7 @@
 //
 
 #import "VideoTool.h"
-#import <libyuv/libyuv.h>
+#import "libyuv.h"
 #import <CocoaLumberjack/CocoaLumberjack.h>
 
 

@@ -8,6 +8,7 @@
 
 #import "AudioViewController.h"
 #import "AACPlayer.h"
+#import "PCMPlayer.h"
 
 @interface AudioViewController ()
 @property (nonatomic, strong) NSArray *tableViewData;
@@ -15,6 +16,7 @@
 
 @implementation AudioViewController{
     AACPlayer *_player;
+    PCMPlayer *_pcmPlayer;
 }
 
 - (void)viewDidLoad {
@@ -27,7 +29,7 @@
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
     
     self.edgesForExtendedLayout = UIRectEdgeNone;
-    _tableViewData = @[@"播放音乐"];
+    _tableViewData = @[@"播放AAC",@"播放PCM"];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -69,6 +71,12 @@
             {
                 _player = [[AACPlayer alloc] init];
                 [_player play];
+            }
+            break;
+        case 1:
+            {
+                _pcmPlayer = [[PCMPlayer alloc] init];
+                [_pcmPlayer play];
             }
             break;
             
