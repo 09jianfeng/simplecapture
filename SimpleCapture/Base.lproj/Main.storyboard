@@ -312,8 +312,8 @@
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </tabBar>
                     <connections>
-                        <segue destination="BYZ-38-t0r" kind="relationship" relationship="viewControllers" id="L8M-FN-zYJ"/>
                         <segue destination="E86-9U-5G5" kind="relationship" relationship="viewControllers" id="FDp-nV-gMH"/>
+                        <segue destination="BYZ-38-t0r" kind="relationship" relationship="viewControllers" id="L8M-FN-zYJ"/>
                         <segue destination="no4-62-k1y" kind="relationship" relationship="viewControllers" id="pJp-t8-ud9"/>
                     </connections>
                 </tabBarController>

@@ -11,16 +11,12 @@
 #import <AVFoundation/AVFoundation.h>
 #import <assert.h>
 
-static const uint32_t CONST_BUFFER_SIZE = 0x10000;
-
 #define INPUT_BUS 1
 #define OUTPUT_BUS 0
 
 @implementation PCMPlayer
 {
     AudioUnit audioUnit;
-    AudioBufferList *buffList;
-    
     NSInputStream *inputSteam;
 }
 
@@ -53,6 +49,7 @@ static const uint32_t CONST_BUFFER_SIZE = 0x10000;
     }
     
     OSStatus status = noErr;
+    
     // set audio session
     NSError *error = nil;
     AVAudioSession *audioSession = [AVAudioSession sharedInstance];
@@ -69,13 +66,6 @@ static const uint32_t CONST_BUFFER_SIZE = 0x10000;
         AudioComponent inputComponent = AudioComponentFindNext(NULL, &audioDesc);
         AudioComponentInstanceNew(inputComponent, &audioUnit);
     }
-    
-    // buffer
-    buffList = (AudioBufferList *)malloc(sizeof(AudioBufferList));
-    buffList->mNumberBuffers = 1;
-    buffList->mBuffers[0].mNumberChannels = 1;
-    buffList->mBuffers[0].mDataByteSize = CONST_BUFFER_SIZE;
-    buffList->mBuffers[0].mData = malloc(CONST_BUFFER_SIZE);
     
     //audio property。 声音输出
     UInt32 flag = 1;
@@ -154,14 +144,6 @@ static OSStatus PlayCallback(void *inRefCon,
 
 - (void)stop {
     AudioOutputUnitStop(audioUnit);
-    if (buffList != NULL) {
-        if (buffList->mBuffers[0].mData) {
-            free(buffList->mBuffers[0].mData);
-            buffList->mBuffers[0].mData = NULL;
-        }
-        free(buffList);
-        buffList = NULL;
-    }
     
     if (self.delegate && [self.delegate respondsToSelector:@selector(onPlayToEnd:)]) {
         __strong typeof (PCMPlayer) *player = self;
@@ -175,11 +157,6 @@ static OSStatus PlayCallback(void *inRefCon,
     AudioOutputUnitStop(audioUnit);
     AudioUnitUninitialize(audioUnit);
     AudioComponentInstanceDispose(audioUnit);
-    
-    if (buffList != NULL) {
-        free(buffList);
-        buffList = NULL;
-    }
 }
 
 
