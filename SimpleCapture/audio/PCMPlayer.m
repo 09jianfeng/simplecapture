@@ -67,21 +67,7 @@
         AudioComponentInstanceNew(inputComponent, &audioUnit);
     }
     
-    //audio property。 声音输出
-    UInt32 flag = 1;
-    if (flag) {
-        status = AudioUnitSetProperty(audioUnit,
-                                      kAudioOutputUnitProperty_EnableIO,
-                                      kAudioUnitScope_Output,
-                                      OUTPUT_BUS,
-                                      &flag,
-                                      sizeof(flag));
-    }
-    if (status) {
-        NSLog(@"AudioUnitSetProperty error with status:%d", status);
-    }
-    
-    // format 设置输入的声音格式
+    // format 设置输入给扬声器的声音格式
     AudioStreamBasicDescription outputFormat;
     memset(&outputFormat, 0, sizeof(outputFormat));
     outputFormat.mSampleRate       = 44100; // 采样率
