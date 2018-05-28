@@ -104,9 +104,10 @@
         AudioStreamBasicDescription inputFormat;
         inputFormat.mSampleRate = 44100;
         inputFormat.mFormatID = kAudioFormatLinearPCM;
+        //双声道需要添加 kAudioFormatFlagIsNonInterleaved 这个 flags。
         inputFormat.mFormatFlags = kAudioFormatFlagIsSignedInteger | kAudioFormatFlagIsNonInterleaved;
         inputFormat.mFramesPerPacket = 1;
-        inputFormat.mChannelsPerFrame = 2;
+        inputFormat.mChannelsPerFrame = 2; //双声道，设置为2。playCallback中的 ioData bufferDataList才有两个声道。
         inputFormat.mBytesPerPacket = 2;
         inputFormat.mBytesPerFrame = 2;
         inputFormat.mBitsPerChannel = 16;
@@ -215,6 +216,8 @@ static OSStatus RecordCallback(void *inRefCon,
 {
     AccompanimentPlay *vc = (__bridge AccompanimentPlay *)inRefCon;
     vc->buffList->mNumberBuffers = 1;
+    
+    //把数据写入buffList。
     OSStatus status = AudioUnitRender(vc->audioUnit, ioActionFlags, inTimeStamp, inBusNumber, inNumberFrames, vc->buffList);
     if (status != noErr) {
         NSLog(@"AudioUnitRender error:%d", status);
@@ -239,7 +242,7 @@ static OSStatus PlayCallback(void *inRefCon,
         ioData->mBuffers[0].mDataByteSize = vc->buffList->mBuffers[0].mDataByteSize;
     }
     
-    {//伴奏在右声道
+    {//伴奏在右声道. 用于测试的 test.pcm 是双声道数据。以单声道的方式播放，这样每次就拿到一半时间的数据（左/右声道），播放速度只有原来的一半。解决方案是每次多读一倍的声音数据，然后取一半，这样就能以正常的速度播放声音。
         NSInteger bytes = CONST_BUFFER_SIZE < ioData->mBuffers[1].mDataByteSize*2 ? CONST_BUFFER_SIZE : ioData->mBuffers[1].mDataByteSize*2; //
         bytes = [vc->inputSteam_left read:vc->buffer maxLength:bytes];
         
