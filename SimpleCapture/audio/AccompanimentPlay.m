@@ -85,7 +85,7 @@
         NSLog(@"setPreferredIOBufferDuration error:%@", error);
     }
     
-    {// 伴奏右声道播放
+    {// 播放
         buffer = malloc(CONST_BUFFER_SIZE);
         // audio unit new
         AudioComponentDescription audioDesc;
@@ -138,8 +138,8 @@
     }
     
     {// 录制PCM
-        // buffer list
-        uint32_t numberBuffers = 1;
+        // numberBuffers代表录制的声道数
+        uint32_t numberBuffers = 2;
         buffList = (AudioBufferList *)malloc(sizeof(AudioBufferList) + (numberBuffers - 1) * sizeof(AudioBuffer));
         buffList->mNumberBuffers = numberBuffers;
         buffList->mBuffers[0].mNumberChannels = 1;
@@ -169,7 +169,7 @@
         outputFormat.mFormatID = kAudioFormatLinearPCM;
         outputFormat.mFormatFlags = kAudioFormatFlagIsSignedInteger | kAudioFormatFlagIsNonInterleaved;
         outputFormat.mFramesPerPacket = 1;
-        outputFormat.mChannelsPerFrame = 1;
+        outputFormat.mChannelsPerFrame = numberBuffers;
         outputFormat.mBytesPerPacket = 2;
         outputFormat.mBytesPerFrame = 2;
         outputFormat.mBitsPerChannel = 16;
@@ -215,7 +215,6 @@ static OSStatus RecordCallback(void *inRefCon,
                                AudioBufferList *ioData)
 {
     AccompanimentPlay *vc = (__bridge AccompanimentPlay *)inRefCon;
-    vc->buffList->mNumberBuffers = 1;
     
     //把数据写入buffList。
     OSStatus status = AudioUnitRender(vc->audioUnit, ioActionFlags, inTimeStamp, inBusNumber, inNumberFrames, vc->buffList);
@@ -223,7 +222,7 @@ static OSStatus RecordCallback(void *inRefCon,
         NSLog(@"AudioUnitRender error:%d", status);
     }
     
-    NSLog(@"size1 = %d", vc->buffList->mBuffers[0].mDataByteSize);
+    NSLog(@"ioActionFlags：%d inTimeStamp:%f inBusNumber:%d inNumberFrames:%d size1 = %d", *ioActionFlags, inTimeStamp->mSampleTime, inBusNumber , inNumberFrames, vc->buffList->mBuffers[0].mDataByteSize);
     [vc writePCMData:vc->buffList->mBuffers[0].mData size:vc->buffList->mBuffers[0].mDataByteSize];
     
     return noErr;
@@ -237,23 +236,25 @@ static OSStatus PlayCallback(void *inRefCon,
                              AudioBufferList *ioData) {
     AccompanimentPlay *vc = (__bridge AccompanimentPlay *)inRefCon;
     
-    {//录制的声音在左声道
+    /*{//录制的声音在左右声道播放
         memcpy(ioData->mBuffers[0].mData, vc->buffList->mBuffers[0].mData, vc->buffList->mBuffers[0].mDataByteSize);
         ioData->mBuffers[0].mDataByteSize = vc->buffList->mBuffers[0].mDataByteSize;
-    }
+        
+        memcpy(ioData->mBuffers[1].mData, vc->buffList->mBuffers[1].mData, vc->buffList->mBuffers[1].mDataByteSize);
+        ioData->mBuffers[1].mDataByteSize = vc->buffList->mBuffers[1].mDataByteSize;
+    }*/
     
-    {//伴奏在右声道. 用于测试的 test.pcm 是双声道数据。以单声道的方式播放，这样每次就拿到一半时间的数据（左/右声道），播放速度只有原来的一半。解决方案是每次多读一倍的声音数据，然后取一半，这样就能以正常的速度播放声音。
+    {//伴奏音乐左右声道播放
+     //用于测试的 test.pcm 是双声道数据。以单声道的方式播放，这样每次就拿到一半时间的数据（左/右声道），播放速度只有原来的一半。解决方案是每次多读一倍的声音数据，然后取一半，这样就能以正常的速度播放声音。
         NSInteger bytes = CONST_BUFFER_SIZE < ioData->mBuffers[1].mDataByteSize*2 ? CONST_BUFFER_SIZE : ioData->mBuffers[1].mDataByteSize*2; //
         bytes = [vc->inputSteam_left read:vc->buffer maxLength:bytes];
         
-        for (int i = 0; i < bytes; ++i) {
-            ((Byte*)ioData->mBuffers[1].mData)[i/2] = vc->buffer[i];
+        for (NSInteger i = 0; i < bytes; ++i) {
+            ((Byte*)ioData->mBuffers[0].mData)[i/2] = vc->buffer[i];
+            ((Byte*)ioData->mBuffers[1].mData)[i/2 + 1] = vc->buffer[i];
         }
+        ioData->mBuffers[0].mDataByteSize = (UInt32)bytes / 2;
         ioData->mBuffers[1].mDataByteSize = (UInt32)bytes / 2;
-        
-        if (ioData->mBuffers[1].mDataByteSize < ioData->mBuffers[0].mDataByteSize) {
-            ioData->mBuffers[0].mDataByteSize = ioData->mBuffers[1].mDataByteSize;
-        }
         
         NSLog(@"size2 = %d", ioData->mBuffers[0].mDataByteSize);
     }
