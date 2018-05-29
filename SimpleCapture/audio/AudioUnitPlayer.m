@@ -184,7 +184,7 @@ OSStatus lyInInputDataProc(AudioConverterRef inAudioConverter, UInt32 *ioNumberD
     AudioUnitPlayer *player = (__bridge AudioUnitPlayer *)(inUserData);
     
     UInt32 byteSize = CONST_BUFFER_SIZE;
-    //从文件中读取一帧数据。
+    //从文件中读取一帧数据。audioFileReadPacketData读取出来的数据已经去掉了aac的adts这样的header。
     OSStatus status = AudioFileReadPacketData(player->audioFileID, NO, &byteSize, player->audioPacketFormat, player->readedPacket, ioNumberDataPackets, player->convertBuffer);
     
     if (outDataPacketDescription) { // 这里要设置好packetFormat，否则会转码失败

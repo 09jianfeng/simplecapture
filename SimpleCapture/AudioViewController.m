@@ -11,6 +11,7 @@
 #import "PCMPlayer.h"
 #import "AccompanimentPlay.h"
 #import "AudioUnitPlayer.h"
+#import "AudioCaptureSampleBuffer.h"
 
 @interface AudioViewController ()
 @property (nonatomic, strong) NSArray *tableViewData;
@@ -21,6 +22,7 @@
     PCMPlayer *_pcmPlayer;
     AccompanimentPlay *_accompPlayer;
     AudioUnitPlayer *_auPlayer;
+    AudioCaptureSampleBuffer *_audioCapture;
 }
 
 - (void)viewDidLoad {
@@ -33,7 +35,7 @@
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
     
     self.edgesForExtendedLayout = UIRectEdgeNone;
-    _tableViewData = @[@"播放AAC",@"播放PCM",@"伴奏",@"AudioUnit解码并且播放"];
+    _tableViewData = @[@"播放AAC",@"播放PCM",@"伴奏",@"AudioUnit解码并且播放",@"采集声音"];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -93,6 +95,12 @@
             {
                 _auPlayer = [AudioUnitPlayer new];
                 [_auPlayer play];
+            }
+            break;
+        case 4:
+            {
+                _audioCapture = [AudioCaptureSampleBuffer new];
+                [_audioCapture startCapture];
             }
             break;
             

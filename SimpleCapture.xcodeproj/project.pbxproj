@@ -17,6 +17,7 @@
 		781A882620BD46B800E8A51F /* AudioUnitPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 781A882520BD46B800E8A51F /* AudioUnitPlayer.m */; };
 		781A882820BD46DD00E8A51F /* test.mov in Resources */ = {isa = PBXBuildFile; fileRef = 781A882720BD46DD00E8A51F /* test.mov */; };
 		781A882B20BD51EC00E8A51F /* AACEncoder.m in Sources */ = {isa = PBXBuildFile; fileRef = 781A882A20BD51EC00E8A51F /* AACEncoder.m */; };
+		781A883620BD549E00E8A51F /* AudioCaptureSampleBuffer.m in Sources */ = {isa = PBXBuildFile; fileRef = 781A883420BD549D00E8A51F /* AudioCaptureSampleBuffer.m */; };
 		7837825F1E8E34FE00DED271 /* YUVFileTransform.mm in Sources */ = {isa = PBXBuildFile; fileRef = 7837825E1E8E34FE00DED271 /* YUVFileTransform.mm */; };
 		783782651E8E531100DED271 /* H264VideoDecoder.m in Sources */ = {isa = PBXBuildFile; fileRef = 783782641E8E531100DED271 /* H264VideoDecoder.m */; };
 		783782671E8E654E00DED271 /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 783782661E8E654E00DED271 /* libc++.tbd */; };
@@ -117,6 +118,8 @@
 		781A882720BD46DD00E8A51F /* test.mov */ = {isa = PBXFileReference; lastKnownFileType = video.quicktime; path = test.mov; sourceTree = "<group>"; };
 		781A882920BD51EB00E8A51F /* AACEncoder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AACEncoder.h; sourceTree = "<group>"; };
 		781A882A20BD51EC00E8A51F /* AACEncoder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AACEncoder.m; sourceTree = "<group>"; };
+		781A883420BD549D00E8A51F /* AudioCaptureSampleBuffer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AudioCaptureSampleBuffer.m; sourceTree = "<group>"; };
+		781A883520BD549E00E8A51F /* AudioCaptureSampleBuffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AudioCaptureSampleBuffer.h; sourceTree = "<group>"; };
 		7837825D1E8E34FE00DED271 /* YUVFileTransform.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YUVFileTransform.h; sourceTree = "<group>"; };
 		7837825E1E8E34FE00DED271 /* YUVFileTransform.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = YUVFileTransform.mm; sourceTree = "<group>"; };
 		783782631E8E531100DED271 /* H264VideoDecoder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = H264VideoDecoder.h; sourceTree = "<group>"; };
@@ -618,6 +621,8 @@
 		785650FF20984B3C00382E80 /* audio */ = {
 			isa = PBXGroup;
 			children = (
+				781A883520BD549E00E8A51F /* AudioCaptureSampleBuffer.h */,
+				781A883420BD549D00E8A51F /* AudioCaptureSampleBuffer.m */,
 				781A882920BD51EB00E8A51F /* AACEncoder.h */,
 				781A882A20BD51EC00E8A51F /* AACEncoder.m */,
 				7856510220984B3C00382E80 /* AACPlayer.h */,
@@ -1481,6 +1486,7 @@
 				DA315F9E1C6F57AD008B9AF3 /* AudioCapture.m in Sources */,
 				DAA20BF21C52278E008DB5AA /* VideoCapture.mm in Sources */,
 				7837825F1E8E34FE00DED271 /* YUVFileTransform.mm in Sources */,
+				781A883620BD549E00E8A51F /* AudioCaptureSampleBuffer.m in Sources */,
 				7899157B20B7FFC300F0E665 /* AccompanimentPlay.m in Sources */,
 				785650FE2098481200382E80 /* AudioViewController.m in Sources */,
 				DA5B1BF61C6743F7005890B1 /* VideoProcessor.m in Sources */,
