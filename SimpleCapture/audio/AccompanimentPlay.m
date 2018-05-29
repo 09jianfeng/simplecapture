@@ -246,7 +246,7 @@ static OSStatus PlayCallback(void *inRefCon,
     
     {//伴奏音乐左右声道播放
      //用于测试的 test.pcm 是双声道数据。以单声道的方式播放，这样每次就拿到一半时间的数据（左/右声道），播放速度只有原来的一半。解决方案是每次多读一倍的声音数据，然后取一半，这样就能以正常的速度播放声音。
-        NSInteger bytes = CONST_BUFFER_SIZE < ioData->mBuffers[1].mDataByteSize*2 ? CONST_BUFFER_SIZE : ioData->mBuffers[1].mDataByteSize*2; //
+        NSInteger bytes = ioData->mBuffers[0].mDataByteSize;
         bytes = [vc->inputSteam_left read:vc->buffer maxLength:bytes];
         
         for (NSInteger i = 0; i < bytes; ++i) {

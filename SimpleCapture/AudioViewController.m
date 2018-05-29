@@ -10,6 +10,7 @@
 #import "AACPlayer.h"
 #import "PCMPlayer.h"
 #import "AccompanimentPlay.h"
+#import "AudioUnitPlayer.h"
 
 @interface AudioViewController ()
 @property (nonatomic, strong) NSArray *tableViewData;
@@ -19,6 +20,7 @@
     AACPlayer *_player;
     PCMPlayer *_pcmPlayer;
     AccompanimentPlay *_accompPlayer;
+    AudioUnitPlayer *_auPlayer;
 }
 
 - (void)viewDidLoad {
@@ -31,7 +33,7 @@
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
     
     self.edgesForExtendedLayout = UIRectEdgeNone;
-    _tableViewData = @[@"播放AAC",@"播放PCM",@"伴奏"];
+    _tableViewData = @[@"播放AAC",@"播放PCM",@"伴奏",@"AudioUnit解码并且播放"];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -85,6 +87,12 @@
             {
                 _accompPlayer = [AccompanimentPlay new];
                 [_accompPlayer start];
+            }
+            break;
+        case 3:
+            {
+                _auPlayer = [AudioUnitPlayer new];
+                [_auPlayer play];
             }
             break;
             
