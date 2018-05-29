@@ -12,6 +12,7 @@
 #import "AccompanimentPlay.h"
 #import "AudioUnitPlayer.h"
 #import "AudioCaptureSampleBuffer.h"
+#import "AudioCapture.h"
 
 @interface AudioViewController ()
 @property (nonatomic, strong) NSArray *tableViewData;
@@ -23,6 +24,7 @@
     AccompanimentPlay *_accompPlayer;
     AudioUnitPlayer *_auPlayer;
     AudioCaptureSampleBuffer *_audioCapture;
+    AudioCapture *_audioCapturePCM;
 }
 
 - (void)viewDidLoad {
@@ -35,7 +37,7 @@
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
     
     self.edgesForExtendedLayout = UIRectEdgeNone;
-    _tableViewData = @[@"播放AAC",@"播放PCM",@"伴奏",@"AudioUnit解码并且播放",@"采集声音"];
+    _tableViewData = @[@"播放AAC",@"播放PCM",@"伴奏",@"AudioUnit解码并且播放",@"采集声音SampleBuffer",@"采集声音PCMdata"];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -73,35 +75,40 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     switch (indexPath.row) {
-        case 0:
-            {
+        case 0:{
                 _player = [[AACPlayer alloc] init];
                 [_player play];
-            }
+        }
             break;
-        case 1:
-            {
+            
+        case 1:{
                 _pcmPlayer = [[PCMPlayer alloc] init];
                 [_pcmPlayer play];
-            }
+        }
             break;
-        case 2:
-            {
+            
+        case 2:{
                 _accompPlayer = [AccompanimentPlay new];
                 [_accompPlayer start];
-            }
+        }
             break;
-        case 3:
-            {
+        
+        case 3:{
                 _auPlayer = [AudioUnitPlayer new];
                 [_auPlayer play];
-            }
+        }
             break;
-        case 4:
-            {
+            
+        case 4:{
                 _audioCapture = [AudioCaptureSampleBuffer new];
                 [_audioCapture startCapture];
-            }
+        }
+            break;
+            
+        case 5:{
+            _audioCapturePCM = [AudioCapture new];
+            [_audioCapturePCM start];
+        }
             break;
             
         default:
