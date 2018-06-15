@@ -222,7 +222,7 @@ static NSString *const ScreenTextureRGBFS = SHADER_STRING
     
     // load and create a texture
     // -------------------------
-    glActiveTexture(GL_TEXTURE0); //GL_TEXTURE0对应着片段着色器里面的第一个声明的uniform sampler2D采样器
+    glActiveTexture(GL_TEXTURE0); //GL_TEXTURE0对应着片段着色器里面声明的uniform sampler2D采样器 默认是单位采样单位0. 如果要设置那个变量的采样单元 glUniform1i(glGetUniformLocation(ourShader.ID, "texture1"), 0);
     glGenTextures(1, &texture);
     glBindTexture(GL_TEXTURE_2D, texture); // all upcoming GL_TEXTURE_2D operations now have effect on this texture object
     // set the texture wrapping parameters

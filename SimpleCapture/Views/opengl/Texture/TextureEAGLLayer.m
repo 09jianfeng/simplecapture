@@ -43,10 +43,52 @@ static NSString *const TextureRGBFS = SHADER_STRING
      varying mediump vec3 outColor;
  
      //纹理采样器
-     uniform sampler2D texture;
+     uniform sampler2D texture0;
+ 	 uniform sampler2D texture1;
+ 	 uniform sampler2D texture2;
+ 	 uniform sampler2D texture3;
+ 	 uniform sampler2D texture4;
+ 	 uniform sampler2D texture5;
+ 	 uniform sampler2D texture6;
+ 	 uniform sampler2D texture7;
+ 	 uniform sampler2D texture8;
+ 
      void main() {
          //从纹理texture中采样纹理
-         gl_FragColor = texture2D(texture, TexCoord) * vec4(outColor, 1.0);
+         float w = 1.0/3.0;
+         float w2 = w * 2.0;
+         
+         if (TexCoord.x < w && TexCoord.y < w) {
+             gl_FragColor = texture2D(texture0, TexCoord*3.0);
+         }
+         else if(TexCoord.x > w && TexCoord.x < w2 && TexCoord.y < w){
+             gl_FragColor = texture2D(texture1, TexCoord*3.0);
+         }
+         else if(TexCoord.x > w2 && TexCoord.x < 1.0 && TexCoord.y < w){
+             gl_FragColor = texture2D(texture2, TexCoord*3.0);
+         }
+         else if(TexCoord.x < w && TexCoord.y < w2 && TexCoord.y > w){
+             gl_FragColor = texture2D(texture3, TexCoord*3.0);
+         }
+         else if(TexCoord.x > w && TexCoord.x < w2 && TexCoord.y < w2 && TexCoord.y > w){
+             gl_FragColor = texture2D(texture4, TexCoord*3.0);
+         }
+         else if(TexCoord.x > w2 && TexCoord.x < 1.0  && TexCoord.y < w2 && TexCoord.y > w){
+             gl_FragColor = texture2D(texture5, TexCoord*3.0);
+         }
+         else if(TexCoord.x < w && TexCoord.y < 1.0 && TexCoord.y > w2){
+             gl_FragColor = texture2D(texture6, TexCoord*3.0);
+         }
+         else if(TexCoord.x > w && TexCoord.x < w2 && TexCoord.y < 1.0 && TexCoord.y > w2){
+             gl_FragColor = texture2D(texture7, TexCoord*3.0);
+         }
+         else if(TexCoord.x > w2 && TexCoord.x < 1.0 && TexCoord.y < 1.0 && TexCoord.y > w2){
+             gl_FragColor = texture2D(texture8, TexCoord*3.0);
+         }
+         else{
+             gl_FragColor = vec4(1.0, 1.0, 1.0, 1.0);
+         }
+         
      }
 );
 
@@ -58,7 +100,9 @@ static NSString *const TextureRGBFS = SHADER_STRING
     GLuint _colorIndex;
     
     GLProgram *_program;
-    unsigned int texture;
+    unsigned int textures[9];
+    unsigned int uniform[9];
+    
     EAGLContext   *_context;
     GLuint _framebufferID;
     GLuint _renderBufferID;
@@ -72,7 +116,7 @@ static NSString *const TextureRGBFS = SHADER_STRING
 - (instancetype)init{
     self = [super init];
     if(self){
-        _context = [[EAGLContext alloc] initWithAPI:kEAGLRenderingAPIOpenGLES2];
+        _context = [[EAGLContext alloc] initWithAPI:kEAGLRenderingAPIOpenGLES3];
         CGFloat scale = [[UIScreen mainScreen] scale];
         self.contentsScale = scale;
         self.opaque = TRUE;
@@ -86,7 +130,6 @@ static NSString *const TextureRGBFS = SHADER_STRING
     [_program addAttribute:@"aPos"];
     [_program addAttribute:@"aTextCoord"];
     [_program addAttribute:@"acolor"];
-    
     if (![_program link]) {
         NSString *programLog = [_program programLog];
         NSLog(@"Program link log: %@", programLog);
@@ -101,9 +144,19 @@ static NSString *const TextureRGBFS = SHADER_STRING
     _positionIndex = [_program attributeIndex:@"aPos"];
     _textureIndex = [_program attributeIndex:@"aTextCoord"];
     _colorIndex = [_program attributeIndex:@"acolor"];
+    
+    for(int i = 0; i < 9 ; i++){
+        NSString *attrabuteName = [NSString stringWithFormat:@"texture%d",i];
+        uniform[i] = [_program uniformIndex:attrabuteName];
+    }
 }
 
 - (void)initGL{
+    
+    // 如果是 opengl es 2.0 只有 8个纹理单元。
+    int MaxTextureImageUnits;
+    glGetIntegerv(GL_MAX_TEXTURE_IMAGE_UNITS, &MaxTextureImageUnits);
+    NSLog(@"____ MaxTextureImageUnits %d",MaxTextureImageUnits);
     
     // general framebuffer
     glGenFramebuffers(1, &_framebufferID);
@@ -126,10 +179,10 @@ static NSString *const TextureRGBFS = SHADER_STRING
     // ------------------------------------------------------------------
     float vertices[] = {
         // positions          // colors           // texture coords
-        0.5f,  0.5f, 0.0f,   1.0f, 0.0f, 0.0f,   1.0f, 1.0f, // top right
-        0.5f, -0.5f, 0.0f,   0.0f, 1.0f, 0.0f,   1.0f, 0.0f, // bottom right
-        -0.5f, -0.5f, 0.0f,   0.0f, 0.0f, 1.0f,   0.0f, 0.0f, // bottom left
-        -0.5f,  0.5f, 0.0f,   1.0f, 1.0f, 0.0f,   0.0f, 1.0f  // top left
+        1.0f,  1.0f, 0.0f,   1.0f, 0.0f, 0.0f,   1.0f, 1.0f, // top right
+        1.0f, -1.0f, 0.0f,   0.0f, 1.0f, 0.0f,   1.0f, 0.0f, // bottom right
+        -1.0f, -1.0f, 0.0f,   0.0f, 0.0f, 1.0f,   0.0f, 0.0f, // bottom left
+        -1.0f,  1.0f, 0.0f,   1.0f, 1.0f, 0.0f,   0.0f, 1.0f  // top left
     };
     unsigned int indices[] = {
         0, 1, 3, // first triangle
@@ -164,22 +217,29 @@ static NSString *const TextureRGBFS = SHADER_STRING
     
     // load and create a texture
     // -------------------------
-    glActiveTexture(GL_TEXTURE0); //GL_TEXTURE0对应着片段着色器里面的第一个声明的uniform sampler2D采样器
-    glGenTextures(1, &texture);
-    glBindTexture(GL_TEXTURE_2D, texture); // all upcoming GL_TEXTURE_2D operations now have effect on this texture object
-    // set the texture wrapping parameters
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);    // set texture wrapping to GL_REPEAT (default wrapping method)
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-    // set texture filtering parameters
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-    
     // load image, create texture and generate mipmaps
-    UIImage *image = [UIImage imageNamed:@"container.jpg"];
-    MImageData* imageData = mglImageDataFromUIImage(image, YES);
-    glTexImage2D(GL_TEXTURE_2D, 0, imageData->format, (GLint)imageData->width, (GLint)imageData->height, 0, imageData->format, imageData->type, imageData->data);
-    glGenerateMipmap(GL_TEXTURE_2D);
-    free(imageData);
+    
+    for(int i = 0; i < 9; i++){
+        NSString *imageName = [NSString stringWithFormat:@"%d_icon.jpg",i + 1];
+//        NSString *imageName = [NSString stringWithFormat:@"container.jpg"];
+        UIImage *image = [UIImage imageNamed:imageName];
+        MImageData* imageData = mglImageDataFromUIImage(image, YES);
+        
+        glActiveTexture(GL_TEXTURE0+i);
+        glGenTextures(1, &textures[i]);
+        glBindTexture(GL_TEXTURE_2D, textures[i]); // all upcoming GL_TEXTURE_2D operations now have effect on this texture object
+        // set the texture wrapping parameters
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);    // set texture wrapping to GL_REPEAT (default wrapping method)
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+        // set texture filtering parameters
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+        glTexImage2D(GL_TEXTURE_2D, 0, imageData->format, (GLint)imageData->width, (GLint)imageData->height, 0, imageData->format, imageData->type, imageData->data);
+        glGenerateMipmap(GL_TEXTURE_2D);
+        
+        free(imageData->data);
+        free(imageData);
+    }
 }
 
 - (void)setUpGLWithFrame:(CGRect)rect{
@@ -198,6 +258,10 @@ static NSString *const TextureRGBFS = SHADER_STRING
     
     // render container
     [_program use];
+    for(int i = 0; i < 9; i++){
+        glUniform1i(uniform[i],i);
+    }
+    
     glBindVertexArrayOES(VAO);
     glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
     
@@ -206,6 +270,9 @@ static NSString *const TextureRGBFS = SHADER_STRING
 }
 
 - (void)dealloc{
+    
+    [EAGLContext setCurrentContext:_context];
+    
     glDeleteFramebuffers(1, &_framebufferID);
     glDeleteRenderbuffers(1, &_renderBufferID);
     glDeleteBuffers(1, &VAO);
