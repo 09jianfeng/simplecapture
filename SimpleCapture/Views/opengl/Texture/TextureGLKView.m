@@ -62,6 +62,8 @@ static NSString *const TextureRGBFS = SHADER_STRING
     GLuint acolor;
     GLuint VAO,VBO,EBO;
     GLuint texture0;
+    
+    CADisplayLink *_displayLink;
 }
 
 - (void)dealloc{
@@ -85,6 +87,10 @@ static NSString *const TextureRGBFS = SHADER_STRING
         [self addSubview:_glkView];
         
         [self initOpenGL];
+        
+        _displayLink = [CADisplayLink displayLinkWithTarget:self selector:@selector(displayingLinkDraw)];
+        _displayLink.frameInterval = 2.0;
+        [_displayLink addToRunLoop:[NSRunLoop currentRunLoop] forMode:NSDefaultRunLoopMode];
     }
     return self;
 }
@@ -166,7 +172,9 @@ static NSString *const TextureRGBFS = SHADER_STRING
     MImageData* imageData = mglImageDataFromUIImage(image, YES);
     glTexImage2D(GL_TEXTURE_2D, 0, imageData->format, (GLint)imageData->width, (GLint)imageData->height, 0, imageData->format, imageData->type, imageData->data);
     glGenerateMipmap(GL_TEXTURE_2D);
-    free(imageData);
+    
+    mglDestroyImageData(imageData);
+    
 }
 
 #pragma mark - GLKViewDelegate
@@ -193,8 +201,13 @@ static NSString *const TextureRGBFS = SHADER_STRING
     [_glkView display];
 }
 
+- (void)displayingLinkDraw{
+    [_glkView display];
+}
+
 - (void)removeFromSuperContainer{
     [self removeFromSuperview];
+    [_displayLink invalidate];
 }
 
 @end

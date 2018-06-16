@@ -104,6 +104,9 @@ static NSString *const ScreenTextureRGBFS = SHADER_STRING
     GLint _backingHeight;
     
     unsigned int VBO, VAO, EBO;
+    
+    CADisplayLink *_displayLink;
+    dispatch_queue_t _queue;
 }
 
 - (instancetype)init{
@@ -114,6 +117,12 @@ static NSString *const ScreenTextureRGBFS = SHADER_STRING
         self.contentsScale = scale;
         self.opaque = TRUE;
         self.drawableProperties = @{ kEAGLDrawablePropertyRetainedBacking :[NSNumber numberWithBool:YES]};
+        
+        _displayLink = [CADisplayLink displayLinkWithTarget:self selector:@selector(displayingLinkDraw)];
+        _displayLink.frameInterval = 2.0;
+        [_displayLink addToRunLoop:[NSRunLoop currentRunLoop] forMode:NSDefaultRunLoopMode];
+        
+        _queue = dispatch_queue_create("Render Queue", DISPATCH_QUEUE_SERIAL);
     }
     return self;
 }
@@ -237,30 +246,39 @@ static NSString *const ScreenTextureRGBFS = SHADER_STRING
     MImageData* imageData = mglImageDataFromUIImage(image, YES);
     glTexImage2D(GL_TEXTURE_2D, 0, imageData->format, (GLint)imageData->width, (GLint)imageData->height, 0, imageData->format, imageData->type, imageData->data);
     glGenerateMipmap(GL_TEXTURE_2D);
-    free(imageData);
+    
+    mglDestroyImageData(imageData);
 }
+
+- (void)displayingLinkDraw{
+    
+    dispatch_async(_queue, ^{
+        [EAGLContext setCurrentContext:_context];
+        
+        glBindFramebuffer(GL_FRAMEBUFFER, _framebufferID);
+        glViewport(0,0,_backingWidth,_backingHeight);
+        
+        // render
+        // ------
+        glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
+        glClear(GL_COLOR_BUFFER_BIT);
+        
+        // render container
+        [_program use];
+        glBindVertexArrayOES(VAO);
+        glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+        
+        glBindRenderbuffer(GL_RENDERBUFFER, _renderBufferID);
+        [_context presentRenderbuffer:GL_RENDERER];
+    });
+}
+
 
 - (void)setUpGLWithFrame:(CGRect)rect{
     [EAGLContext setCurrentContext:_context];
     
     [self buildProgram];
     [self initGL];
-    
-    glBindFramebuffer(GL_FRAMEBUFFER, _framebufferID);
-    glViewport(0,0,_backingWidth,_backingHeight);
-    
-    // render
-    // ------
-    glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
-    glClear(GL_COLOR_BUFFER_BIT);
-    
-    // render container
-    [_program use];
-    glBindVertexArrayOES(VAO);
-    glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
-    
-    glBindRenderbuffer(GL_RENDERBUFFER, _renderBufferID);
-    [_context presentRenderbuffer:GL_RENDERER];
 }
 
 - (void)dealloc{
@@ -284,6 +302,7 @@ static NSString *const ScreenTextureRGBFS = SHADER_STRING
 
 - (void)removeFromSuperContainer{
     [self removeFromSuperlayer];
+    [_displayLink invalidate];
 }
 
 @end

@@ -97,13 +97,15 @@ static NSString *const ScreenTextureRGBFS = SHADER_STRING
     unsigned int shadowMapTextureId;
     unsigned int shadowMapTextureIdLoc;
     unsigned int shadowMapBufferId;
+    
+    CADisplayLink *_displayLink;
 }
 
 - (void)dealloc{
     glDeleteBuffers(1, &VAO);
     glDeleteBuffers(1, &VBO);
     glDeleteBuffers(1, &EBO);
-    NSLog(@"textureglkview dealloc");
+    NSLog(@"TextureGLKViewFBTexture dealloc");
 }
 
 - (instancetype)initWithFrame:(CGRect)frame{
@@ -118,6 +120,10 @@ static NSString *const ScreenTextureRGBFS = SHADER_STRING
         _glkView.drawableDepthFormat = GLKViewDrawableDepthFormat24;
         _glkView.enableSetNeedsDisplay = NO;
         [self addSubview:_glkView];
+        
+        _displayLink = [CADisplayLink displayLinkWithTarget:self selector:@selector(displayingLinkDraw)];
+        _displayLink.frameInterval = 2.0;
+        [_displayLink addToRunLoop:[NSRunLoop currentRunLoop] forMode:NSDefaultRunLoopMode];
     }
     return self;
 }
@@ -245,7 +251,8 @@ static NSString *const ScreenTextureRGBFS = SHADER_STRING
     MImageData* imageData = mglImageDataFromUIImage(image, YES);
     glTexImage2D(GL_TEXTURE_2D, 0, imageData->format, (GLint)imageData->width, (GLint)imageData->height, 0, imageData->format, imageData->type, imageData->data);
     glGenerateMipmap(GL_TEXTURE_2D);
-    free(imageData);
+    
+    mglDestroyImageData(imageData);
 }
 
 #pragma mark - GLKViewDelegate
@@ -300,8 +307,13 @@ static NSString *const ScreenTextureRGBFS = SHADER_STRING
     [_glkView display];
 }
 
+- (void)displayingLinkDraw{
+    [_glkView display];
+}
+
 - (void)removeFromSuperContainer{
     [self removeFromSuperview];
+    [_displayLink invalidate];
 }
 
 @end

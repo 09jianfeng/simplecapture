@@ -80,4 +80,9 @@
     }
 }
 
+- (void)dealloc{
+    NSLog(@"OpenGLTestVCBase dealloc");
+    [self.openglDelegate removeFromSuperContainer];
+}
+
 @end

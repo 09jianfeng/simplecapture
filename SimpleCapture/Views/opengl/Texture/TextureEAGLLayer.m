@@ -111,6 +111,9 @@ static NSString *const TextureRGBFS = SHADER_STRING
     GLint _backingHeight;
     
     unsigned int VBO, VAO, EBO;
+    
+    CADisplayLink *_displayLink;
+    dispatch_queue_t _queue;
 }
 
 - (instancetype)init{
@@ -121,6 +124,12 @@ static NSString *const TextureRGBFS = SHADER_STRING
         self.contentsScale = scale;
         self.opaque = TRUE;
         self.drawableProperties = @{ kEAGLDrawablePropertyRetainedBacking :[NSNumber numberWithBool:YES]};
+        
+        _displayLink = [CADisplayLink displayLinkWithTarget:self selector:@selector(displayingLinkDraw)];
+        _displayLink.frameInterval = 2.0;
+        [_displayLink addToRunLoop:[NSRunLoop currentRunLoop] forMode:NSDefaultRunLoopMode];
+        
+        _queue = dispatch_queue_create("Render Queue", DISPATCH_QUEUE_SERIAL);
     }
     return self;
 }
@@ -153,7 +162,7 @@ static NSString *const TextureRGBFS = SHADER_STRING
 
 - (void)initGL{
     
-    // 如果是 opengl es 2.0 只有 8个纹理单元。
+    // 如果是 opengl es 2.0 只有 8个纹理单元。 opengl es 3.0有16个纹理单元。
     int MaxTextureImageUnits;
     glGetIntegerv(GL_MAX_TEXTURE_IMAGE_UNITS, &MaxTextureImageUnits);
     NSLog(@"____ MaxTextureImageUnits %d",MaxTextureImageUnits);
@@ -219,6 +228,7 @@ static NSString *const TextureRGBFS = SHADER_STRING
     // -------------------------
     // load image, create texture and generate mipmaps
     
+    glGenTextures(10, textures);
     for(int i = 0; i < 9; i++){
         NSString *imageName = [NSString stringWithFormat:@"%d_icon.jpg",i + 1];
 //        NSString *imageName = [NSString stringWithFormat:@"container.jpg"];
@@ -226,7 +236,6 @@ static NSString *const TextureRGBFS = SHADER_STRING
         MImageData* imageData = mglImageDataFromUIImage(image, YES);
         
         glActiveTexture(GL_TEXTURE0+i);
-        glGenTextures(1, &textures[i]);
         glBindTexture(GL_TEXTURE_2D, textures[i]); // all upcoming GL_TEXTURE_2D operations now have effect on this texture object
         // set the texture wrapping parameters
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);    // set texture wrapping to GL_REPEAT (default wrapping method)
@@ -237,24 +246,8 @@ static NSString *const TextureRGBFS = SHADER_STRING
         glTexImage2D(GL_TEXTURE_2D, 0, imageData->format, (GLint)imageData->width, (GLint)imageData->height, 0, imageData->format, imageData->type, imageData->data);
         glGenerateMipmap(GL_TEXTURE_2D);
         
-        free(imageData->data);
-        free(imageData);
+        mglDestroyImageData(imageData);
     }
-}
-
-- (void)setUpGLWithFrame:(CGRect)rect{
-    [EAGLContext setCurrentContext:_context];
-    
-    [self buildProgram];
-    [self initGL];
-    
-    glBindFramebuffer(GL_FRAMEBUFFER, _framebufferID);
-    glViewport(0,0,_backingWidth,_backingHeight);
-    
-    // render
-    // ------
-    glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
-    glClear(GL_COLOR_BUFFER_BIT);
     
     // render container
     [_program use];
@@ -262,11 +255,34 @@ static NSString *const TextureRGBFS = SHADER_STRING
         glUniform1i(uniform[i],i);
     }
     
-    glBindVertexArrayOES(VAO);
-    glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+    glViewport(0,0,_backingWidth,_backingHeight);
+}
+
+- (void)displayingLinkDraw{
     
-    glBindRenderbuffer(GL_RENDERBUFFER, _renderBufferID);
-    [_context presentRenderbuffer:GL_RENDERER];
+    dispatch_async(_queue, ^{
+        [EAGLContext setCurrentContext:_context];
+        
+        glBindFramebuffer(GL_FRAMEBUFFER, _framebufferID);
+        
+        // render
+        // ------
+//        glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
+//        glClear(GL_COLOR_BUFFER_BIT);
+        
+        glBindVertexArrayOES(VAO);
+        glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+        
+        glBindRenderbuffer(GL_RENDERBUFFER, _renderBufferID);
+        [_context presentRenderbuffer:GL_RENDERER];
+    });
+}
+
+- (void)setUpGLWithFrame:(CGRect)rect{
+    [EAGLContext setCurrentContext:_context];
+    
+    [self buildProgram];
+    [self initGL];
 }
 
 - (void)dealloc{
@@ -293,6 +309,7 @@ static NSString *const TextureRGBFS = SHADER_STRING
 
 - (void)removeFromSuperContainer{
     [self removeFromSuperlayer];
+    [_displayLink invalidate];
 }
 
 @end
