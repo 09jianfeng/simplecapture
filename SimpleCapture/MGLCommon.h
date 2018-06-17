@@ -77,6 +77,8 @@ MImageData* mglImageDataFromUIImage(UIImage* uiImage, BOOL flipVertical);
 MImageData* mglImageDataFromCGImage(CGImageRef cgImage, BOOL flipVertical);
 void mglDestroyImageData(MImageData* imageData);
 
+CVPixelBufferRef imageToYUVPixelBuffer(UIImage *image);
+
 #pragma mark - GL
 #define STRINGIZE(x) #x
 #define SHADER_STRING(text) @ STRINGIZE(text)

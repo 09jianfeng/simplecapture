@@ -588,14 +588,8 @@
 			isa = PBXGroup;
 			children = (
 				7842DA5D20D3A519006B25D1 /* resource */,
-				78A21EFD209C0A0600918C6D /* TextureEAGLLayerFBTexture.h */,
-				78A21EFE209C0A0600918C6D /* TextureEAGLLayerFBTexture.m */,
-				780448952086E60E00FAE1DF /* TextureEAGLLayer.h */,
-				780448962086E60E00FAE1DF /* TextureEAGLLayer.m */,
-				780448A8208833DB00FAE1DF /* TextureGLKView.h */,
-				780448A9208833DC00FAE1DF /* TextureGLKView.m */,
-				78FB9979208DDE62000F1448 /* TextureGLKViewFBTexture.h */,
-				78FB9978208DDE62000F1448 /* TextureGLKViewFBTexture.m */,
+				782D62B520D5FFAB0085FE26 /* openGL */,
+				782D62B620D5FFBE0085FE26 /* Metal */,
 			);
 			path = Texture;
 			sourceTree = "<group>";
@@ -625,6 +619,28 @@
 				7888278C1EC45AE2002090DA /* FFMPEGDecodeFilter.mm */,
 			);
 			path = VideoOutput;
+			sourceTree = "<group>";
+		};
+		782D62B520D5FFAB0085FE26 /* openGL */ = {
+			isa = PBXGroup;
+			children = (
+				78A21EFD209C0A0600918C6D /* TextureEAGLLayerFBTexture.h */,
+				78A21EFE209C0A0600918C6D /* TextureEAGLLayerFBTexture.m */,
+				780448952086E60E00FAE1DF /* TextureEAGLLayer.h */,
+				780448962086E60E00FAE1DF /* TextureEAGLLayer.m */,
+				780448A8208833DB00FAE1DF /* TextureGLKView.h */,
+				780448A9208833DC00FAE1DF /* TextureGLKView.m */,
+				78FB9979208DDE62000F1448 /* TextureGLKViewFBTexture.h */,
+				78FB9978208DDE62000F1448 /* TextureGLKViewFBTexture.m */,
+			);
+			path = openGL;
+			sourceTree = "<group>";
+		};
+		782D62B620D5FFBE0085FE26 /* Metal */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Metal;
 			sourceTree = "<group>";
 		};
 		7842DA5D20D3A519006B25D1 /* resource */ = {
@@ -960,7 +976,7 @@
 			path = libs;
 			sourceTree = "<group>";
 		};
-		78A21EFB209C092000918C6D /* opengl */ = {
+		78A21EFB209C092000918C6D /* render */ = {
 			isa = PBXGroup;
 			children = (
 				780448A420874CE200FAE1DF /* OpenGLContianerDelegate.h */,
@@ -971,7 +987,7 @@
 				78DB57EB1E83BFD100FBBD99 /* AAPLEAGLLayer.h */,
 				78DB57EC1E83BFD100FBBD99 /* AAPLEAGLLayer.m */,
 			);
-			path = opengl;
+			path = render;
 			sourceTree = "<group>";
 		};
 		78AE42631E82264500D84304 /* ViewController */ = {
@@ -1262,7 +1278,7 @@
 		78DB57EA1E83BFB800FBBD99 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				78A21EFB209C092000918C6D /* opengl */,
+				78A21EFB209C092000918C6D /* render */,
 			);
 			path = Views;
 			sourceTree = "<group>";
