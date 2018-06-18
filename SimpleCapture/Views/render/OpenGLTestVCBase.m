@@ -12,6 +12,7 @@
 #import "TextureGLKView.h"
 #import "TextureGLKViewFBTexture.h"
 #import "TextureEAGLLayerFBTexture.h"
+#import "MetalRenderLayer.h"
 
 @interface OpenGLTestVCBase ()
 @property(nonatomic, strong) id<OpenGLContianerDelegate> openglDelegate;
@@ -73,6 +74,12 @@
             self.openglDelegate = textureLayer;
         }
             break;
+        case 4:
+        {
+            MetalRenderLayer *metal = [MetalRenderLayer new];
+            [self.view.layer addSublayer:metal];
+            self.openglDelegate = metal;
+        }
 
         
         default:

@@ -29,7 +29,8 @@
     _tableData = @[@"glkview fb 渲染到纹理",
                    @"glkview 直接渲染",
                    @"CAEAGLLayer 渲染到renderbuffer",
-                   @"CAEAGLLayer 渲染到纹理"];
+                   @"CAEAGLLayer 渲染到纹理",
+                   @"metalrenderlayer"];
 }
 
 - (void)didReceiveMemoryWarning {

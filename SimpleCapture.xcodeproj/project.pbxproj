@@ -18,6 +18,8 @@
 		781A882820BD46DD00E8A51F /* test.mov in Resources */ = {isa = PBXBuildFile; fileRef = 781A882720BD46DD00E8A51F /* test.mov */; };
 		781A882B20BD51EC00E8A51F /* AACEncoder.m in Sources */ = {isa = PBXBuildFile; fileRef = 781A882A20BD51EC00E8A51F /* AACEncoder.m */; };
 		781A883620BD549E00E8A51F /* AudioCaptureSampleBuffer.m in Sources */ = {isa = PBXBuildFile; fileRef = 781A883420BD549D00E8A51F /* AudioCaptureSampleBuffer.m */; };
+		782D62BA20D746B20085FE26 /* MetalRenderLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 782D62B920D746B20085FE26 /* MetalRenderLayer.m */; };
+		782D62BC20D778F20085FE26 /* Shaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = 782D62BB20D778F20085FE26 /* Shaders.metal */; };
 		7837825F1E8E34FE00DED271 /* YUVFileTransform.mm in Sources */ = {isa = PBXBuildFile; fileRef = 7837825E1E8E34FE00DED271 /* YUVFileTransform.mm */; };
 		783782651E8E531100DED271 /* H264VideoDecoder.m in Sources */ = {isa = PBXBuildFile; fileRef = 783782641E8E531100DED271 /* H264VideoDecoder.m */; };
 		783782671E8E654E00DED271 /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 783782661E8E654E00DED271 /* libc++.tbd */; };
@@ -129,6 +131,9 @@
 		781A882A20BD51EC00E8A51F /* AACEncoder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AACEncoder.m; sourceTree = "<group>"; };
 		781A883420BD549D00E8A51F /* AudioCaptureSampleBuffer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AudioCaptureSampleBuffer.m; sourceTree = "<group>"; };
 		781A883520BD549E00E8A51F /* AudioCaptureSampleBuffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AudioCaptureSampleBuffer.h; sourceTree = "<group>"; };
+		782D62B820D746B20085FE26 /* MetalRenderLayer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MetalRenderLayer.h; sourceTree = "<group>"; };
+		782D62B920D746B20085FE26 /* MetalRenderLayer.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MetalRenderLayer.m; sourceTree = "<group>"; };
+		782D62BB20D778F20085FE26 /* Shaders.metal */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.metal; path = Shaders.metal; sourceTree = "<group>"; };
 		7837825D1E8E34FE00DED271 /* YUVFileTransform.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YUVFileTransform.h; sourceTree = "<group>"; };
 		7837825E1E8E34FE00DED271 /* YUVFileTransform.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = YUVFileTransform.mm; sourceTree = "<group>"; };
 		783782631E8E531100DED271 /* H264VideoDecoder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = H264VideoDecoder.h; sourceTree = "<group>"; };
@@ -639,6 +644,9 @@
 		782D62B620D5FFBE0085FE26 /* Metal */ = {
 			isa = PBXGroup;
 			children = (
+				782D62BB20D778F20085FE26 /* Shaders.metal */,
+				782D62B820D746B20085FE26 /* MetalRenderLayer.h */,
+				782D62B920D746B20085FE26 /* MetalRenderLayer.m */,
 			);
 			path = Metal;
 			sourceTree = "<group>";
@@ -1540,6 +1548,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				DA71E0851C56276100080493 /* BitrateMonitor.cpp in Sources */,
+				782D62BA20D746B20085FE26 /* MetalRenderLayer.m in Sources */,
 				7888278D1EC45AE2002090DA /* FFMPEGDecodeFilter.mm in Sources */,
 				7804489D2086F5E800FAE1DF /* MGLCommon.m in Sources */,
 				78AE426A1E82271600D84304 /* VideoPlayerVC.m in Sources */,
@@ -1560,6 +1569,7 @@
 				78A21EFA209C069700918C6D /* OpenglTableViewController.m in Sources */,
 				78DB57ED1E83BFD100FBBD99 /* AAPLEAGLLayer.m in Sources */,
 				78D62EFD1E85045600D8629C /* VideoPlayerVC+EvtRe.m in Sources */,
+				782D62BC20D778F20085FE26 /* Shaders.metal in Sources */,
 				7856510320984B3C00382E80 /* AACPlayer.m in Sources */,
 				787F33C41FA8AA38009A5C5F /* KxMovieGLView.m in Sources */,
 				DA0E7AFC1C128164003A8C25 /* AppDelegate.m in Sources */,
