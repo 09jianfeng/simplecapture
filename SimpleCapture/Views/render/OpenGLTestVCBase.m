@@ -11,7 +11,7 @@
 #import "MultiTextureEAGLLayer.h"
 #import "TextureGLKView.h"
 #import "TextureGLKViewFBTexture.h"
-#import "MultiTextureEAGLLayerFBTexture.h"
+#import "TextureEAGLLayerFBTexture.h"
 #import "MetalRenderLayer.h"
 #import "AAPLEAGLLayer.h"
 
@@ -70,7 +70,7 @@
             
         case 3:
         {
-            MultiTextureEAGLLayerFBTexture *textureLayer = [MultiTextureEAGLLayerFBTexture new];
+            TextureEAGLLayerFBTexture *textureLayer = [TextureEAGLLayerFBTexture new];
             [self.view.layer addSublayer:textureLayer];
             self.openglDelegate = textureLayer;
         }

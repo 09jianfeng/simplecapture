@@ -6,7 +6,7 @@
 //  Copyright © 2018年 duowan. All rights reserved.
 //
 
-#import "MultiTextureEAGLLayerFBTexture.h"
+#import "TextureEAGLLayerFBTexture.h"
 #import <UIKit/UIKit.h>
 #include <OpenGLES/EAGL.h>
 #include <OpenGLES/ES2/gl.h>
@@ -83,7 +83,7 @@ static NSString *const ScreenTextureRGBFS = SHADER_STRING
 
 
 
-@implementation MultiTextureEAGLLayerFBTexture{
+@implementation TextureEAGLLayerFBTexture{
     GLuint _textureIndex;
     GLuint _positionIndex;
     GLuint _colorIndex;
