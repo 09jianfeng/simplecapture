@@ -1,5 +1,5 @@
 //
-//  TextureEAGLLayer.h
+//  MultiTextureEAGLLayer.h
 //  SimpleCapture
 //
 //  Created by JFChen on 2018/4/18.
@@ -9,6 +9,6 @@
 #import <QuartzCore/QuartzCore.h>
 #import "OpenGLContianerDelegate.h"
 
-@interface TextureEAGLLayer : CAEAGLLayer<OpenGLContianerDelegate>
+@interface MultiTextureEAGLLayer : CAEAGLLayer<OpenGLContianerDelegate>
 
 @end

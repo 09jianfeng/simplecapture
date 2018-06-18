@@ -8,11 +8,12 @@
 
 #import "OpenGLTestVCBase.h"
 #import "OpenGLContianerDelegate.h"
-#import "TextureEAGLLayer.h"
+#import "MultiTextureEAGLLayer.h"
 #import "TextureGLKView.h"
 #import "TextureGLKViewFBTexture.h"
-#import "TextureEAGLLayerFBTexture.h"
+#import "MultiTextureEAGLLayerFBTexture.h"
 #import "MetalRenderLayer.h"
+#import "AAPLEAGLLayer.h"
 
 @interface OpenGLTestVCBase ()
 @property(nonatomic, strong) id<OpenGLContianerDelegate> openglDelegate;
@@ -61,7 +62,7 @@
         
         case 2:
         {
-            TextureEAGLLayer *textureLayer = [TextureEAGLLayer new];
+            MultiTextureEAGLLayer *textureLayer = [MultiTextureEAGLLayer new];
             [self.view.layer addSublayer:textureLayer];
             self.openglDelegate = textureLayer;
         }
@@ -69,7 +70,7 @@
             
         case 3:
         {
-            TextureEAGLLayerFBTexture *textureLayer = [TextureEAGLLayerFBTexture new];
+            MultiTextureEAGLLayerFBTexture *textureLayer = [MultiTextureEAGLLayerFBTexture new];
             [self.view.layer addSublayer:textureLayer];
             self.openglDelegate = textureLayer;
         }
@@ -80,7 +81,13 @@
             [self.view.layer addSublayer:metal];
             self.openglDelegate = metal;
         }
-
+        	break;
+        case 5:{
+            AAPLEAGLLayer *layer = [[AAPLEAGLLayer alloc] initWithFrame:CGRectZero];
+            [self.view.layer addSublayer:layer];
+            self.openglDelegate = layer;
+        }
+        	break;
         
         default:
         break;

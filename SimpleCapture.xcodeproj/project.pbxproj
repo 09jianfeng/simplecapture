@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		780448972086E60E00FAE1DF /* TextureEAGLLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 780448962086E60E00FAE1DF /* TextureEAGLLayer.m */; };
+		780448972086E60E00FAE1DF /* MultiTextureEAGLLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 780448962086E60E00FAE1DF /* MultiTextureEAGLLayer.m */; };
 		7804489A2086F44C00FAE1DF /* container.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 780448992086F44B00FAE1DF /* container.jpg */; };
 		7804489D2086F5E800FAE1DF /* MGLCommon.m in Sources */ = {isa = PBXBuildFile; fileRef = 7804489B2086F5E800FAE1DF /* MGLCommon.m */; };
 		780448A0208749C300FAE1DF /* OpenGLTestVCBase.m in Sources */ = {isa = PBXBuildFile; fileRef = 7804489F208749C300FAE1DF /* OpenGLTestVCBase.m */; };
@@ -111,8 +111,8 @@
 /* Begin PBXFileReference section */
 		1A9E6D278A1582539FFAB121 /* Pods-SimpleCapture.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SimpleCapture.release.xcconfig"; path = "Pods/Target Support Files/Pods-SimpleCapture/Pods-SimpleCapture.release.xcconfig"; sourceTree = "<group>"; };
 		3D2B17E96E0507E76F3E857C /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		780448952086E60E00FAE1DF /* TextureEAGLLayer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TextureEAGLLayer.h; sourceTree = "<group>"; };
-		780448962086E60E00FAE1DF /* TextureEAGLLayer.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TextureEAGLLayer.m; sourceTree = "<group>"; };
+		780448952086E60E00FAE1DF /* MultiTextureEAGLLayer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MultiTextureEAGLLayer.h; sourceTree = "<group>"; };
+		780448962086E60E00FAE1DF /* MultiTextureEAGLLayer.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MultiTextureEAGLLayer.m; sourceTree = "<group>"; };
 		780448992086F44B00FAE1DF /* container.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = container.jpg; sourceTree = "<group>"; };
 		7804489B2086F5E800FAE1DF /* MGLCommon.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGLCommon.m; sourceTree = "<group>"; };
 		7804489C2086F5E800FAE1DF /* MGLCommon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGLCommon.h; sourceTree = "<group>"; };
@@ -631,12 +631,14 @@
 			children = (
 				78A21EFD209C0A0600918C6D /* TextureEAGLLayerFBTexture.h */,
 				78A21EFE209C0A0600918C6D /* TextureEAGLLayerFBTexture.m */,
-				780448952086E60E00FAE1DF /* TextureEAGLLayer.h */,
-				780448962086E60E00FAE1DF /* TextureEAGLLayer.m */,
+				780448952086E60E00FAE1DF /* MultiTextureEAGLLayer.h */,
+				780448962086E60E00FAE1DF /* MultiTextureEAGLLayer.m */,
 				780448A8208833DB00FAE1DF /* TextureGLKView.h */,
 				780448A9208833DC00FAE1DF /* TextureGLKView.m */,
 				78FB9979208DDE62000F1448 /* TextureGLKViewFBTexture.h */,
 				78FB9978208DDE62000F1448 /* TextureGLKViewFBTexture.m */,
+				78DB57EB1E83BFD100FBBD99 /* AAPLEAGLLayer.h */,
+				78DB57EC1E83BFD100FBBD99 /* AAPLEAGLLayer.m */,
 			);
 			path = openGL;
 			sourceTree = "<group>";
@@ -992,8 +994,6 @@
 				7804489F208749C300FAE1DF /* OpenGLTestVCBase.m */,
 				780448912086E1E000FAE1DF /* Texture */,
 				78DB0C7D2064DD6D005F87DA /* Camera */,
-				78DB57EB1E83BFD100FBBD99 /* AAPLEAGLLayer.h */,
-				78DB57EC1E83BFD100FBBD99 /* AAPLEAGLLayer.m */,
 			);
 			path = render;
 			sourceTree = "<group>";
@@ -1587,7 +1587,7 @@
 				78FB997A208DDE62000F1448 /* TextureGLKViewFBTexture.m in Sources */,
 				DA3832881C6DC2E50093BFC1 /* VideoViewController.m in Sources */,
 				787F33C31FA8AA38009A5C5F /* KxMovieDecoder.m in Sources */,
-				780448972086E60E00FAE1DF /* TextureEAGLLayer.m in Sources */,
+				780448972086E60E00FAE1DF /* MultiTextureEAGLLayer.m in Sources */,
 				DA0E7AF91C128164003A8C25 /* main.m in Sources */,
 				780448A0208749C300FAE1DF /* OpenGLTestVCBase.m in Sources */,
 			);

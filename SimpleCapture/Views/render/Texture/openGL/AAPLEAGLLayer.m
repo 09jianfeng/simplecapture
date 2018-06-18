@@ -19,6 +19,7 @@
 #include <OpenGLES/ES2/glext.h>
 #include <time.h>
 #include <sys/time.h>
+#include "MGLCommon.h"
 
 // #import "log.h"
 
@@ -108,6 +109,7 @@ static const GLfloat kColorConversion709FullRange[] = {
     BOOL _justInBackground;
     BOOL _justRestored;
     uint32_t _timeRestoreFromBackground;
+    CADisplayLink *_displayLink;
 }
 @property GLuint program;
 
@@ -215,6 +217,10 @@ static VideoFillModeType  fillMode = FillModePreserveAspectRatio;
         _preferredConversion = kColorConversion601;
         
         [self setupGL];
+        
+        _displayLink = [CADisplayLink displayLinkWithTarget:self selector:@selector(displayingLinkDraw)];
+        _displayLink.frameInterval = 2.0;
+        [_displayLink addToRunLoop:[NSRunLoop currentRunLoop] forMode:NSDefaultRunLoopMode];
     }
     
     return self;
@@ -765,6 +771,35 @@ const GLchar *shader_vsh = (const GLchar*)"attribute vec4 position;"
     if(_context) {
         _context = nil;
     }
+}
+
+- (void)displayingLinkDraw{
+    [self openGLRender];
+}
+
+#pragma mark - openglDelegate
+- (void)setContianerFrame:(CGRect)rect{
+    [self setFrame:rect];
+}
+
+- (void)openGLRender{
+    if(_pixelBuffer){
+        CVPixelBufferRef pixelbuffer = CVPixelBufferRetain(_pixelBuffer);
+        [self setPixelBuffer:_pixelBuffer];
+        CVPixelBufferRelease(pixelbuffer);
+        return;
+    }
+    
+    NSString *imageName = [NSString stringWithFormat:@"container.jpg"];
+    UIImage *image = [UIImage imageNamed:imageName];
+    CVPixelBufferRef pixelbuffer = imageToYUVPixelBuffer(image);
+    [self setPixelBuffer:pixelbuffer];
+    CVPixelBufferRelease(pixelbuffer);
+}
+
+- (void)removeFromSuperContainer{
+    [_displayLink invalidate];
+    [self removeFromSuperlayer];
 }
 
 @end

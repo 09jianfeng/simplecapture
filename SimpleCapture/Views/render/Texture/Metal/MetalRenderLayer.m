@@ -64,6 +64,8 @@ typedef enum{
     BOOL _isInBackground;
     
     BOOL _isLastCommandBufferFinish;
+    
+    CADisplayLink *_displayLink;
 }
 
 - (void)dealloc{
@@ -105,6 +107,10 @@ typedef enum{
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(layerBecomeActiveFromBackground:) name:UIApplicationDidBecomeActiveNotification object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(layerWillResignActiveToBackground:) name:UIApplicationWillResignActiveNotification object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(layerDidEnterBackground:) name:UIApplicationDidEnterBackgroundNotification object:nil];
+        
+        _displayLink = [CADisplayLink displayLinkWithTarget:self selector:@selector(displayingLinkDraw)];
+        _displayLink.frameInterval = 2.0;
+        [_displayLink addToRunLoop:[NSRunLoop currentRunLoop] forMode:NSDefaultRunLoopMode];
     }
     return self;
 }
@@ -657,12 +663,23 @@ typedef enum{
 }
 
 
+- (void)displayingLinkDraw{
+    [self openGLRender];
+}
+
 #pragma mark - openglDelegate
 - (void)setContianerFrame:(CGRect)rect{
     [self setFrame:rect];
 }
 
 - (void)openGLRender{
+    if(_pixelBuffer){
+        CVPixelBufferRef pixelbuffer = CVPixelBufferRetain(_pixelBuffer);
+        [self setPixelBuffer:_pixelBuffer];
+        CVPixelBufferRelease(pixelbuffer);
+        return;
+    }
+    
     NSString *imageName = [NSString stringWithFormat:@"container.jpg"];
     UIImage *image = [UIImage imageNamed:imageName];
     CVPixelBufferRef pixelbuffer = imageToYUVPixelBuffer(image);
@@ -671,6 +688,7 @@ typedef enum{
 }
 
 - (void)removeFromSuperContainer{
+    [_displayLink invalidate];
     [self removeFromSuperlayer];
 }
 

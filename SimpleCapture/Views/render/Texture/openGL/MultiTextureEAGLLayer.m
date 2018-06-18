@@ -1,12 +1,12 @@
 //
-//  TextureEAGLLayer.m
+//  MultiTextureEAGLLayer.m
 //  SimpleCapture
 //
 //  Created by JFChen on 2018/4/18.
 //  Copyright © 2018年 duowan. All rights reserved.
 //
 
-#import "TextureEAGLLayer.h"
+#import "MultiTextureEAGLLayer.h"
 #import <UIKit/UIKit.h>
 #include <OpenGLES/EAGL.h>
 #include <OpenGLES/ES2/gl.h>
@@ -94,7 +94,7 @@ static NSString *const TextureRGBFS = SHADER_STRING
 
 
 
-@implementation TextureEAGLLayer{
+@implementation MultiTextureEAGLLayer{
     GLuint _textureIndex;
     GLuint _positionIndex;
     GLuint _colorIndex;
@@ -295,7 +295,7 @@ static NSString *const TextureRGBFS = SHADER_STRING
     glDeleteBuffers(1, &VBO);
     glDeleteBuffers(1, &EBO);
     
-    NSLog(@"TextureEaGlLayer dealloc");
+    NSLog(@"MultiTextureEAGLLayer dealloc");
 }
 
 #pragma mark - openglcontainerDelegate

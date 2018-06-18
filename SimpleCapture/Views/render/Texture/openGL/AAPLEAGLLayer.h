@@ -11,6 +11,7 @@
 //@import QuartzCore;
 #include <QuartzCore/QuartzCore.h>
 #include <CoreVideo/CoreVideo.h>
+#include "OpenGLContianerDelegate.h"
 
 typedef enum
 {
@@ -19,7 +20,7 @@ typedef enum
     FillModePreserveAspectRatioAndFill ,    // Maintains the aspect ratio of the source image, zooming in on its center to fill the view--->Outer Fit(crop first and then zoom)
 } VideoFillModeType;
 
-@interface AAPLEAGLLayer : CAEAGLLayer
+@interface AAPLEAGLLayer : CAEAGLLayer<OpenGLContianerDelegate>
 
 @property CVPixelBufferRef pixelBuffer;
 
