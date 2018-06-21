@@ -14,6 +14,7 @@
 #import "TextureEAGLLayerFBTexture.h"
 #import "MetalRenderLayer.h"
 #import "AAPLEAGLLayer.h"
+#import "MultiRenderMetalLayer.h"
 
 @interface OpenGLTestVCBase ()
 @property(nonatomic, strong) id<OpenGLContianerDelegate> openglDelegate;
@@ -87,6 +88,12 @@
             [self.view.layer addSublayer:layer];
             self.openglDelegate = layer;
         }
+        case 6:{
+            MultiRenderMetalLayer *layer = [[MultiRenderMetalLayer alloc] initWithFrame:self.view.bounds Capacity:9];
+            [self.view.layer addSublayer:layer];
+            self.openglDelegate = layer;
+        }
+
         	break;
         
         default:

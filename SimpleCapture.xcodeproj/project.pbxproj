@@ -20,6 +20,7 @@
 		781A883620BD549E00E8A51F /* AudioCaptureSampleBuffer.m in Sources */ = {isa = PBXBuildFile; fileRef = 781A883420BD549D00E8A51F /* AudioCaptureSampleBuffer.m */; };
 		782D62BA20D746B20085FE26 /* MetalRenderLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 782D62B920D746B20085FE26 /* MetalRenderLayer.m */; };
 		782D62BC20D778F20085FE26 /* Shaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = 782D62BB20D778F20085FE26 /* Shaders.metal */; };
+		782D63E220DB52690085FE26 /* MultiRenderMetalLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 782D63E020DB52680085FE26 /* MultiRenderMetalLayer.m */; };
 		7837825F1E8E34FE00DED271 /* YUVFileTransform.mm in Sources */ = {isa = PBXBuildFile; fileRef = 7837825E1E8E34FE00DED271 /* YUVFileTransform.mm */; };
 		783782651E8E531100DED271 /* H264VideoDecoder.m in Sources */ = {isa = PBXBuildFile; fileRef = 783782641E8E531100DED271 /* H264VideoDecoder.m */; };
 		783782671E8E654E00DED271 /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 783782661E8E654E00DED271 /* libc++.tbd */; };
@@ -134,6 +135,8 @@
 		782D62B820D746B20085FE26 /* MetalRenderLayer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MetalRenderLayer.h; sourceTree = "<group>"; };
 		782D62B920D746B20085FE26 /* MetalRenderLayer.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MetalRenderLayer.m; sourceTree = "<group>"; };
 		782D62BB20D778F20085FE26 /* Shaders.metal */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.metal; path = Shaders.metal; sourceTree = "<group>"; };
+		782D63E020DB52680085FE26 /* MultiRenderMetalLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MultiRenderMetalLayer.m; path = ../../../../../../../../../../Desktop/MultiRenderMetalLayer.m; sourceTree = "<group>"; };
+		782D63E120DB52690085FE26 /* MultiRenderMetalLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MultiRenderMetalLayer.h; path = ../../../../../../../../../../Desktop/MultiRenderMetalLayer.h; sourceTree = "<group>"; };
 		7837825D1E8E34FE00DED271 /* YUVFileTransform.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YUVFileTransform.h; sourceTree = "<group>"; };
 		7837825E1E8E34FE00DED271 /* YUVFileTransform.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = YUVFileTransform.mm; sourceTree = "<group>"; };
 		783782631E8E531100DED271 /* H264VideoDecoder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = H264VideoDecoder.h; sourceTree = "<group>"; };
@@ -646,6 +649,8 @@
 		782D62B620D5FFBE0085FE26 /* Metal */ = {
 			isa = PBXGroup;
 			children = (
+				782D63E120DB52690085FE26 /* MultiRenderMetalLayer.h */,
+				782D63E020DB52680085FE26 /* MultiRenderMetalLayer.m */,
 				782D62BB20D778F20085FE26 /* Shaders.metal */,
 				782D62B820D746B20085FE26 /* MetalRenderLayer.h */,
 				782D62B920D746B20085FE26 /* MetalRenderLayer.m */,
@@ -1582,6 +1587,7 @@
 				789914AA20B7A93100F0E665 /* PCMPlayer.m in Sources */,
 				787F33C11FA8AA38009A5C5F /* KxAudioManager.m in Sources */,
 				78EE3B861E8A371D00B66CE1 /* FileChooseVC.m in Sources */,
+				782D63E220DB52690085FE26 /* MultiRenderMetalLayer.m in Sources */,
 				787F33C81FA8AAF1009A5C5F /* KXMovieController.m in Sources */,
 				DAA20BF61C5263FA008DB5AA /* VideoEncoder.m in Sources */,
 				78FB997A208DDE62000F1448 /* TextureGLKViewFBTexture.m in Sources */,

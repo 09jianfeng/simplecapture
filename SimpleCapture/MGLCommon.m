@@ -64,6 +64,55 @@ void mglDestroyImageData(MImageData* imageData) {
     imageData = NULL;
 }
 
+//nv12 rotate 90
+typedef struct NV12Frame{
+    int width;
+    int height;
+    int linesize[3];
+    uint8_t *data[3];
+}NV12Frame;
+
+void NV12_frame_rotate_90(CVPixelBufferRef source, CVPixelBufferRef target)
+{
+    NV12Frame* des;
+    NV12Frame *src;
+    
+    int n = 0;
+    int hw = src->width>>1;
+    int hh = src->height>>1;
+    int size = src->width * src->height;
+    int hsize = size>>2;
+    
+    int pos = 0;
+    //copy y
+    for(int j = 0; j < src->width;j++)
+    {
+        pos = size;
+        for(int i = src->height - 1; i >= 0; i--)
+        {   pos-=src->width;
+            des->data[0][n++] = src->data[0][pos + j];
+        }
+    }
+    //copy uv
+    n = 0;
+    for(int j = 0;j < hw;j++)
+    {   pos= hsize;
+        for(int i = hh - 1;i >= 0;i--)
+        {
+            pos-=hw;
+            des->data[1][n] = src->data[1][ pos + j];
+            des->data[2][n] = src->data[2][ pos + j];
+            n++;
+        }
+    }
+    
+    des->linesize[0] = src->height;
+    des->linesize[1] = src->height>>1;
+    des->linesize[2] = src->height>>1;
+    des->height = src->width;
+    des->width = src->height;
+}
+
 /*
  * UIImage to yuv420f nv12格式。
  */

@@ -31,7 +31,8 @@
                    @"CAEAGLLayer 多重纹理",
                    @"CAEAGLLayer 渲染到纹理",
                    @"metalrenderlayer",
-                   @"AAPLEAGLlayer"];
+                   @"AAPLEAGLlayer",
+                   @"MultiRenderMetalLayer"];
 }
 
 - (void)didReceiveMemoryWarning {
