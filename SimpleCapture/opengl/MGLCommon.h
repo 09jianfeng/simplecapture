@@ -128,7 +128,7 @@ static inline const char * GetGLErrorString(GLenum error) {
 {                                                           \
     GLenum err = glGetError();                              \
     while (err != GL_NO_ERROR) {                            \
-        LogInfo(@"GLError %s set in File:%s Line:%d\n",       \
+        NSLog(@"GLError %s set in File:%s Line:%d\n",       \
         GetGLErrorString(err), __FILE__, __LINE__);         \
         err = glGetError();                                 \
     }                                                       \
