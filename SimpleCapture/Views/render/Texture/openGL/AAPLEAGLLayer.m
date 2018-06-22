@@ -190,6 +190,10 @@ static VideoFillModeType  fillMode = FillModePreserveAspectRatio;
     }
 }
 
+- (instancetype)init{
+    return [self initWithFrame:[UIScreen mainScreen].bounds];
+}
+
 - (instancetype)initWithFrame:(CGRect)frame
 {
     self = [super init];

@@ -1,16 +1,17 @@
 //
-//  MultiTextureEAGLLayer.m
+//  MGLFBEAGLayer.m
 //  SimpleCapture
 //
-//  Created by JFChen on 2018/4/18.
+//  Created by JFChen on 2018/6/22.
 //  Copyright © 2018年 duowan. All rights reserved.
 //
 
-#import "TextureEAGLLayerFBTexture.h"
+#import "MGLFBEAGLayer.h"
+
 #import <UIKit/UIKit.h>
 #include <OpenGLES/EAGL.h>
-#include <OpenGLES/ES2/gl.h>
-#include <OpenGLES/ES2/glext.h>
+#include <OpenGLES/ES3/gl.h>
+#include <OpenGLES/ES3/glext.h>
 #import "GLProgram.h"
 #import "MGLCommon.h"
 
@@ -81,9 +82,7 @@ static NSString *const ScreenTextureRGBFS = SHADER_STRING
  }
  );
 
-
-
-@implementation TextureEAGLLayerFBTexture{
+@implementation MGLFBEAGLayer{
     GLuint _textureIndex;
     GLuint _positionIndex;
     GLuint _colorIndex;
@@ -99,27 +98,33 @@ static NSString *const ScreenTextureRGBFS = SHADER_STRING
     GLint _backingHeight;
     
     unsigned int VBO, VAO, EBO;
-    
-    CADisplayLink *_displayLink;
-    dispatch_queue_t _queue;
 }
 
 - (instancetype)init{
     self = [super init];
     if(self){
-        _context = [[EAGLContext alloc] initWithAPI:kEAGLRenderingAPIOpenGLES2];
+        _context = [[EAGLContext alloc] initWithAPI:kEAGLRenderingAPIOpenGLES3];
+        
         CGFloat scale = [[UIScreen mainScreen] scale];
         self.contentsScale = scale;
         self.opaque = TRUE;
         self.drawableProperties = @{ kEAGLDrawablePropertyRetainedBacking :[NSNumber numberWithBool:YES]};
-        
-        _displayLink = [CADisplayLink displayLinkWithTarget:self selector:@selector(displayingLinkDraw)];
-        _displayLink.frameInterval = 2.0;
-        [_displayLink addToRunLoop:[NSRunLoop currentRunLoop] forMode:NSDefaultRunLoopMode];
-        
-        _queue = dispatch_queue_create("Render Queue", DISPATCH_QUEUE_SERIAL);
     }
     return self;
+}
+
+- (void)setUpGLWithFrame:(CGRect)rect{
+    [EAGLContext setCurrentContext:_context];
+    
+    [self buildProgram];
+    [self initBuffer];
+}
+
+- (void)setupGL{
+    [EAGLContext setCurrentContext:_context];
+    
+    [self buildProgram];
+    [self initBuffer];
 }
 
 - (void)buildProgram{
@@ -144,8 +149,7 @@ static NSString *const ScreenTextureRGBFS = SHADER_STRING
     _colorIndex = [_program attributeIndex:@"acolor"];
 }
 
-- (void)initGL{
-    
+- (void)initBuffer{
     // general framebuffer
     glGenFramebuffers(1, &_framebufferID);
     glBindFramebuffer(GL_FRAMEBUFFER, _framebufferID);
@@ -224,45 +228,24 @@ static NSString *const ScreenTextureRGBFS = SHADER_STRING
     mglDestroyImageData(imageData);
 }
 
-- (void)displayingLinkDraw{
-    
-    dispatch_async(_queue, ^{
-        [EAGLContext setCurrentContext:_context];
-        
-        glBindFramebuffer(GL_FRAMEBUFFER, _framebufferID);
-        glViewport(0,0,_backingWidth,_backingHeight);
-        
-        // render
-        // ------
-        glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
-        glClear(GL_COLOR_BUFFER_BIT);
-        
-        // render container
-        [_program use];
-        glBindVertexArrayOES(VAO);
-        glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
-        
-        glBindRenderbuffer(GL_RENDERBUFFER, _renderBufferID);
-        [_context presentRenderbuffer:GL_RENDERER];
-    });
-}
-
-
-- (void)setUpGLWithFrame:(CGRect)rect{
+- (void)drawOpenGL{
     [EAGLContext setCurrentContext:_context];
     
-    [self buildProgram];
-    [self initGL];
-}
-
-- (void)dealloc{
-    glDeleteFramebuffers(1, &_framebufferID);
-    glDeleteRenderbuffers(1, &_renderBufferID);
-    glDeleteBuffers(1, &VAO);
-    glDeleteBuffers(1, &VBO);
-    glDeleteBuffers(1, &EBO);
+    glBindFramebuffer(GL_FRAMEBUFFER, _framebufferID);
+    glViewport(0,0,_backingWidth,_backingHeight);
     
-    NSLog(@"MultiTextureEAGLLayer dealloc");
+    // render
+    // ------
+    glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
+    glClear(GL_COLOR_BUFFER_BIT);
+    
+    // render container
+    [_program use];
+    glBindVertexArrayOES(VAO);
+    glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+    
+    glBindRenderbuffer(GL_RENDERBUFFER, _renderBufferID);
+    [_context presentRenderbuffer:GL_RENDERER];
 }
 
 #pragma mark - openglcontainerDelegate
@@ -272,28 +255,11 @@ static NSString *const ScreenTextureRGBFS = SHADER_STRING
 
 - (void)openGLRender{
     [self setUpGLWithFrame:self.frame];
+    [self drawOpenGL];
 }
 
 - (void)removeFromSuperContainer{
     [self removeFromSuperlayer];
-    [_displayLink invalidate];
 }
 
 @end
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

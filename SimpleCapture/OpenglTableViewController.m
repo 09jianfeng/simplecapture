@@ -61,7 +61,16 @@
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
     OpenGLTestVCBase *openglVC = [OpenGLTestVCBase new];
-    [openglVC useOpenGLTestType:indexPath.row];
+    openglVC.classNames = @[@"TextureGLKViewFBTexture",
+                    @"TextureGLKView",
+                    @"MultiTextureEAGLLayer",
+                    @"TextureEAGLLayerFBTexture",
+                    @"MetalRenderLayer",
+                    @"AAPLEAGLLayer",
+                    @"MultiRenderMetalLayer",
+                    @"MGLFBEAGLayer",
+                    @""];
+    [openglVC useOpenGLTestType:(int)indexPath.row];
     [self.navigationController pushViewController:openglVC animated:NO];
 }
 

@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 
 @interface OpenGLTestVCBase : UIViewController
+@property (nonatomic, strong) NSArray *classNames;
 
 - (void)useOpenGLTestType:(int)type;
 

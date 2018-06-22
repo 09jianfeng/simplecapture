@@ -20,7 +20,8 @@
 @property(nonatomic, strong) id<OpenGLContianerDelegate> openglDelegate;
 @end
 
-@implementation OpenGLTestVCBase
+@implementation OpenGLTestVCBase{
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -45,60 +46,15 @@
 - (void)useOpenGLTestType:(int)type{
     [self.openglDelegate removeFromSuperContainer];
     
-    switch (type) {
-        case 0:{
-            TextureGLKViewFBTexture *textureView = [TextureGLKViewFBTexture new];
-            [self.view addSubview:textureView];
-            self.openglDelegate = textureView;
-
-        }
-        break;
-
-        case 1:{
-            TextureGLKView *textureView = [TextureGLKView new];
-            [self.view addSubview:textureView];
-            self.openglDelegate = textureView;
-        }
-        break;
-        
-        case 2:
-        {
-            MultiTextureEAGLLayer *textureLayer = [MultiTextureEAGLLayer new];
-            [self.view.layer addSublayer:textureLayer];
-            self.openglDelegate = textureLayer;
-        }
-        break;
-            
-        case 3:
-        {
-            TextureEAGLLayerFBTexture *textureLayer = [TextureEAGLLayerFBTexture new];
-            [self.view.layer addSublayer:textureLayer];
-            self.openglDelegate = textureLayer;
-        }
-            break;
-        case 4:
-        {
-            MetalRenderLayer *metal = [MetalRenderLayer new];
-            [self.view.layer addSublayer:metal];
-            self.openglDelegate = metal;
-        }
-        	break;
-        case 5:{
-            AAPLEAGLLayer *layer = [[AAPLEAGLLayer alloc] initWithFrame:CGRectZero];
-            [self.view.layer addSublayer:layer];
-            self.openglDelegate = layer;
-        }
-        case 6:{
-            MultiRenderMetalLayer *layer = [[MultiRenderMetalLayer alloc] initWithFrame:self.view.bounds Capacity:9];
-            [self.view.layer addSublayer:layer];
-            self.openglDelegate = layer;
-        }
-
-        	break;
-        
-        default:
-        break;
+    NSString *name = _classNames[type];
+    Class MineClass = NSClassFromString(name);
+    id<OpenGLContianerDelegate> object = [MineClass new];
+    if([object respondsToSelector:@selector(addSubview:)]){
+        [self.view addSubview:(UIView *)object];
+    }else{
+     [self.view.layer addSublayer:(CALayer *)object];
     }
+    self.openglDelegate = object;
 }
 
 - (void)dealloc{
