@@ -94,9 +94,9 @@ static NSString *const ScreenTextureRGBFS = SHADER_STRING
     GLuint VAO,VBO,EBO;
     GLuint texture0;
     
-    unsigned int shadowMapTextureId;
-    unsigned int shadowMapTextureIdLoc;
-    unsigned int shadowMapBufferId;
+    unsigned int offscreenTextureId;
+    unsigned int offscreenTextureIdLoc;
+    unsigned int offscreenBufferId;
     
     CADisplayLink *_displayLink;
 }
@@ -160,29 +160,29 @@ static NSString *const ScreenTextureRGBFS = SHADER_STRING
         GLint defaultFramebuffer = 0;
         int scale = [UIScreen mainScreen].scale;
         // use 1K by 1K texture for shadow map
-        unsigned int shadowMapTextureWidth = CGRectGetWidth(self.frame) * scale;
-        unsigned int  shadowMapTextureHeight = CGRectGetHeight(self.frame) * scale;
+        unsigned int offscreenTextureWidth = CGRectGetWidth(self.frame) * scale;
+        unsigned int  offscreenTextureHeight = CGRectGetHeight(self.frame) * scale;
         
-        glGenTextures ( 1, &shadowMapTextureId );
-        glBindTexture ( GL_TEXTURE_2D, shadowMapTextureId );
+        glGenTextures ( 1, &offscreenTextureId );
+        glBindTexture ( GL_TEXTURE_2D, offscreenTextureId );
         glTexParameteri ( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR );
         glTexParameteri ( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR );
-        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, shadowMapTextureWidth, shadowMapTextureHeight, 0, GL_RGB, GL_UNSIGNED_BYTE, NULL);
+        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, offscreenTextureWidth, offscreenTextureHeight, 0, GL_RGB, GL_UNSIGNED_BYTE, NULL);
         
         glBindTexture ( GL_TEXTURE_2D, 0 );
         
         glGetIntegerv ( GL_FRAMEBUFFER_BINDING, &defaultFramebuffer );
         // setup fbo
-        glGenFramebuffers ( 1, &shadowMapBufferId );
-        glBindFramebuffer ( GL_FRAMEBUFFER, shadowMapBufferId );
+        glGenFramebuffers ( 1, &offscreenBufferId );
+        glBindFramebuffer ( GL_FRAMEBUFFER, offscreenBufferId );
         
-        glFramebufferTexture2D ( GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, shadowMapTextureId, 0 );
-        glBindTexture ( GL_TEXTURE_2D, shadowMapTextureId );
+        glFramebufferTexture2D ( GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, offscreenTextureId, 0 );
+        glBindTexture ( GL_TEXTURE_2D, offscreenTextureId );
         
         GLuint depthRenderbuffer;
         glGenRenderbuffers(1, &depthRenderbuffer);
         glBindRenderbuffer(GL_RENDERBUFFER, depthRenderbuffer);
-        glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT16, shadowMapTextureWidth, shadowMapTextureHeight);
+        glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT16, offscreenTextureWidth, offscreenTextureHeight);
         glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, depthRenderbuffer);
         
         if ( GL_FRAMEBUFFER_COMPLETE != glCheckFramebufferStatus ( GL_FRAMEBUFFER ) )
@@ -266,7 +266,7 @@ static NSString *const ScreenTextureRGBFS = SHADER_STRING
     GLint defaultFramebuffer = 0;
     glGetIntegerv ( GL_FRAMEBUFFER_BINDING, &defaultFramebuffer );
     
-    glBindFramebuffer ( GL_FRAMEBUFFER, shadowMapBufferId );
+    glBindFramebuffer ( GL_FRAMEBUFFER, offscreenBufferId );
     GLint setFrameBufferid = 0;
     glGetIntegerv ( GL_FRAMEBUFFER_BINDING, &setFrameBufferid );
 //    glViewport ( 0, 0, (unsigned int)self.glkView.drawableWidth, (unsigned int)self.glkView.drawableHeight);
@@ -298,7 +298,7 @@ static NSString *const ScreenTextureRGBFS = SHADER_STRING
     [_screenProgram use];
     glBindVertexArrayOES(VAO);
     glActiveTexture ( GL_TEXTURE0 );
-    glBindTexture ( GL_TEXTURE_2D, shadowMapTextureId );
+    glBindTexture ( GL_TEXTURE_2D, offscreenTextureId );
     glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 }
 

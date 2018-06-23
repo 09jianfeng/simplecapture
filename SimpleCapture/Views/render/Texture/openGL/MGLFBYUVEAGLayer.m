@@ -1,13 +1,12 @@
 //
-//  MGLFBEAGLayer.m
+//  MGLFBYUVEAGLayer.m
 //  SimpleCapture
 //
-//  Created by JFChen on 2018/6/22.
+//  Created by JFChen on 2018/6/23.
 //  Copyright © 2018年 duowan. All rights reserved.
 //
 
-#import "MGLFBEAGLayer.h"
-
+#import "MGLFBYUVEAGLayer.h"
 #import <UIKit/UIKit.h>
 #include <OpenGLES/EAGL.h>
 #include <OpenGLES/ES2/gl.h>
@@ -46,10 +45,21 @@ static NSString *const TextureRGBFS = SHADER_STRING
  varying mediump vec3 outColor;
  
  //纹理采样器
- uniform sampler2D texture;
+ uniform sampler2D textureY;
+ uniform sampler2D textureUV;
+ 
+ uniform mat3 colorConversionMatrix;
+ uniform float rangeOffset;
+ 
  void main() {
      //从纹理texture中采样纹理
-     gl_FragColor = texture2D(texture, TexCoord) * vec4(outColor, 1.0);
+//     gl_FragColor = texture2D(textureY, TexCoord);
+     mediump vec3 yuv;
+     lowp vec3 rgb;
+     yuv.x = (texture2D(textureY, TexCoord).r - (rangeOffset/255.0));
+     yuv.yz = (texture2D(textureUV, TexCoord).rg - vec2(0.5, 0.5));
+     rgb = colorConversionMatrix * yuv;
+     gl_FragColor = vec4(rgb, 1);
  }
  );
 
@@ -59,13 +69,16 @@ static NSString *const ScreenTextureRGBVS = SHADER_STRING
 (
  attribute vec3 aPos;
  attribute vec2 aTextCoord;
+ attribute vec3 acolor;
  
  //纹理坐标，传给片段着色器的
  varying vec2 TexCoord;
+ varying vec3 outColor;
  
  void main() {
      gl_Position = vec4(aPos,1.0);
      TexCoord = aTextCoord.xy;
+     outColor = acolor.rgb;
  }
  );
 
@@ -75,6 +88,7 @@ static NSString *const ScreenTextureRGBFS = SHADER_STRING
  precision mediump float;
  //纹理坐标，从顶点着色器那里传过来
  varying mediump vec2 TexCoord;
+ varying mediump vec3 outColor;
  
  //纹理采样器
  uniform sampler2D texture;
@@ -84,7 +98,7 @@ static NSString *const ScreenTextureRGBFS = SHADER_STRING
  }
  );
 
-@implementation MGLFBEAGLayer{
+@implementation MGLFBYUVEAGLayer{
     GLuint _textureIndex;
     GLuint _positionIndex;
     GLuint _colorIndex;
@@ -92,7 +106,6 @@ static NSString *const ScreenTextureRGBFS = SHADER_STRING
     GLProgram *_program;
     GLProgram *_screenProgram;
     
-    unsigned int texture;
     EAGLContext   *_context;
     GLuint _framebufferID;
     GLuint _renderBufferID;
@@ -103,6 +116,10 @@ static NSString *const ScreenTextureRGBFS = SHADER_STRING
     unsigned int VBO, VAO, EBO;
     
     MGLFrameBuffer *_mglFB;
+    
+    CVOpenGLESTextureRef _lumaTexture;
+    CVOpenGLESTextureRef _chromaTexture;
+    CVOpenGLESTextureCacheRef _videoTextureCache;
 }
 
 - (instancetype)init{
@@ -116,6 +133,25 @@ static NSString *const ScreenTextureRGBFS = SHADER_STRING
         self.drawableProperties = @{ kEAGLDrawablePropertyRetainedBacking :[NSNumber numberWithBool:YES]};
     }
     return self;
+}
+
+
+// BT.709, which is the standard for HDTV.
+static const GLfloat kColorConversion709[] = {
+    1.164,  1.164, 1.164,
+    0.0, -0.213, 2.112,
+    1.793, -0.533,   0.0,
+};
+
+// if full range then rangeOffset is 0; 16.0 is video range
+static GLfloat rangeOffset = 16.0;
+- (void)setUniforAttribute{
+//    glUniform1f([_program uniformIndex:@"colorConversionMatrix"], 0);//rangeOffset
+    glUniform1f([_program uniformIndex:@"rangeOffset"], rangeOffset);
+    glUniformMatrix3fv([_program uniformIndex:@"colorConversionMatrix"], 1, GL_FALSE, kColorConversion709);
+    
+    glUniform1i([_program uniformIndex:@"textureY"], 0);
+    glUniform1i([_program uniformIndex:@"textureUV"], 1);
 }
 
 - (void)buildProgram{
@@ -145,7 +181,7 @@ static NSString *const ScreenTextureRGBFS = SHADER_STRING
         _screenProgram = nil;
         NSAssert(NO, @"Falied to link TextureRGBFS shaders");
     }
-
+    
 }
 
 - (void)initFramebuffer{
@@ -209,6 +245,71 @@ static NSString *const ScreenTextureRGBFS = SHADER_STRING
 }
 
 - (void)loadTexture{
+    // Create CVOpenGLESTextureCacheRef for optimal CVPixelBufferRef to GLES texture conversion.
+    if (!_videoTextureCache) {
+        CVReturn err = CVOpenGLESTextureCacheCreate(kCFAllocatorDefault, NULL, _context, NULL, &_videoTextureCache);
+        if (err != noErr) {
+            NSLog(@"Error at CVOpenGLESTextureCacheCreate %d", err);
+            return;
+        }
+    }
+    
+    // load image, create texture and generate mipmaps
+    UIImage *image = [UIImage imageNamed:@"container.jpg"];
+    CVPixelBufferRef nv12Pixelbuf = imageToYUVPixelBuffer(image);
+    
+    size_t width = CVPixelBufferGetWidthOfPlane(nv12Pixelbuf, 0);
+    size_t height = CVPixelBufferGetHeightOfPlane(nv12Pixelbuf, 0);
+    
+    glActiveTexture(GL_TEXTURE0);
+    // 这个函数是 opengl es 2的
+    CVReturn err = CVOpenGLESTextureCacheCreateTextureFromImage(kCFAllocatorDefault,
+                                                                _videoTextureCache,
+                                                                nv12Pixelbuf,
+                                                                NULL,
+                                                                GL_TEXTURE_2D,
+                                                                GL_RED_EXT,//GL_LUM
+                                                                (int)width,
+                                                                (int)height,
+                                                                GL_RED_EXT,//GL_RED_EXT
+                                                                GL_UNSIGNED_BYTE,
+                                                                0,
+                                                                &_lumaTexture);
+
+    if (err) {
+        NSLog(@"Error at CVOpenGLESTextureCacheCreateTextureFromImage %d", err);
+    }
+    glBindTexture(CVOpenGLESTextureGetTarget(_lumaTexture), CVOpenGLESTextureGetName(_lumaTexture));
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+    glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+    
+    
+    glActiveTexture(GL_TEXTURE1);
+    err = CVOpenGLESTextureCacheCreateTextureFromImage(kCFAllocatorDefault,
+                                                       _videoTextureCache,
+                                                       nv12Pixelbuf,
+                                                       NULL,
+                                                       GL_TEXTURE_2D,
+                                                       GL_RG_EXT,
+                                                       (int)width/2,
+                                                       (int)height/2,
+                                                       GL_RG_EXT,
+                                                       GL_UNSIGNED_BYTE,
+                                                       1,
+                                                       &_chromaTexture);
+    if (err) {
+        NSLog(@"Error at CVOpenGLESTextureCacheCreateTextureFromImage %d", err);
+    }
+    
+    glBindTexture(CVOpenGLESTextureGetTarget(_chromaTexture), CVOpenGLESTextureGetName(_chromaTexture));
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+    glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+    
+    /*
     // load and create a texture
     // -------------------------
     glActiveTexture(GL_TEXTURE0); //GL_TEXTURE0对应着片段着色器里面声明的uniform sampler2D采样器 默认是单位采样单位0. 如果要设置那个变量的采样单元 glUniform1i(glGetUniformLocation(ourShader.ID, "texture1"), 0);
@@ -221,13 +322,11 @@ static NSString *const ScreenTextureRGBFS = SHADER_STRING
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
     
-    // load image, create texture and generate mipmaps
-    UIImage *image = [UIImage imageNamed:@"container.jpg"];
     MImageData* imageData = mglImageDataFromUIImage(image, YES);
     glTexImage2D(GL_TEXTURE_2D, 0, imageData->format, (GLint)imageData->width, (GLint)imageData->height, 0, imageData->format, imageData->type, imageData->data);
     glGenerateMipmap(GL_TEXTURE_2D);
-    
     mglDestroyImageData(imageData);
+     */
 }
 
 - (void)drawOpenGL{
@@ -235,20 +334,28 @@ static NSString *const ScreenTextureRGBFS = SHADER_STRING
     
     // -- offscreen
     [_mglFB activateFramebuffer];
-
+    
     // render
     // ------
-    glClearColor(0.5f, 1.0f, 1.0f, 1.0f);
+    glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
     glClear(GL_COLOR_BUFFER_BIT);
-
+    
     // render container
     [_program use];
+    [self setUniforAttribute];
+    
     glBindVertexArrayOES(VAO);
     glActiveTexture(GL_TEXTURE0);
-    glBindTexture(GL_TEXTURE_2D, texture);
+    glBindTexture(CVOpenGLESTextureGetTarget(_lumaTexture), CVOpenGLESTextureGetName(_lumaTexture));
+    
+    glActiveTexture(GL_TEXTURE1);
+    glBindTexture(CVOpenGLESTextureGetTarget(_chromaTexture), CVOpenGLESTextureGetName(_chromaTexture));
     
     glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
     [_mglFB deactiveFramebuffer];
+    
+    
+    
     
     // -- on screen
     glBindFramebuffer(GL_FRAMEBUFFER, _framebufferID);
@@ -260,7 +367,7 @@ static NSString *const ScreenTextureRGBFS = SHADER_STRING
     glClear(GL_COLOR_BUFFER_BIT);
     
     // render container
-    [_program use];
+    [_screenProgram use];
     glBindVertexArrayOES(VAO);
     
     glActiveTexture(GL_TEXTURE0);
@@ -290,7 +397,7 @@ static NSString *const ScreenTextureRGBFS = SHADER_STRING
         int scale = [UIScreen mainScreen].scale;
         int width = CGRectGetWidth(self.bounds) * scale;
         int heigh = CGRectGetHeight(self.bounds) * scale;
-
+        
         _mglFB = [[MGLFrameBuffer alloc] initWithSize:CGSizeMake(width, heigh)];
     }
     

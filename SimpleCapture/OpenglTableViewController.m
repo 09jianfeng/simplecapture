@@ -32,7 +32,9 @@
                    @"CAEAGLLayer 渲染到纹理",
                    @"metalrenderlayer",
                    @"AAPLEAGLlayer",
-                   @"MultiRenderMetalLayer",@"MGLFramebufferEAGL"];
+                   @"MultiRenderMetalLayer",
+                   @"MGLFramebufferEAGL",
+                   @"MGLFBYUVEAGLayer"];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -69,7 +71,7 @@
                     @"AAPLEAGLLayer",
                     @"MultiRenderMetalLayer",
                     @"MGLFBEAGLayer",
-                    @""];
+                    @"MGLFBYUVEAGLayer"];
     [openglVC useOpenGLTestType:(int)indexPath.row];
     [self.navigationController pushViewController:openglVC animated:NO];
 }
