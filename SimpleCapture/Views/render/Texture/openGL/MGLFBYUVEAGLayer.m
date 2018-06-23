@@ -31,7 +31,7 @@ static NSString *const TextureRGBVS = SHADER_STRING
  
  void main() {
      gl_Position = vec4(aPos,1.0);
-     TexCoord = aTextCoord.xy;
+     TexCoord = vec2(aTextCoord.x,aTextCoord.y);
      outColor = acolor.rgb;
  }
  );
@@ -59,7 +59,7 @@ static NSString *const TextureRGBFS = SHADER_STRING
      yuv.x = (texture2D(textureY, TexCoord).r - (rangeOffset/255.0));
      yuv.yz = (texture2D(textureUV, TexCoord).rg - vec2(0.5, 0.5));
      rgb = colorConversionMatrix * yuv;
-     gl_FragColor = vec4(rgb, 1);
+     gl_FragColor = vec4(rgb, 1)*vec4(outColor,1);
  }
  );
 
@@ -78,7 +78,9 @@ static NSString *const ScreenTextureRGBVS = SHADER_STRING
  void main() {
      gl_Position = vec4(aPos,1.0);
      TexCoord = aTextCoord.xy;
-     outColor = acolor.rgb;
+     
+// 注意：这里传递acolor的值的话，会导致渲染变形。为什么会这样呢？？？？？？
+//     outColor = acolor.rgb;
  }
  );
 
@@ -103,6 +105,11 @@ static NSString *const ScreenTextureRGBFS = SHADER_STRING
     GLuint _positionIndex;
     GLuint _colorIndex;
     
+    GLuint _ontextureIndex;
+    GLuint _onpositionIndex;
+    GLuint _oncolorIndex;
+
+    
     GLProgram *_program;
     GLProgram *_screenProgram;
     
@@ -114,6 +121,7 @@ static NSString *const ScreenTextureRGBFS = SHADER_STRING
     GLint _backingHeight;
     
     unsigned int VBO, VAO, EBO;
+    unsigned int onVBO, onVAO, onEBO;
     
     MGLFrameBuffer *_mglFB;
     
@@ -155,6 +163,7 @@ static GLfloat rangeOffset = 16.0;
 }
 
 - (void)buildProgram{
+    // -- offscreen
     _program = [[GLProgram alloc] initWithVertexShaderString:TextureRGBVS fragmentShaderString:TextureRGBFS];
     [_program addAttribute:@"aPos"];
     [_program addAttribute:@"aTextCoord"];
@@ -175,13 +184,21 @@ static GLfloat rangeOffset = 16.0;
     _textureIndex = [_program attributeIndex:@"aTextCoord"];
     _colorIndex = [_program attributeIndex:@"acolor"];
     
+    //-- screen
     _screenProgram = [[GLProgram alloc] initWithVertexShaderString:ScreenTextureRGBVS fragmentShaderString:ScreenTextureRGBFS];
     if(![_screenProgram link]){
         NSLog(@"_program link error %@  fragement log %@  vertext log %@", [_screenProgram programLog], [_screenProgram fragmentShaderLog], [_screenProgram vertexShaderLog]);
         _screenProgram = nil;
         NSAssert(NO, @"Falied to link TextureRGBFS shaders");
     }
+    [_screenProgram addAttribute:@"aPos"];
+    [_screenProgram addAttribute:@"aTextCoord"];
+    [_screenProgram addAttribute:@"acolor"];
     
+    _onpositionIndex = [_screenProgram attributeIndex:@"aPos"];
+    _ontextureIndex = [_screenProgram attributeIndex:@"aTextCoord"];
+    _oncolorIndex = [_screenProgram attributeIndex:@"acolor"];
+
 }
 
 - (void)initFramebuffer{
@@ -206,13 +223,22 @@ static GLfloat rangeOffset = 16.0;
 - (void)initVertBuffer{
     // set up vertex data (and buffer(s)) and configure vertex attributes
     // ------------------------------------------------------------------
+//    float vertices[] = {
+//        // positions          // colors           // texture coords
+//        0.5f,  0.5f, 0.0f,   1.0f, 0.0f, 0.0f,   1.0f, 1.0f, // top right
+//        0.5f, -0.5f, 0.0f,   0.0f, 1.0f, 0.0f,   1.0f, 0.0f, // bottom right
+//        -0.5f, -0.5f, 0.0f,   0.0f, 0.0f, 1.0f,   0.0f, 0.0f, // bottom left
+//        -0.5f,  0.5f, 0.0f,   1.0f, 1.0f, 0.0f,   0.0f, 1.0f  // top left
+//    };
+    
     float vertices[] = {
         // positions          // colors           // texture coords
-        0.5f,  0.5f, 0.0f,   1.0f, 0.0f, 0.0f,   1.0f, 1.0f, // top right
-        0.5f, -0.5f, 0.0f,   0.0f, 1.0f, 0.0f,   1.0f, 0.0f, // bottom right
-        -0.5f, -0.5f, 0.0f,   0.0f, 0.0f, 1.0f,   0.0f, 0.0f, // bottom left
-        -0.5f,  0.5f, 0.0f,   1.0f, 1.0f, 0.0f,   0.0f, 1.0f  // top left
+        1.0f,  1.0f, 0.0f,   1.0f, 0.0f, 0.0f,   1.0f, 1.0f, // top right
+        1.0f, -1.0f, 0.0f,   0.0f, 1.0f, 0.0f,   1.0f, 0.0f, // bottom right
+        -1.0f, -1.0f, 0.0f,   0.0f, 0.0f, 1.0f,   0.0f, 0.0f, // bottom left
+        -1.0f,  1.0f, 0.0f,   1.0f, 1.0f, 0.0f,   0.0f, 1.0f  // top left
     };
+
     unsigned int indices[] = {
         0, 1, 3, // first triangle
         1, 2, 3  // second triangle
@@ -242,6 +268,61 @@ static GLfloat rangeOffset = 16.0;
     // texture coord attribute
     glVertexAttribPointer(_textureIndex, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(6 * sizeof(float)));
     glEnableVertexAttribArray(_textureIndex);
+    
+    glBindVertexArrayOES(0);
+    
+    
+    
+    
+    // set up vertex data (and buffer(s)) and configure vertex attributes
+    // ------------------------------------------------------------------
+    float onvertices[] = {
+        // positions          // colors           // texture coords
+        0.5f,  0.5f, 0.0f,   1.0f, 0.0f, 0.0f,   1.0f, 1.0f, // top right
+        0.5f, -0.5f, 0.0f,   0.0f, 1.0f, 0.0f,   1.0f, 0.0f, // bottom right
+        -0.5f, -0.5f, 0.0f,   0.0f, 0.0f, 1.0f,   0.0f, 0.0f, // bottom left
+        -0.5f,  0.5f, 0.0f,   1.0f, 1.0f, 0.0f,   0.0f, 1.0f  // top left
+    };
+//    float onvertices[] = {
+//        // positions          // colors           // texture coords
+//        1.0f,  1.0f, 0.0f,   1.0f, 0.0f, 0.0f,   1.0f, 1.0f, // top right
+//        1.0f, -1.0f, 0.0f,   0.0f, 1.0f, 0.0f,   1.0f, 0.0f, // bottom right
+//        -1.0f, -1.0f, 0.0f,   0.0f, 0.0f, 1.0f,   0.0f, 0.0f, // bottom left
+//        -1.0f,  1.0f, 0.0f,   1.0f, 1.0f, 0.0f,   0.0f, 1.0f  // top left
+//    };
+
+    unsigned int onindices[] = {
+        0, 1, 3, // first triangle
+        1, 2, 3  // second triangle
+    };
+    
+    
+    glGenVertexArraysOES(1, &onVAO);
+    glGenBuffers(1, &onVBO);
+    glGenBuffers(1, &onEBO);
+    
+    glBindVertexArrayOES(onVAO);
+    
+    glBindBuffer(GL_ARRAY_BUFFER, onVBO);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(onvertices), onvertices, GL_STATIC_DRAW);
+    
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, onEBO);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(onindices), onindices, GL_STATIC_DRAW);
+    
+    // position attribute
+    glVertexAttribPointer(_onpositionIndex, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)0);
+    glEnableVertexAttribArray(_onpositionIndex);
+    
+    // color attribute
+    glVertexAttribPointer(_oncolorIndex, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(3 * sizeof(float)));
+    glEnableVertexAttribArray(_oncolorIndex);
+    
+    // texture coord attribute
+    glVertexAttribPointer(_ontextureIndex, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(6 * sizeof(float)));
+    glEnableVertexAttribArray(_ontextureIndex);
+    
+    glBindVertexArrayOES(0);
+
 }
 
 - (void)loadTexture{
@@ -337,7 +418,7 @@ static GLfloat rangeOffset = 16.0;
     
     // render
     // ------
-    glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
+    glClearColor(0.5f, 0.4f, 0.3f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT);
     
     // render container
@@ -354,8 +435,9 @@ static GLfloat rangeOffset = 16.0;
     glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
     [_mglFB deactiveFramebuffer];
     
-    
-    
+    glFlush();
+    CVPixelBufferRef pixel = _mglFB.pixelBuffer;
+    NSLog(@"pixel %@",pixel);
     
     // -- on screen
     glBindFramebuffer(GL_FRAMEBUFFER, _framebufferID);
@@ -368,7 +450,7 @@ static GLfloat rangeOffset = 16.0;
     
     // render container
     [_screenProgram use];
-    glBindVertexArrayOES(VAO);
+    glBindVertexArrayOES(onVAO);
     
     glActiveTexture(GL_TEXTURE0);
     glBindTexture(GL_TEXTURE_2D, _mglFB.bindTexture);

@@ -250,6 +250,10 @@ static NSString *const ScreenTextureRGBFS = SHADER_STRING
     glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
     [_mglFB deactiveFramebuffer];
     
+    glFlush();
+    CVPixelBufferRef pixel = _mglFB.pixelBuffer;
+    NSLog(@"pixel %@",pixel);
+    
     // -- on screen
     glBindFramebuffer(GL_FRAMEBUFFER, _framebufferID);
     glViewport(0,0,_backingWidth,_backingHeight);
