@@ -185,7 +185,7 @@
     
     GLenum status = glCheckFramebufferStatus(GL_FRAMEBUFFER);
     if (status != GL_FRAMEBUFFER_COMPLETE) {
-        //[YYLogger info:TPreProcess message:@"generateFramebuffer failed to complete framebuffer object %x", status];
+        NSLog(@"___ MGLFrameBuffer glCheckFramebufferStatus error %d",status);
     }
     
     glBindTexture(GL_TEXTURE_2D, 0);

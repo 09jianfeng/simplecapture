@@ -155,8 +155,7 @@ static NSString *const ScreenTextureRGBFS = SHADER_STRING
     }
 }
 
-- (void)setUpGLBuffers{
-    
+- (void)setupFramebuffer{
     { // 设置framebuffer。 并且给framebuffer附加上 纹理。  framebuffer必须附加上纹理或者 renderbuffer。
         GLint defaultFramebuffer = 0;
         int scale = [UIScreen mainScreen].scale;
@@ -178,7 +177,6 @@ static NSString *const ScreenTextureRGBFS = SHADER_STRING
         glBindFramebuffer ( GL_FRAMEBUFFER, shadowMapBufferId );
         
         glFramebufferTexture2D ( GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, shadowMapTextureId, 0 );
-        glActiveTexture ( GL_TEXTURE0 );
         glBindTexture ( GL_TEXTURE_2D, shadowMapTextureId );
         
         GLuint depthRenderbuffer;
@@ -192,9 +190,11 @@ static NSString *const ScreenTextureRGBFS = SHADER_STRING
             NSLog(@"Failed to make complete framebuffer object %x", glCheckFramebufferStatus(GL_FRAMEBUFFER));
         }
         glBindFramebuffer ( GL_FRAMEBUFFER, defaultFramebuffer );
-
+        
     }
-    
+}
+
+- (void)setUpGLBuffers{
     {  //生成并且绑定顶点数据。  VAO、VOB、EBO。  这些顶点数据都会被VAO附带。要用的时候不需要在赋值顶点数据、纹理顶点数据。只需要绑定VAO。就是复带上了所需的顶点数据
         float vertices[] = {
             // positions          // colors           // texture coords
@@ -259,14 +259,19 @@ static NSString *const ScreenTextureRGBFS = SHADER_STRING
 - (void)glkView:(GLKView *)view drawInRect:(CGRect)rect{
     [EAGLContext setCurrentContext:_context];
     
+    int scale = [UIScreen mainScreen].scale;
+    int width = CGRectGetWidth(rect) * scale;
+    int heigh = CGRectGetHeight(rect) * scale;
+    
     GLint defaultFramebuffer = 0;
     glGetIntegerv ( GL_FRAMEBUFFER_BINDING, &defaultFramebuffer );
     
     glBindFramebuffer ( GL_FRAMEBUFFER, shadowMapBufferId );
     GLint setFrameBufferid = 0;
     glGetIntegerv ( GL_FRAMEBUFFER_BINDING, &setFrameBufferid );
+//    glViewport ( 0, 0, (unsigned int)self.glkView.drawableWidth, (unsigned int)self.glkView.drawableHeight);
+    glViewport ( 0, 0, width, heigh);
     
-    glViewport ( 0, 0, (unsigned int)self.glkView.drawableWidth, (unsigned int)self.glkView.drawableHeight);
     // render
     // ------
     glClearColor(0.2f, 0.3f, 1.0f, 1.0f);
@@ -275,11 +280,15 @@ static NSString *const ScreenTextureRGBFS = SHADER_STRING
     // render container
     [_program use];
     glBindVertexArrayOES(VAO);
+    //bind 了framebuffer后要记得绑过一次texture0；要跟对应着对应的framebuffer
+    glBindTexture ( GL_TEXTURE_2D, texture0);
+    
     glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
     
     
     glBindFramebuffer ( GL_FRAMEBUFFER, defaultFramebuffer );
-
+    glViewport ( 0, 0, (unsigned int)self.glkView.drawableWidth, (unsigned int)self.glkView.drawableHeight);
+    
     // render
     // ------
     glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
@@ -301,14 +310,16 @@ static NSString *const ScreenTextureRGBFS = SHADER_STRING
 
 - (void)openGLRender{
     [self buildProgram];
+    
     [self setUpGLBuffers];
     [self setUpTexture];
+    [self setupFramebuffer];
     
     [_glkView display];
 }
 
 - (void)displayingLinkDraw{
-    [_glkView display];
+//    [_glkView display];
 }
 
 - (void)removeFromSuperContainer{

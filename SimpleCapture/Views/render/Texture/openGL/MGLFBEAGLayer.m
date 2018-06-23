@@ -15,6 +15,8 @@
 #import "GLProgram.h"
 #import "MGLCommon.h"
 
+#import "MGLFrameBuffer.h"
+
 #define STRINGIZE(x) #x
 #define SHADER_STRING(text) @ STRINGIZE(text)
 
@@ -88,6 +90,7 @@ static NSString *const ScreenTextureRGBFS = SHADER_STRING
     GLuint _colorIndex;
     
     GLProgram *_program;
+    GLProgram *_screenProgram;
     
     unsigned int texture;
     EAGLContext   *_context;
@@ -98,6 +101,8 @@ static NSString *const ScreenTextureRGBFS = SHADER_STRING
     GLint _backingHeight;
     
     unsigned int VBO, VAO, EBO;
+    
+    MGLFrameBuffer *_mglFB;
 }
 
 - (instancetype)init{
@@ -111,20 +116,6 @@ static NSString *const ScreenTextureRGBFS = SHADER_STRING
         self.drawableProperties = @{ kEAGLDrawablePropertyRetainedBacking :[NSNumber numberWithBool:YES]};
     }
     return self;
-}
-
-- (void)setUpGLWithFrame:(CGRect)rect{
-    [EAGLContext setCurrentContext:_context];
-    
-    [self buildProgram];
-    [self initBuffer];
-}
-
-- (void)setupGL{
-    [EAGLContext setCurrentContext:_context];
-    
-    [self buildProgram];
-    [self initBuffer];
 }
 
 - (void)buildProgram{
@@ -147,9 +138,18 @@ static NSString *const ScreenTextureRGBFS = SHADER_STRING
     _positionIndex = [_program attributeIndex:@"aPos"];
     _textureIndex = [_program attributeIndex:@"aTextCoord"];
     _colorIndex = [_program attributeIndex:@"acolor"];
+    
+    _screenProgram = [[GLProgram alloc] initWithVertexShaderString:ScreenTextureRGBVS fragmentShaderString:ScreenTextureRGBFS];
+    if(![_screenProgram link]){
+        NSLog(@"_program link error %@  fragement log %@  vertext log %@", [_screenProgram programLog], [_screenProgram fragmentShaderLog], [_screenProgram vertexShaderLog]);
+        _screenProgram = nil;
+        NSAssert(NO, @"Falied to link TextureRGBFS shaders");
+    }
+
 }
 
-- (void)initBuffer{
+- (void)initFramebuffer{
+    // -- on screen
     // general framebuffer
     glGenFramebuffers(1, &_framebufferID);
     glBindFramebuffer(GL_FRAMEBUFFER, _framebufferID);
@@ -165,8 +165,9 @@ static NSString *const ScreenTextureRGBFS = SHADER_STRING
     if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE) {
         NSLog(@"Failed to make complete framebuffer object %x", glCheckFramebufferStatus(GL_FRAMEBUFFER));
     }
-    
-    
+}
+
+- (void)initVertBuffer{
     // set up vertex data (and buffer(s)) and configure vertex attributes
     // ------------------------------------------------------------------
     float vertices[] = {
@@ -205,14 +206,15 @@ static NSString *const ScreenTextureRGBFS = SHADER_STRING
     // texture coord attribute
     glVertexAttribPointer(_textureIndex, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(6 * sizeof(float)));
     glEnableVertexAttribArray(_textureIndex);
-    
-    
+}
+
+- (void)loadTexture{
     // load and create a texture
     // -------------------------
     glActiveTexture(GL_TEXTURE0); //GL_TEXTURE0对应着片段着色器里面声明的uniform sampler2D采样器 默认是单位采样单位0. 如果要设置那个变量的采样单元 glUniform1i(glGetUniformLocation(ourShader.ID, "texture1"), 0);
     glGenTextures(1, &texture);
     glBindTexture(GL_TEXTURE_2D, texture); // all upcoming GL_TEXTURE_2D operations now have effect on this texture object
-    // set the texture wrapping parameters
+    //    // set the texture wrapping parameters
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);    // set texture wrapping to GL_REPEAT (default wrapping method)
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
     // set texture filtering parameters
@@ -231,6 +233,26 @@ static NSString *const ScreenTextureRGBFS = SHADER_STRING
 - (void)drawOpenGL{
     [EAGLContext setCurrentContext:_context];
     
+    // -- offscreen
+    [_mglFB activateFramebuffer];
+
+    // render
+    // ------
+    glClearColor(0.5f, 1.0f, 1.0f, 1.0f);
+    glClear(GL_COLOR_BUFFER_BIT);
+
+    // render container
+    [_program use];
+    glBindVertexArrayOES(VAO);
+    glActiveTexture(GL_TEXTURE0);
+    glBindTexture(GL_TEXTURE_2D, texture);
+    
+    glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+    [_mglFB deactiveFramebuffer];
+    
+    
+    
+    // -- on screen
     glBindFramebuffer(GL_FRAMEBUFFER, _framebufferID);
     glViewport(0,0,_backingWidth,_backingHeight);
     
@@ -242,9 +264,11 @@ static NSString *const ScreenTextureRGBFS = SHADER_STRING
     // render container
     [_program use];
     glBindVertexArrayOES(VAO);
-    glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
     
-    glBindRenderbuffer(GL_RENDERBUFFER, _renderBufferID);
+    glActiveTexture(GL_TEXTURE0);
+    glBindTexture(GL_TEXTURE_2D, _mglFB.bindTexture);
+    
+    glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
     [_context presentRenderbuffer:GL_RENDERER];
 }
 
@@ -253,8 +277,27 @@ static NSString *const ScreenTextureRGBFS = SHADER_STRING
     self.frame = rect;
 }
 
+- (void)setUpGLWithFrame:(CGRect)rect{
+    [self buildProgram];
+    [self initVertBuffer];
+    [self loadTexture];
+    [self initFramebuffer];
+}
+
+
 - (void)openGLRender{
+    [EAGLContext setCurrentContext:_context];
+    
+    if(!_mglFB){
+        int scale = [UIScreen mainScreen].scale;
+        int width = CGRectGetWidth(self.bounds) * scale;
+        int heigh = CGRectGetHeight(self.bounds) * scale;
+
+        _mglFB = [[MGLFrameBuffer alloc] initWithSize:CGSizeMake(width, heigh)];
+    }
+    
     [self setUpGLWithFrame:self.frame];
+    
     [self drawOpenGL];
 }
 

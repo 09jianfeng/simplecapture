@@ -32,7 +32,7 @@
                    @"CAEAGLLayer 渲染到纹理",
                    @"metalrenderlayer",
                    @"AAPLEAGLlayer",
-                   @"MultiRenderMetalLayer"];
+                   @"MultiRenderMetalLayer",@"MGLFramebufferEAGL"];
 }
 
 - (void)didReceiveMemoryWarning {
