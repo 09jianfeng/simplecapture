@@ -143,7 +143,6 @@ CVPixelBufferRef imageToYUVPixelBuffer(UIImage *image){
     CFDictionarySetValue(attrs, kCVPixelBufferIOSurfacePropertiesKey, (void*)[NSDictionary dictionary]);
     CFDictionarySetValue(attrs, kCVPixelBufferOpenGLESCompatibilityKey, (void*)[NSNumber numberWithBool:YES]);
     
-    ////420YpCbCr8BiPlanar是半 plannar
     CVReturn err = CVPixelBufferCreate(kCFAllocatorDefault, (int)image.size.width, (int)image.size.height, kCVPixelFormatType_420YpCbCr8BiPlanarFullRange, attrs, &yuvPixelBuffer);
     if (err) {
         return NULL;
@@ -164,7 +163,7 @@ CVPixelBufferRef imageToYUVPixelBuffer(UIImage *image){
             float g  = bitmapData[j*bytesPerRow + i*4 + 1];
             float b  = bitmapData[j*bytesPerRow + i*4 + 2];
             
-            int16_t y = (0.257*r + 0.504*g + 0.098*b) + 16;
+            int16_t y = 0.299*r + 0.587*g + 0.114*b;
             if (y > 255) {
                 y = 255;
             } else if (y < 0) {
@@ -175,14 +174,16 @@ CVPixelBufferRef imageToYUVPixelBuffer(UIImage *image){
         }
     }
     
-    for (int j = 0; j < image.size.height/2; j++) {
-        for (int i = 0; i < image.size.width/2; i++) {
-            float r  = bitmapData[j*2*bytesPerRow + i*2*4 + 0];
-            float g  = bitmapData[j*2*bytesPerRow + i*2*4 + 1];
-            float b  = bitmapData[j*2*bytesPerRow + i*2*4 + 2];
+    for (int j = 0; j < image.size.height; j+=2)
+    {
+        for (int i = 0; i < image.size.width; i+=2)
+        {
+            float r  = bitmapData[j*bytesPerRow + i*4 + 0];
+            float g  = bitmapData[j*bytesPerRow + i*4 + 1];
+            float b  = bitmapData[j*bytesPerRow + i*4 + 2];
             
-            int16_t u = (-0.148*r - 0.291*g + 0.439*b) + 128;
-            int16_t v = (0.439*r - 0.368*g - 0.071*b) + 128;
+            int16_t u = (-0.1145*r - 0.3855*g + 0.500*b) + 128;
+            int16_t v = (0.500*r - 0.4543*g - 0.0457*b) + 128;
             
             if (u > 255) {
                 u = 255;
@@ -196,8 +197,8 @@ CVPixelBufferRef imageToYUVPixelBuffer(UIImage *image){
                 v = 0;
             }
             
-            uvPtr[j*strideUV + i*2 + 0] = (uint8_t)u;
-            uvPtr[j*strideUV + i*2 + 1] = (uint8_t)v;
+            uvPtr[j/2*strideUV + i + 0] = (uint8_t)u;
+            uvPtr[j/2*strideUV + i + 1] = (uint8_t)v;
         }
     }
     

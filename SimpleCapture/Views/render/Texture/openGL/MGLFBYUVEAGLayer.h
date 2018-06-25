@@ -13,4 +13,6 @@
 
 @interface MGLFBYUVEAGLayer : CAEAGLLayer
 
+- (void)rotate:(int)angle;
+
 @end

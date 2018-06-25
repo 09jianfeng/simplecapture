@@ -15,6 +15,7 @@
 #import "MGLCommon.h"
 
 #import "MGLFrameBuffer.h"
+#import "MGLMatrix.h"
 
 #define STRINGIZE(x) #x
 #define SHADER_STRING(text) @ STRINGIZE(text)
@@ -29,8 +30,10 @@ static NSString *const TextureRGBVS = SHADER_STRING
  varying vec2 TexCoord;
  varying vec3 outColor;
  
+ uniform mat4 transform;
+ 
  void main() {
-     gl_Position = vec4(aPos,1.0);
+     gl_Position = transform * vec4(aPos,1.0);
      TexCoord = vec2(aTextCoord.x,aTextCoord.y);
      outColor = acolor.rgb;
  }
@@ -128,6 +131,8 @@ static NSString *const ScreenTextureRGBFS = SHADER_STRING
     CVOpenGLESTextureRef _lumaTexture;
     CVOpenGLESTextureRef _chromaTexture;
     CVOpenGLESTextureCacheRef _videoTextureCache;
+    
+    MGLMatrix *_matrix;
 }
 
 - (instancetype)init{
@@ -139,6 +144,9 @@ static NSString *const ScreenTextureRGBFS = SHADER_STRING
         self.contentsScale = scale;
         self.opaque = TRUE;
         self.drawableProperties = @{ kEAGLDrawablePropertyRetainedBacking :[NSNumber numberWithBool:YES]};
+        
+        _matrix = [MGLMatrix new];
+        [_matrix setIdentity];
     }
     return self;
 }
@@ -160,6 +168,7 @@ static GLfloat rangeOffset = 16.0;
     
     glUniform1i([_program uniformIndex:@"textureY"], 0);
     glUniform1i([_program uniformIndex:@"textureUV"], 1);
+    glUniformMatrix4fv([_program uniformIndex:@"transform"], 1, GL_FALSE, _matrix.mtxElements);
 }
 
 - (void)buildProgram{
@@ -465,6 +474,8 @@ static GLfloat rangeOffset = 16.0;
 }
 
 - (void)setUpGLWithFrame:(CGRect)rect{
+    [self rotate:90];
+    
     [self buildProgram];
     [self initVertBuffer];
     [self loadTexture];
@@ -490,6 +501,10 @@ static GLfloat rangeOffset = 16.0;
 
 - (void)removeFromSuperContainer{
     [self removeFromSuperlayer];
+}
+
+- (void)rotate:(int)angle{
+    [_matrix setRotate:angle xAxis:0.0 yAxis:0.0 zAxis:1.0];
 }
 
 @end
