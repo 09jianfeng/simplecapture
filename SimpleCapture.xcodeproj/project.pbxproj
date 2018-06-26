@@ -28,6 +28,7 @@
 		782D643120DCA3130085FE26 /* MGLTools.m in Sources */ = {isa = PBXBuildFile; fileRef = 782D642F20DCA3120085FE26 /* MGLTools.m */; };
 		782D643620DCEFCC0085FE26 /* MGLFBEAGLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 782D643520DCEFCC0085FE26 /* MGLFBEAGLayer.m */; };
 		782D643920DDF8DB0085FE26 /* MGLFBYUVEAGLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 782D643820DDF8DB0085FE26 /* MGLFBYUVEAGLayer.m */; };
+		782FAACB20E23365001DBAF7 /* PixelBufferRotateTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 782FAAC920E23364001DBAF7 /* PixelBufferRotateTool.m */; };
 		7837825F1E8E34FE00DED271 /* YUVFileTransform.mm in Sources */ = {isa = PBXBuildFile; fileRef = 7837825E1E8E34FE00DED271 /* YUVFileTransform.mm */; };
 		783782651E8E531100DED271 /* H264VideoDecoder.m in Sources */ = {isa = PBXBuildFile; fileRef = 783782641E8E531100DED271 /* H264VideoDecoder.m */; };
 		783782671E8E654E00DED271 /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 783782661E8E654E00DED271 /* libc++.tbd */; };
@@ -158,6 +159,8 @@
 		782D643520DCEFCC0085FE26 /* MGLFBEAGLayer.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MGLFBEAGLayer.m; sourceTree = "<group>"; };
 		782D643720DDF8DB0085FE26 /* MGLFBYUVEAGLayer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MGLFBYUVEAGLayer.h; sourceTree = "<group>"; };
 		782D643820DDF8DB0085FE26 /* MGLFBYUVEAGLayer.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MGLFBYUVEAGLayer.m; sourceTree = "<group>"; };
+		782FAAC920E23364001DBAF7 /* PixelBufferRotateTool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PixelBufferRotateTool.m; sourceTree = "<group>"; };
+		782FAACA20E23364001DBAF7 /* PixelBufferRotateTool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PixelBufferRotateTool.h; sourceTree = "<group>"; };
 		7837825D1E8E34FE00DED271 /* YUVFileTransform.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YUVFileTransform.h; sourceTree = "<group>"; };
 		7837825E1E8E34FE00DED271 /* YUVFileTransform.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = YUVFileTransform.mm; sourceTree = "<group>"; };
 		783782631E8E531100DED271 /* H264VideoDecoder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = H264VideoDecoder.h; sourceTree = "<group>"; };
@@ -686,6 +689,8 @@
 		782D643220DCA31E0085FE26 /* opengl */ = {
 			isa = PBXGroup;
 			children = (
+				782FAACA20E23364001DBAF7 /* PixelBufferRotateTool.h */,
+				782FAAC920E23364001DBAF7 /* PixelBufferRotateTool.m */,
 				7804489C2086F5E800FAE1DF /* MGLCommon.h */,
 				7804489B2086F5E800FAE1DF /* MGLCommon.m */,
 				782D642720DCA2D70085FE26 /* MGLFrameBuffer.h */,
@@ -1638,6 +1643,7 @@
 				782D642B20DCA2D80085FE26 /* MGLTexture.m in Sources */,
 				782D63E220DB52690085FE26 /* MultiRenderMetalLayer.m in Sources */,
 				787F33C81FA8AAF1009A5C5F /* KXMovieController.m in Sources */,
+				782FAACB20E23365001DBAF7 /* PixelBufferRotateTool.m in Sources */,
 				DAA20BF61C5263FA008DB5AA /* VideoEncoder.m in Sources */,
 				78FB997A208DDE62000F1448 /* TextureGLKViewFBTexture.m in Sources */,
 				DA3832881C6DC2E50093BFC1 /* VideoViewController.m in Sources */,
