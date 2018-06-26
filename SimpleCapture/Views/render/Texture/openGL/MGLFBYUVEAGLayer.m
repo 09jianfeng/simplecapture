@@ -344,6 +344,20 @@ static GLfloat rangeOffset = 16.0;
         }
     }
     
+    if (_lumaTexture) {
+        CFRelease(_lumaTexture);
+        _lumaTexture = NULL;
+    }
+    
+    if (_chromaTexture) {
+        CFRelease(_chromaTexture);
+        _chromaTexture = NULL;
+    }
+    
+    // Periodic texture cache flush every frame
+    CVOpenGLESTextureCacheFlush(_videoTextureCache, 0);
+
+    
     // load image, create texture and generate mipmaps
     UIImage *image = [UIImage imageNamed:@"container.jpg"];
     CVPixelBufferRef nv12Pixelbuf = imageToYUVPixelBuffer(image);
