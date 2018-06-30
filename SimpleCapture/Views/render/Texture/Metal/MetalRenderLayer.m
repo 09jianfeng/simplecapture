@@ -454,7 +454,6 @@ typedef enum{
     {
         _colorConversionBuffer = _color601ConversionBuffer;
         currentColorConversionType = COLOR_601;
-        NSLog(@"buffer kColorConversion601");
     }
     
     if (_colorConversionType != currentColorConversionType)

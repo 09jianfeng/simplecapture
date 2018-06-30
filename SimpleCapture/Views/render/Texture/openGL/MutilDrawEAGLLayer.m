@@ -443,19 +443,7 @@ static const GLfloat kColorConversion709FullRange[] = {
         return;
     }
     
-    //    if (isFirstPixelToRender) {
-    //        // Periodic texture cache flush every frame
-    //        CVOpenGLESTextureCacheFlush(_videoTextureCache, 0);
-    //    }
-    
     [self cleanUpTextures];
-    
-    //    if (isFirstPixelToRender) {
-    //        glBindFramebuffer(GL_FRAMEBUFFER, _frameBufferHandle);
-    //    }
-    /*
-     Use the color attachment of the pixel buffer to determine the appropriate color conversion matrix.
-     */
     
     FourCharCode fourcc = CVPixelBufferGetPixelFormatType(pixelBuffer);
     
@@ -606,16 +594,6 @@ static const GLfloat kColorConversion709FullRange[] = {
         default://maybe another fill mode is not used for yy
             break;
     }
-    
-    // Normalize the quad vertices.
-    //    if (cropScaleAmount.width > cropScaleAmount.height) {
-    //        normalizedSamplingSize.width = 1.0;
-    //        normalizedSamplingSize.height = cropScaleAmount.height/cropScaleAmount.width;
-    //    }
-    //    else {
-    //        normalizedSamplingSize.width = cropScaleAmount.width/cropScaleAmount.height;
-    //        normalizedSamplingSize.height = 1.0;;
-    //    }
     
     /*
      The quad vertex data defines the region of 2D plane onto which we draw our pixel buffers.
