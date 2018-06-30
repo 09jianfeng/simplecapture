@@ -20,7 +20,7 @@
 		781A883620BD549E00E8A51F /* AudioCaptureSampleBuffer.m in Sources */ = {isa = PBXBuildFile; fileRef = 781A883420BD549D00E8A51F /* AudioCaptureSampleBuffer.m */; };
 		782D62BA20D746B20085FE26 /* MetalRenderLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 782D62B920D746B20085FE26 /* MetalRenderLayer.m */; };
 		782D62BC20D778F20085FE26 /* Shaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = 782D62BB20D778F20085FE26 /* Shaders.metal */; };
-		782D63E220DB52690085FE26 /* MultiRenderMetalLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 782D63E020DB52680085FE26 /* MultiRenderMetalLayer.m */; };
+		782D63E220DB52690085FE26 /* MultiDrawMetalLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 782D63E020DB52680085FE26 /* MultiDrawMetalLayer.m */; };
 		782D642B20DCA2D80085FE26 /* MGLTexture.m in Sources */ = {isa = PBXBuildFile; fileRef = 782D642320DCA2D60085FE26 /* MGLTexture.m */; };
 		782D642C20DCA2D80085FE26 /* MGLMatrix.m in Sources */ = {isa = PBXBuildFile; fileRef = 782D642520DCA2D70085FE26 /* MGLMatrix.m */; };
 		782D642D20DCA2D80085FE26 /* MGLFrameBuffer.m in Sources */ = {isa = PBXBuildFile; fileRef = 782D642820DCA2D70085FE26 /* MGLFrameBuffer.m */; };
@@ -29,6 +29,7 @@
 		782D643620DCEFCC0085FE26 /* MGLFBEAGLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 782D643520DCEFCC0085FE26 /* MGLFBEAGLayer.m */; };
 		782D643920DDF8DB0085FE26 /* MGLFBYUVEAGLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 782D643820DDF8DB0085FE26 /* MGLFBYUVEAGLayer.m */; };
 		782FAACB20E23365001DBAF7 /* PixelBufferRotateTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 782FAAC920E23364001DBAF7 /* PixelBufferRotateTool.m */; };
+		782FAB2B20E63A59001DBAF7 /* MutilDrawEAGLLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 782FAB2A20E63A58001DBAF7 /* MutilDrawEAGLLayer.m */; };
 		7837825F1E8E34FE00DED271 /* YUVFileTransform.mm in Sources */ = {isa = PBXBuildFile; fileRef = 7837825E1E8E34FE00DED271 /* YUVFileTransform.mm */; };
 		783782651E8E531100DED271 /* H264VideoDecoder.m in Sources */ = {isa = PBXBuildFile; fileRef = 783782641E8E531100DED271 /* H264VideoDecoder.m */; };
 		783782671E8E654E00DED271 /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 783782661E8E654E00DED271 /* libc++.tbd */; };
@@ -143,8 +144,8 @@
 		782D62B820D746B20085FE26 /* MetalRenderLayer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MetalRenderLayer.h; sourceTree = "<group>"; };
 		782D62B920D746B20085FE26 /* MetalRenderLayer.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MetalRenderLayer.m; sourceTree = "<group>"; };
 		782D62BB20D778F20085FE26 /* Shaders.metal */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.metal; path = Shaders.metal; sourceTree = "<group>"; };
-		782D63E020DB52680085FE26 /* MultiRenderMetalLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MultiRenderMetalLayer.m; path = ../../../../../../../../../../Desktop/MultiRenderMetalLayer.m; sourceTree = "<group>"; };
-		782D63E120DB52690085FE26 /* MultiRenderMetalLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MultiRenderMetalLayer.h; path = ../../../../../../../../../../Desktop/MultiRenderMetalLayer.h; sourceTree = "<group>"; };
+		782D63E020DB52680085FE26 /* MultiDrawMetalLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MultiDrawMetalLayer.m; path = ../../../../../../../../../../Desktop/MultiDrawMetalLayer.m; sourceTree = "<group>"; };
+		782D63E120DB52690085FE26 /* MultiDrawMetalLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MultiDrawMetalLayer.h; path = ../../../../../../../../../../Desktop/MultiDrawMetalLayer.h; sourceTree = "<group>"; };
 		782D642320DCA2D60085FE26 /* MGLTexture.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGLTexture.m; sourceTree = "<group>"; };
 		782D642420DCA2D70085FE26 /* MGLProgram.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGLProgram.h; sourceTree = "<group>"; };
 		782D642520DCA2D70085FE26 /* MGLMatrix.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGLMatrix.m; sourceTree = "<group>"; };
@@ -161,6 +162,8 @@
 		782D643820DDF8DB0085FE26 /* MGLFBYUVEAGLayer.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MGLFBYUVEAGLayer.m; sourceTree = "<group>"; };
 		782FAAC920E23364001DBAF7 /* PixelBufferRotateTool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PixelBufferRotateTool.m; sourceTree = "<group>"; };
 		782FAACA20E23364001DBAF7 /* PixelBufferRotateTool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PixelBufferRotateTool.h; sourceTree = "<group>"; };
+		782FAB2920E63A58001DBAF7 /* MutilDrawEAGLLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MutilDrawEAGLLayer.h; sourceTree = "<group>"; };
+		782FAB2A20E63A58001DBAF7 /* MutilDrawEAGLLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MutilDrawEAGLLayer.m; sourceTree = "<group>"; };
 		7837825D1E8E34FE00DED271 /* YUVFileTransform.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YUVFileTransform.h; sourceTree = "<group>"; };
 		7837825E1E8E34FE00DED271 /* YUVFileTransform.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = YUVFileTransform.mm; sourceTree = "<group>"; };
 		783782631E8E531100DED271 /* H264VideoDecoder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = H264VideoDecoder.h; sourceTree = "<group>"; };
@@ -670,6 +673,8 @@
 				78FB9978208DDE62000F1448 /* TextureGLKViewFBTexture.m */,
 				78DB57EB1E83BFD100FBBD99 /* AAPLEAGLLayer.h */,
 				78DB57EC1E83BFD100FBBD99 /* AAPLEAGLLayer.m */,
+				782FAB2920E63A58001DBAF7 /* MutilDrawEAGLLayer.h */,
+				782FAB2A20E63A58001DBAF7 /* MutilDrawEAGLLayer.m */,
 			);
 			path = openGL;
 			sourceTree = "<group>";
@@ -677,8 +682,8 @@
 		782D62B620D5FFBE0085FE26 /* Metal */ = {
 			isa = PBXGroup;
 			children = (
-				782D63E120DB52690085FE26 /* MultiRenderMetalLayer.h */,
-				782D63E020DB52680085FE26 /* MultiRenderMetalLayer.m */,
+				782D63E120DB52690085FE26 /* MultiDrawMetalLayer.h */,
+				782D63E020DB52680085FE26 /* MultiDrawMetalLayer.m */,
 				782D62BB20D778F20085FE26 /* Shaders.metal */,
 				782D62B820D746B20085FE26 /* MetalRenderLayer.h */,
 				782D62B920D746B20085FE26 /* MetalRenderLayer.m */,
@@ -1468,7 +1473,7 @@
 					};
 					DA0E7AF31C128164003A8C25 = {
 						CreatedOnToolsVersion = 7.1.1;
-						DevelopmentTeam = 7H57TJHB75;
+						DevelopmentTeam = 67Q24N9KP5;
 					};
 				};
 			};
@@ -1604,6 +1609,7 @@
 				782D62BA20D746B20085FE26 /* MetalRenderLayer.m in Sources */,
 				7888278D1EC45AE2002090DA /* FFMPEGDecodeFilter.mm in Sources */,
 				7804489D2086F5E800FAE1DF /* MGLCommon.m in Sources */,
+				782FAB2B20E63A59001DBAF7 /* MutilDrawEAGLLayer.m in Sources */,
 				78AE426A1E82271600D84304 /* VideoPlayerVC.m in Sources */,
 				DA315F9E1C6F57AD008B9AF3 /* AudioCapture.m in Sources */,
 				DAA20BF21C52278E008DB5AA /* VideoCapture.mm in Sources */,
@@ -1641,7 +1647,7 @@
 				787F33C11FA8AA38009A5C5F /* KxAudioManager.m in Sources */,
 				78EE3B861E8A371D00B66CE1 /* FileChooseVC.m in Sources */,
 				782D642B20DCA2D80085FE26 /* MGLTexture.m in Sources */,
-				782D63E220DB52690085FE26 /* MultiRenderMetalLayer.m in Sources */,
+				782D63E220DB52690085FE26 /* MultiDrawMetalLayer.m in Sources */,
 				787F33C81FA8AAF1009A5C5F /* KXMovieController.m in Sources */,
 				782FAACB20E23365001DBAF7 /* PixelBufferRotateTool.m in Sources */,
 				DAA20BF61C5263FA008DB5AA /* VideoEncoder.m in Sources */,
@@ -1810,7 +1816,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = 7H57TJHB75;
+				DEVELOPMENT_TEAM = 67Q24N9KP5;
 				ENABLE_BITCODE = NO;
 				HEADER_SEARCH_PATHS = (
 					"${PODS_ROOT}/gpuimagesdk/include",
@@ -1842,7 +1848,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = 7H57TJHB75;
+				DEVELOPMENT_TEAM = 67Q24N9KP5;
 				ENABLE_BITCODE = NO;
 				HEADER_SEARCH_PATHS = (
 					"${PODS_ROOT}/gpuimagesdk/include",

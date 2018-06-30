@@ -32,9 +32,10 @@
                    @"CAEAGLLayer 渲染到纹理",
                    @"metalrenderlayer",
                    @"AAPLEAGLlayer",
-                   @"MultiRenderMetalLayer",
+                   @"MultiDrawMetalLayer",
                    @"MGLFramebufferEAGL",
-                   @"MGLFBYUVEAGLayer"];
+                   @"MGLFBYUVEAGLayer",
+                   @"MutilDrawEAGLLayer"];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -69,9 +70,10 @@
                     @"TextureEAGLLayerFBTexture",
                     @"MetalRenderLayer",
                     @"AAPLEAGLLayer",
-                    @"MultiRenderMetalLayer",
+                    @"MultiDrawMetalLayer",
                     @"MGLFBEAGLayer",
-                    @"MGLFBYUVEAGLayer"];
+                    @"MGLFBYUVEAGLayer",
+                    @"MutilDrawEAGLLayer"];
     [openglVC useOpenGLTestType:(int)indexPath.row];
     [self.navigationController pushViewController:openglVC animated:NO];
 }

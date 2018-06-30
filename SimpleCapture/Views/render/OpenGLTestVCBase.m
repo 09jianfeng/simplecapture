@@ -14,7 +14,7 @@
 #import "TextureEAGLLayerFBTexture.h"
 #import "MetalRenderLayer.h"
 #import "AAPLEAGLLayer.h"
-#import "MultiRenderMetalLayer.h"
+#import "MultiDrawMetalLayer.h"
 
 @interface OpenGLTestVCBase ()
 @property(nonatomic, strong) id<OpenGLContianerDelegate> openglDelegate;
