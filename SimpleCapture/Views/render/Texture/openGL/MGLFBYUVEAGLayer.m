@@ -133,6 +133,9 @@ static NSString *const ScreenTextureRGBFS = SHADER_STRING
     CVOpenGLESTextureCacheRef _videoTextureCache;
     
     MGLMatrix *_matrix;
+    
+    CADisplayLink *_displayLink;
+    dispatch_queue_t _queue;
 }
 
 - (instancetype)init{
@@ -147,10 +150,16 @@ static NSString *const ScreenTextureRGBFS = SHADER_STRING
         
         _matrix = [MGLMatrix new];
         [_matrix setIdentity];
+        
+        _displayLink = [CADisplayLink displayLinkWithTarget:self selector:@selector(displayingLinkDraw)];
+        _displayLink.frameInterval = 2.0;
+        [_displayLink addToRunLoop:[NSRunLoop currentRunLoop] forMode:NSDefaultRunLoopMode];
+        
+        _queue = dispatch_queue_create("Render Queue", DISPATCH_QUEUE_SERIAL);
+
     }
     return self;
 }
-
 
 // BT.709, which is the standard for HDTV.
 static const GLfloat kColorConversion709[] = {
@@ -434,6 +443,14 @@ static GLfloat rangeOffset = 16.0;
 }
 
 - (void)drawOpenGL{
+    if (!_context) {
+        return;
+    }
+    
+    if (!_mglFB) {
+        return;
+    }
+    
     [EAGLContext setCurrentContext:_context];
     
     // -- offscreen
@@ -460,7 +477,6 @@ static GLfloat rangeOffset = 16.0;
     
     glFlush();
     CVPixelBufferRef pixel = _mglFB.pixelBuffer;
-    NSLog(@"pixel %@",pixel);
     
     // -- on screen
     glBindFramebuffer(GL_FRAMEBUFFER, _framebufferID);
@@ -479,6 +495,10 @@ static GLfloat rangeOffset = 16.0;
     glBindTexture(GL_TEXTURE_2D, _mglFB.bindTexture);
     
     glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+    
+    //presentRenderbuffer 之前要绑定对应的renderbuffer
+    glBindRenderbuffer(GL_RENDERBUFFER, _renderBufferID);
+    
     [_context presentRenderbuffer:GL_RENDERER];
 }
 
@@ -489,16 +509,17 @@ static GLfloat rangeOffset = 16.0;
 
 - (void)setUpGLWithFrame:(CGRect)rect{
     [self rotate:90];
-    
     [self buildProgram];
     [self initVertBuffer];
     [self loadTexture];
-    [self initFramebuffer];
+	[self initFramebuffer];
 }
 
 
 - (void)openGLRender{
     [EAGLContext setCurrentContext:_context];
+    
+    [self setUpGLWithFrame:self.frame];
     
     if(!_mglFB){
         int scale = [UIScreen mainScreen].scale;
@@ -507,9 +528,9 @@ static GLfloat rangeOffset = 16.0;
         
         _mglFB = [[MGLFrameBuffer alloc] initWithSize:CGSizeMake(width, heigh)];
     }
-    
-    [self setUpGLWithFrame:self.frame];
-    
+}
+
+- (void)displayingLinkDraw{
     [self drawOpenGL];
 }
 
