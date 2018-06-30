@@ -141,7 +141,7 @@ static NSString *const ScreenTextureRGBFS = SHADER_STRING
 - (instancetype)init{
     self = [super init];
     if(self){
-        _context = [[EAGLContext alloc] initWithAPI:kEAGLRenderingAPIOpenGLES2];
+        _context = [[EAGLContext alloc] initWithAPI:kEAGLRenderingAPIOpenGLES3];
         
         CGFloat scale = [[UIScreen mainScreen] scale];
         self.contentsScale = scale;
@@ -375,13 +375,13 @@ static GLfloat rangeOffset = 16.0;
     size_t height = CVPixelBufferGetHeightOfPlane(nv12Pixelbuf, 0);
     
     glActiveTexture(GL_TEXTURE0);
-    // 这个函数是 opengl es 2的
+    // On GLES3 use GL_R8 instead of GL_RED
     CVReturn err = CVOpenGLESTextureCacheCreateTextureFromImage(kCFAllocatorDefault,
                                                                 _videoTextureCache,
                                                                 nv12Pixelbuf,
                                                                 NULL,
                                                                 GL_TEXTURE_2D,
-                                                                GL_RED_EXT,//GL_LUM
+                                                                GL_R8_EXT,//GL_LUM
                                                                 (int)width,
                                                                 (int)height,
                                                                 GL_RED_EXT,//GL_RED_EXT
@@ -405,7 +405,7 @@ static GLfloat rangeOffset = 16.0;
                                                        nv12Pixelbuf,
                                                        NULL,
                                                        GL_TEXTURE_2D,
-                                                       GL_RG_EXT,
+                                                       GL_RG8_EXT,
                                                        (int)width/2,
                                                        (int)height/2,
                                                        GL_RG_EXT,
