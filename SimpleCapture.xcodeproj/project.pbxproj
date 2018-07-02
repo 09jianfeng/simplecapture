@@ -30,6 +30,7 @@
 		782FAACB20E23365001DBAF7 /* PixelBufferRotateTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 782FAAC920E23364001DBAF7 /* PixelBufferRotateTool.m */; };
 		782FAB2B20E63A59001DBAF7 /* MutilDrawEAGLLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 782FAB2A20E63A58001DBAF7 /* MutilDrawEAGLLayer.m */; };
 		7832CA7420E7654F009CC807 /* MultiDrawMetalLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 7832CA7220E7654E009CC807 /* MultiDrawMetalLayer.m */; };
+		7832CA7720E777E5009CC807 /* MultiTextureYUVGLLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 7832CA7620E777E5009CC807 /* MultiTextureYUVGLLayer.m */; };
 		7837825F1E8E34FE00DED271 /* YUVFileTransform.mm in Sources */ = {isa = PBXBuildFile; fileRef = 7837825E1E8E34FE00DED271 /* YUVFileTransform.mm */; };
 		783782651E8E531100DED271 /* H264VideoDecoder.m in Sources */ = {isa = PBXBuildFile; fileRef = 783782641E8E531100DED271 /* H264VideoDecoder.m */; };
 		783782671E8E654E00DED271 /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 783782661E8E654E00DED271 /* libc++.tbd */; };
@@ -164,6 +165,8 @@
 		782FAB2A20E63A58001DBAF7 /* MutilDrawEAGLLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MutilDrawEAGLLayer.m; sourceTree = "<group>"; };
 		7832CA7220E7654E009CC807 /* MultiDrawMetalLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MultiDrawMetalLayer.m; sourceTree = "<group>"; };
 		7832CA7320E7654E009CC807 /* MultiDrawMetalLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MultiDrawMetalLayer.h; sourceTree = "<group>"; };
+		7832CA7520E777E5009CC807 /* MultiTextureYUVGLLayer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MultiTextureYUVGLLayer.h; sourceTree = "<group>"; };
+		7832CA7620E777E5009CC807 /* MultiTextureYUVGLLayer.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MultiTextureYUVGLLayer.m; sourceTree = "<group>"; };
 		7837825D1E8E34FE00DED271 /* YUVFileTransform.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YUVFileTransform.h; sourceTree = "<group>"; };
 		7837825E1E8E34FE00DED271 /* YUVFileTransform.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = YUVFileTransform.mm; sourceTree = "<group>"; };
 		783782631E8E531100DED271 /* H264VideoDecoder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = H264VideoDecoder.h; sourceTree = "<group>"; };
@@ -667,6 +670,8 @@
 				78A21EFE209C0A0600918C6D /* TextureEAGLLayerFBTexture.m */,
 				780448952086E60E00FAE1DF /* MultiTextureEAGLLayer.h */,
 				780448962086E60E00FAE1DF /* MultiTextureEAGLLayer.m */,
+				7832CA7520E777E5009CC807 /* MultiTextureYUVGLLayer.h */,
+				7832CA7620E777E5009CC807 /* MultiTextureYUVGLLayer.m */,
 				780448A8208833DB00FAE1DF /* TextureGLKView.h */,
 				780448A9208833DC00FAE1DF /* TextureGLKView.m */,
 				78FB9979208DDE62000F1448 /* TextureGLKViewFBTexture.h */,
@@ -1638,6 +1643,7 @@
 				DA0E7AFC1C128164003A8C25 /* AppDelegate.m in Sources */,
 				78AE42571E821E5E00D84304 /* VideoFileDecoder.m in Sources */,
 				78DB0C722064DBEF005F87DA /* CameraViewController.m in Sources */,
+				7832CA7720E777E5009CC807 /* MultiTextureYUVGLLayer.m in Sources */,
 				783782651E8E531100DED271 /* H264VideoDecoder.m in Sources */,
 				780448AA208833DC00FAE1DF /* TextureGLKView.m in Sources */,
 				782D642D20DCA2D80085FE26 /* MGLFrameBuffer.m in Sources */,

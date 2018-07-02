@@ -28,14 +28,15 @@
     
     _tableData = @[@"glkview fb 渲染到纹理",
                    @"glkview 直接渲染",
-                   @"CAEAGLLayer 多重纹理",
+                   @"openGL 多重纹理",
                    @"CAEAGLLayer 渲染到纹理",
                    @"metalrenderlayer",
                    @"AAPLEAGLlayer",
                    @"MultiDrawMetalLayer",
                    @"MGLFramebufferEAGL",
                    @"MGLFBYUVEAGLayer",
-                   @"MutilDrawEAGLLayer"];
+                   @"MutilDrawEAGLLayer",
+                   @"YUVGLLayer 多重纹理"];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -73,7 +74,9 @@
                     @"MultiDrawMetalLayer",
                     @"MGLFBEAGLayer",
                     @"MGLFBYUVEAGLayer",
-                    @"MutilDrawEAGLLayer"];
+                    @"MutilDrawEAGLLayer",
+                    @"MultiTextureYUVGLLayer"];
+    
     [openglVC useOpenGLTestType:(int)indexPath.row];
     [self.navigationController pushViewController:openglVC animated:NO];
 }
