@@ -165,6 +165,11 @@ static NSString *const TextureRGBFS = SHADER_STRING
     
     MGLMatrix *_matrix;
     
+    CVOpenGLESTextureRef lumaTexture[9];
+    CVOpenGLESTextureRef chromaTexture[9];
+    CVOpenGLESTextureCacheRef _videoTextureCache;
+    CVPixelBufferRef _nv12Pixelbuf;
+    
     CADisplayLink *_displayLink;
     dispatch_queue_t _queue;
 }
@@ -183,6 +188,9 @@ static NSString *const TextureRGBFS = SHADER_STRING
         [_displayLink addToRunLoop:[NSRunLoop currentRunLoop] forMode:NSDefaultRunLoopMode];
         
         _queue = dispatch_queue_create("Render Queue", DISPATCH_QUEUE_SERIAL);
+        
+        UIImage *image = [UIImage imageNamed:@"container.jpg"];
+        _nv12Pixelbuf = imageToYUVPixelBuffer(image);
     }
     return self;
 }
@@ -204,6 +212,8 @@ static GLfloat rangeOffset = 16.0;
 }
 
 - (void)buildProgram{
+    NSLog(@"____ buildProgram");
+    
     _program = [[GLProgram alloc] initWithVertexShaderString:TextureRGBVS fragmentShaderString:TextureRGBFS];
     [_program addAttribute:@"aPos"];
     [_program addAttribute:@"aTextCoord"];
@@ -231,29 +241,92 @@ static GLfloat rangeOffset = 16.0;
     }
 }
 
-- (void)initGL{
+- (void)loadTexture{
+    NSLog(@"____ loadTexture");
     
-    // 如果是 opengl es 2.0 只有 8个纹理单元。 opengl es 3.0有16个纹理单元。
-    int MaxTextureImageUnits;
-    glGetIntegerv(GL_MAX_TEXTURE_IMAGE_UNITS, &MaxTextureImageUnits);
-    NSLog(@"____ MaxTextureImageUnits %d",MaxTextureImageUnits);
-    
-    // general framebuffer
-    glGenFramebuffers(1, &_framebufferID);
-    glBindFramebuffer(GL_FRAMEBUFFER, _framebufferID);
-    
-    glGenRenderbuffers(1, &_renderBufferID);
-    glBindRenderbuffer(GL_RENDERBUFFER, _renderBufferID);
-    
-    [_context renderbufferStorage:GL_RENDERBUFFER fromDrawable:self];
-    glGetRenderbufferParameteriv(GL_RENDERBUFFER, GL_RENDERBUFFER_WIDTH, &_backingWidth);
-    glGetRenderbufferParameteriv(GL_RENDERBUFFER, GL_RENDERBUFFER_HEIGHT, &_backingHeight);
-    
-    glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_RENDERBUFFER, _renderBufferID);
-    if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE) {
-        NSLog(@"Failed to make complete framebuffer object %x", glCheckFramebufferStatus(GL_FRAMEBUFFER));
+    // load and create a texture
+    // -------------------------
+    for(int i = 0; i < 18; i+=2){
+        // Create CVOpenGLESTextureCacheRef for optimal CVPixelBufferRef to GLES texture conversion
+        CVReturn err;
+        if (!_videoTextureCache) {
+            err = CVOpenGLESTextureCacheCreate(kCFAllocatorDefault, NULL, _context, NULL, &_videoTextureCache);
+            if (err != noErr) {
+                NSLog(@"Error at CVOpenGLESTextureCacheCreate %d", err);
+                return;
+            }
+        }
+        
+        if (lumaTexture[i/2]) {
+            CFRelease(lumaTexture[i/2]);
+        }
+        
+        if (chromaTexture[i/2]) {
+            CFRelease(chromaTexture[i/2]);
+        }
+        
+        // Periodic texture cache flush every frame
+        CVOpenGLESTextureCacheFlush(_videoTextureCache, 0);
+
+        
+//         Periodic texture cache flush every frame
+        CVOpenGLESTextureCacheFlush(_videoTextureCache, 0);
+        
+        size_t width = CVPixelBufferGetWidthOfPlane(_nv12Pixelbuf, 0);
+        size_t height = CVPixelBufferGetHeightOfPlane(_nv12Pixelbuf, 0);
+        
+        glActiveTexture(GL_TEXTURE0+i);
+        //  On GLES3 use GL_R8 instead of GL_RED
+        err = CVOpenGLESTextureCacheCreateTextureFromImage(kCFAllocatorDefault,
+                                                                    _videoTextureCache,
+                                                                    _nv12Pixelbuf,
+                                                                    NULL,
+                                                                    GL_TEXTURE_2D,
+                                                                    GL_R8_EXT,//GL_LUM
+                                                                    (int)width,
+                                                                    (int)height,
+                                                                    GL_RED_EXT,//GL_RED_EXT
+                                                                    GL_UNSIGNED_BYTE,
+                                                                    0,
+                                                                    &lumaTexture[i/2]);
+        
+        if (err) {
+            NSLog(@"Error at CVOpenGLESTextureCacheCreateTextureFromImage %d", err);
+        }
+        glBindTexture(CVOpenGLESTextureGetTarget(lumaTexture[i/2]), CVOpenGLESTextureGetName(lumaTexture[i/2]));
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+        glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+        glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+        
+        
+        glActiveTexture(GL_TEXTURE0+i+1);
+        err = CVOpenGLESTextureCacheCreateTextureFromImage(kCFAllocatorDefault,
+                                                           _videoTextureCache,
+                                                           _nv12Pixelbuf,
+                                                           NULL,
+                                                           GL_TEXTURE_2D,
+                                                           GL_RG8_EXT,
+                                                           (int)width/2,
+                                                           (int)height/2,
+                                                           GL_RG_EXT,
+                                                           GL_UNSIGNED_BYTE,
+                                                           1,
+                                                           &chromaTexture[i/2]);
+        if (err) {
+            NSLog(@"Error at CVOpenGLESTextureCacheCreateTextureFromImage %d", err);
+        }
+        
+        glBindTexture(CVOpenGLESTextureGetTarget(chromaTexture[i/2]), CVOpenGLESTextureGetName(chromaTexture[i/2]));
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+        glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+        glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
     }
-    
+}
+
+- (void)initVertices{
+    NSLog(@"____ initVertices");
     
     // set up vertex data (and buffer(s)) and configure vertex attributes
     // ------------------------------------------------------------------
@@ -294,89 +367,36 @@ static GLfloat rangeOffset = 16.0;
     glVertexAttribPointer(_textureIndex, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(6 * sizeof(float)));
     glEnableVertexAttribArray(_textureIndex);
     
-    
-    // load and create a texture
-    // -------------------------
-    // load image, create texture and generate mipmaps
-    
-    // load image, create texture and generate mipmaps
-    UIImage *image = [UIImage imageNamed:@"container.jpg"];
-    CVPixelBufferRef nv12Pixelbuf = imageToYUVPixelBuffer(image);
-    
-    for(int i = 0; i < 18; i+=2){
-        // Create CVOpenGLESTextureCacheRef for optimal CVPixelBufferRef to GLES texture conversion.
-        
-        CVOpenGLESTextureRef _lumaTexture;
-        CVOpenGLESTextureRef _chromaTexture;
-        CVOpenGLESTextureCacheRef _videoTextureCache;
-
-        CVReturn err = CVOpenGLESTextureCacheCreate(kCFAllocatorDefault, NULL, _context, NULL, &_videoTextureCache);
-        if (err != noErr) {
-            NSLog(@"Error at CVOpenGLESTextureCacheCreate %d", err);
-            return;
-        }
-        
-//         Periodic texture cache flush every frame
-        CVOpenGLESTextureCacheFlush(_videoTextureCache, 0);
-        
-        size_t width = CVPixelBufferGetWidthOfPlane(nv12Pixelbuf, 0);
-        size_t height = CVPixelBufferGetHeightOfPlane(nv12Pixelbuf, 0);
-        
-        glActiveTexture(GL_TEXTURE0+i);
-        //  On GLES3 use GL_R8 instead of GL_RED
-        err = CVOpenGLESTextureCacheCreateTextureFromImage(kCFAllocatorDefault,
-                                                                    _videoTextureCache,
-                                                                    nv12Pixelbuf,
-                                                                    NULL,
-                                                                    GL_TEXTURE_2D,
-                                                                    GL_R8_EXT,//GL_LUM
-                                                                    (int)width,
-                                                                    (int)height,
-                                                                    GL_RED_EXT,//GL_RED_EXT
-                                                                    GL_UNSIGNED_BYTE,
-                                                                    0,
-                                                                    &_lumaTexture);
-        
-        if (err) {
-            NSLog(@"Error at CVOpenGLESTextureCacheCreateTextureFromImage %d", err);
-        }
-        glBindTexture(CVOpenGLESTextureGetTarget(_lumaTexture), CVOpenGLESTextureGetName(_lumaTexture));
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-        glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-        glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-        
-        
-        glActiveTexture(GL_TEXTURE0+i+1);
-        err = CVOpenGLESTextureCacheCreateTextureFromImage(kCFAllocatorDefault,
-                                                           _videoTextureCache,
-                                                           nv12Pixelbuf,
-                                                           NULL,
-                                                           GL_TEXTURE_2D,
-                                                           GL_RG8_EXT,
-                                                           (int)width/2,
-                                                           (int)height/2,
-                                                           GL_RG_EXT,
-                                                           GL_UNSIGNED_BYTE,
-                                                           1,
-                                                           &_chromaTexture);
-        if (err) {
-            NSLog(@"Error at CVOpenGLESTextureCacheCreateTextureFromImage %d", err);
-        }
-        
-        glBindTexture(CVOpenGLESTextureGetTarget(_chromaTexture), CVOpenGLESTextureGetName(_chromaTexture));
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-        glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-        glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-        
-    }
-    
-    // render container
+    // 纹理变量对应上纹理单元
     [_program use];
     [self setUniforAttribute];
     for(int i = 0; i < 18; i++){
         glUniform1i(uniform[i],i);
+    }
+}
+
+- (void)initFrameBuffer{
+    NSLog(@"____ initFrameBuffer");
+    
+    // 如果是 opengl es 2.0 只有 8个纹理单元。 opengl es 3.0有16个纹理单元。
+    int MaxTextureImageUnits;
+    glGetIntegerv(GL_MAX_TEXTURE_IMAGE_UNITS, &MaxTextureImageUnits);
+    NSLog(@"____ MaxTextureImageUnits %d",MaxTextureImageUnits);
+    
+    // general framebuffer
+    glGenFramebuffers(1, &_framebufferID);
+    glBindFramebuffer(GL_FRAMEBUFFER, _framebufferID);
+    
+    glGenRenderbuffers(1, &_renderBufferID);
+    glBindRenderbuffer(GL_RENDERBUFFER, _renderBufferID);
+    
+    [_context renderbufferStorage:GL_RENDERBUFFER fromDrawable:self];
+    glGetRenderbufferParameteriv(GL_RENDERBUFFER, GL_RENDERBUFFER_WIDTH, &_backingWidth);
+    glGetRenderbufferParameteriv(GL_RENDERBUFFER, GL_RENDERBUFFER_HEIGHT, &_backingHeight);
+    
+    glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_RENDERBUFFER, _renderBufferID);
+    if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE) {
+        NSLog(@"Failed to make complete framebuffer object %x", glCheckFramebufferStatus(GL_FRAMEBUFFER));
     }
     
     glViewport(0,0,_backingWidth,_backingHeight);
@@ -384,10 +404,12 @@ static GLfloat rangeOffset = 16.0;
 
 - (void)displayingLinkDraw{
     
-    dispatch_async(_queue, ^{
+    dispatch_sync(_queue, ^{
         [EAGLContext setCurrentContext:_context];
         
         glBindFramebuffer(GL_FRAMEBUFFER, _framebufferID);
+        
+        [self loadTexture];
         
         // render
         // ------
@@ -403,10 +425,13 @@ static GLfloat rangeOffset = 16.0;
 }
 
 - (void)setUpGLWithFrame:(CGRect)rect{
+    NSLog(@"setUpGLWithFrame");
+    
     [EAGLContext setCurrentContext:_context];
     
     [self buildProgram];
-    [self initGL];
+    [self initVertices];
+    [self initFrameBuffer];
 }
 
 - (void)dealloc{
@@ -424,14 +449,20 @@ static GLfloat rangeOffset = 16.0;
 
 #pragma mark - openglcontainerDelegate
 - (void)setContianerFrame:(CGRect)rect{
+    NSLog(@"____ setContianerFrame");
+    
     self.frame = rect;
 }
 
 - (void)openGLRender{
+    NSLog(@"____ openGLRender");
+    
     [self setUpGLWithFrame:self.frame];
 }
 
 - (void)removeFromSuperContainer{
+    NSLog(@"____ removeFromSuperContainer");
+    
     [self removeFromSuperlayer];
     [_displayLink invalidate];
 }

@@ -160,30 +160,7 @@ static NSString *const TextureRGBFS = SHADER_STRING
     }
 }
 
-- (void)initGL{
-    
-    // 如果是 opengl es 2.0 只有 8个纹理单元。 opengl es 3.0有16个纹理单元。
-    int MaxTextureImageUnits;
-    glGetIntegerv(GL_MAX_TEXTURE_IMAGE_UNITS, &MaxTextureImageUnits);
-    NSLog(@"____ MaxTextureImageUnits %d",MaxTextureImageUnits);
-    
-    // general framebuffer
-    glGenFramebuffers(1, &_framebufferID);
-    glBindFramebuffer(GL_FRAMEBUFFER, _framebufferID);
-    
-    glGenRenderbuffers(1, &_renderBufferID);
-    glBindRenderbuffer(GL_RENDERBUFFER, _renderBufferID);
-    
-    [_context renderbufferStorage:GL_RENDERBUFFER fromDrawable:self];
-    glGetRenderbufferParameteriv(GL_RENDERBUFFER, GL_RENDERBUFFER_WIDTH, &_backingWidth);
-    glGetRenderbufferParameteriv(GL_RENDERBUFFER, GL_RENDERBUFFER_HEIGHT, &_backingHeight);
-    
-    glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_RENDERBUFFER, _renderBufferID);
-    if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE) {
-        NSLog(@"Failed to make complete framebuffer object %x", glCheckFramebufferStatus(GL_FRAMEBUFFER));
-    }
-    
-    
+- (void)initVerticesBuffer{
     // set up vertex data (and buffer(s)) and configure vertex attributes
     // ------------------------------------------------------------------
     float vertices[] = {
@@ -222,8 +199,34 @@ static NSString *const TextureRGBFS = SHADER_STRING
     // texture coord attribute
     glVertexAttribPointer(_textureIndex, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(6 * sizeof(float)));
     glEnableVertexAttribArray(_textureIndex);
+}
+
+- (void)initFramebuffer{
+    // 如果是 opengl es 2.0 只有 8个纹理单元。 opengl es 3.0有16个纹理单元。
+    int MaxTextureImageUnits;
+    glGetIntegerv(GL_MAX_TEXTURE_IMAGE_UNITS, &MaxTextureImageUnits);
+    NSLog(@"____ MaxTextureImageUnits %d",MaxTextureImageUnits);
     
+    // general framebuffer
+    glGenFramebuffers(1, &_framebufferID);
+    glBindFramebuffer(GL_FRAMEBUFFER, _framebufferID);
     
+    glGenRenderbuffers(1, &_renderBufferID);
+    glBindRenderbuffer(GL_RENDERBUFFER, _renderBufferID);
+    
+    [_context renderbufferStorage:GL_RENDERBUFFER fromDrawable:self];
+    glGetRenderbufferParameteriv(GL_RENDERBUFFER, GL_RENDERBUFFER_WIDTH, &_backingWidth);
+    glGetRenderbufferParameteriv(GL_RENDERBUFFER, GL_RENDERBUFFER_HEIGHT, &_backingHeight);
+    
+    glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_RENDERBUFFER, _renderBufferID);
+    if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE) {
+        NSLog(@"Failed to make complete framebuffer object %x", glCheckFramebufferStatus(GL_FRAMEBUFFER));
+    }
+    
+    glViewport(0,0,_backingWidth,_backingHeight);
+}
+
+- (void)loadTexture{
     // load and create a texture
     // -------------------------
     // load image, create texture and generate mipmaps
@@ -232,7 +235,7 @@ static NSString *const TextureRGBFS = SHADER_STRING
     NSString *imageName = [NSString stringWithFormat:@"container.jpg"];
     UIImage *image = [UIImage imageNamed:imageName];
     MImageData* imageData = mglImageDataFromUIImage(image, YES);
-
+    
     for(int i = 0; i < 9; i++){
         glActiveTexture(GL_TEXTURE0+i);
         glBindTexture(GL_TEXTURE_2D, textures[i]); // all upcoming GL_TEXTURE_2D operations now have effect on this texture object
@@ -243,7 +246,7 @@ static NSString *const TextureRGBFS = SHADER_STRING
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
         glTexImage2D(GL_TEXTURE_2D, 0, imageData->format, (GLint)imageData->width, (GLint)imageData->height, 0, imageData->format, imageData->type, imageData->data);
-        glGenerateMipmap(GL_TEXTURE_2D);
+//        glGenerateMipmap(GL_TEXTURE_2D);
     }
     mglDestroyImageData(imageData);
     
@@ -252,13 +255,11 @@ static NSString *const TextureRGBFS = SHADER_STRING
     for(int i = 0; i < 9; i++){
         glUniform1i(uniform[i],i);
     }
-    
-    glViewport(0,0,_backingWidth,_backingHeight);
 }
 
 - (void)displayingLinkDraw{
     
-    dispatch_async(_queue, ^{
+    dispatch_sync(_queue, ^{
         [EAGLContext setCurrentContext:_context];
         
         glBindFramebuffer(GL_FRAMEBUFFER, _framebufferID);
@@ -280,7 +281,9 @@ static NSString *const TextureRGBFS = SHADER_STRING
     [EAGLContext setCurrentContext:_context];
     
     [self buildProgram];
-    [self initGL];
+    [self initVerticesBuffer];
+    [self initFramebuffer];
+    [self loadTexture];
 }
 
 - (void)dealloc{
@@ -292,6 +295,8 @@ static NSString *const TextureRGBFS = SHADER_STRING
     glDeleteBuffers(1, &VAO);
     glDeleteBuffers(1, &VBO);
     glDeleteBuffers(1, &EBO);
+    
+    glDeleteTextures(9, textures);
     
     NSLog(@"MultiTextureEAGLLayer dealloc");
 }
