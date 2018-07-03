@@ -7,6 +7,7 @@
 //
 
 #import "AVAssetDecodeEncode.h"
+#import "YMTinyVideoCompositionEditor.h"
 
 #define YM_TINYVIDEO_NORMAL_FPS 30
 #define YM_TINYVIDEO_PLAYER_FPS 60
@@ -77,14 +78,14 @@
     }
     
     _videoItems.firstObject.rotateAngle = self.rotateAngle;
-    /*
+    
     YMTinyVideoCompositionEditor * compositionEditor = [[YMTinyVideoCompositionEditor alloc] initWithVideoItems:_videoItems audioItems:_audioItems];
     [compositionEditor buildCropAVComposition:_outputSize cropRect:_cropRect fps:[self getActualFrameRate]];
     self.videoComposition = compositionEditor.videoComposition;
     self.audioMix = compositionEditor.audioMix;
-    */
     
-    [self doExport:videoAVAsset useGL:NO handler:handler];
+    
+    [self doExport:compositionEditor.composition useGL:NO handler:handler];
 }
 
 - (void)doExport:(AVAsset *)asset useGL:(BOOL)useGL handler:(void (^)(void))handler {

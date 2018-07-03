@@ -13,8 +13,14 @@
 #import "VideoItem.h"
 #import "AVAssetDecodeEncode.h"
 
-@interface AssetViewController ()
+typedef void (^YMTinyVideoTranscodeCompleteBlock)(void);
+typedef void (^YMTinyVideoTranscodeProgressBlock)(CGFloat progress);
+typedef void (^YMTinyVideoTranscodeFailureBlock)(NSError * err);
 
+@interface AssetViewController ()
+@property (nonatomic, copy) YMTinyVideoTranscodeProgressBlock progressBlock;
+@property (nonatomic, copy) YMTinyVideoTranscodeCompleteBlock completeBlock;
+@property (nonatomic, copy) YMTinyVideoTranscodeFailureBlock failureBlock;
 @end
 
 @implementation AssetViewController{
@@ -24,6 +30,22 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
+    
+    YMTinyVideoTranscodeCompleteBlock compleBlock = ^{
+        NSLog(@"____ complete");
+    };
+    
+    YMTinyVideoTranscodeProgressBlock progress = ^(CGFloat progress){
+        NSLog(@"____ progress %f",progress);
+    };
+    
+    YMTinyVideoTranscodeFailureBlock failture = ^(NSError * err){
+        NSLog(@"____ failture %@",err);
+    };
+
+    self.completeBlock = compleBlock;
+    self.progressBlock = progress;
+    self.failureBlock = failture;
 }
 
 - (void)didReceiveMemoryWarning {
@@ -36,17 +58,20 @@
     videoItem.videoPath = url.path;
     _encoder = [[AVAssetDecodeEncode alloc] initWithVideoItems:@[videoItem] audioItems:nil];
     _encoder.outputFileType = AVFileTypeMPEG4;
-    _encoder.outputURL = [NSURL URLWithString:[NSTemporaryDirectory() stringByAppendingPathComponent:[url.path lastPathComponent]]];
+    int timeIntel = [[[NSDate alloc] init] timeIntervalSince1970];
+    _encoder.outputURL = [NSURL fileURLWithPath:[NSTemporaryDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"%d_%@",timeIntel,[url.path lastPathComponent]]]];
     _encoder.shouldOptimizeForNetworkUse = YES;
     
     CMTime startTime = CMTimeMakeWithSeconds(0, _encoder.originAsset.duration.timescale);
-    CMTime endTime = CMTimeMakeWithSeconds(0 + phasset.duration, _encoder.originAsset.duration.timescale);
+    
+    int duration = phasset.duration;//这一步非常必须
+    CMTime endTime = CMTimeMakeWithSeconds(duration, _encoder.originAsset.duration.timescale);
     
     int width = (int)phasset.pixelWidth;
     int height = (int)phasset.pixelHeight;
-    int maxBitrate = 3000;
+    int maxBitrate = 8388608;
     int iframes = 6;
-    int fps = 25;
+    int fps = 24;
     
     _encoder.timeRange = CMTimeRangeFromTimeToTime(startTime, endTime);
     _encoder.outputSize = CGSizeMake(width, height);
@@ -70,7 +95,36 @@
                                AVSampleRateKey: @44100,
                                };
     
-
+    [self addObserver];
+    [_encoder exportCropAsynchronouslyWithCompletionHandler:^{
+        if (_encoder.status == AVAssetExportSessionStatusCompleted) {
+            NSLog(@"Asset Transcode Completed");
+            if (_completeBlock) {
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    _completeBlock();
+                });
+            }
+        } else if (_encoder.status == AVAssetExportSessionStatusCancelled) {
+            NSLog(@"Asset Transcode Cancelled");
+            //} else {
+            if (_failureBlock) {
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    _failureBlock(_encoder.error);
+                });
+            }
+            NSLog(@"Asset transcode failed with error: %@", _encoder.error);
+        } else if (_encoder.status == AVAssetExportSessionStatusFailed) {
+            NSLog(@"Asset Transcode failed");
+            if (_failureBlock) {
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    _failureBlock(_encoder.error);
+                });
+            }
+            NSLog(@"Asset transcode failed with error: %@", _encoder.error);
+        } else {
+            NSLog(@"should not call this status %zi ", _encoder.status);
+        }
+    } avasset:(AVAsset *)phasset];
 }
 
 - (IBAction)seleteVideoBtnPressed:(id)sender {
@@ -111,4 +165,48 @@
     }];
 }
 
+- (void)cancel {
+    dispatch_async(dispatch_get_main_queue(), ^{
+    	[_encoder cancelExport];
+    });
+}
+
+
+#pragma mark - kvo
+
+- (void)addObserver{
+    [_encoder addObserver:self forKeyPath:@"progress" options:NSKeyValueObservingOptionOld | NSKeyValueObservingOptionNew context:nil];
+}
+
+- (void)removeObserver{
+    [_encoder removeObserver:self forKeyPath:@"progress" context:nil];
+}
+
+- (void)observeValueForKeyPath:(NSString *)keyPath
+                      ofObject:(id)object
+                        change:(NSDictionary *)change
+                       context:(void *)context {
+    NSNumber * old = [change objectForKey:NSKeyValueChangeOldKey];
+    NSNumber * new = [change objectForKey:NSKeyValueChangeNewKey];
+    
+    if ([old isEqual:new]) {
+        // No change in value - don't bother with any processing.
+        return;
+    }
+    
+    if ([keyPath isEqualToString:@"progress"]) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            if(self.progressBlock){
+                self.progressBlock(new.floatValue);
+            }
+
+        });
+    }
+}
+
+- (void)dealloc {
+    if (_encoder) {
+        [self removeObserver];
+    }
+}
 @end

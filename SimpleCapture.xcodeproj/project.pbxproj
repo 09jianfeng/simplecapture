@@ -42,6 +42,10 @@
 		782FA39720EB72BA00CCE550 /* YMTinyVideoFFmpegContext.m in Sources */ = {isa = PBXBuildFile; fileRef = 782FA39320EB72B900CCE550 /* YMTinyVideoFFmpegContext.m */; };
 		782FA39820EB72BA00CCE550 /* YMTinyVideoFFmpeg.m in Sources */ = {isa = PBXBuildFile; fileRef = 782FA39520EB72B900CCE550 /* YMTinyVideoFFmpeg.m */; };
 		782FA39A20EB76C600CCE550 /* ffmpegframework.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 782FA2F220EB6F2600CCE550 /* ffmpegframework.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		782FA3A620EB7E9600CCE550 /* YMTinyVideoCompositor.m in Sources */ = {isa = PBXBuildFile; fileRef = 782FA39C20EB7E9600CCE550 /* YMTinyVideoCompositor.m */; };
+		782FA3A720EB7E9600CCE550 /* YMTinyVideoCompositionEditor.m in Sources */ = {isa = PBXBuildFile; fileRef = 782FA39F20EB7E9600CCE550 /* YMTinyVideoCompositionEditor.m */; };
+		782FA3A820EB7E9600CCE550 /* YMTinyVideoCompositionInstruction.m in Sources */ = {isa = PBXBuildFile; fileRef = 782FA3A220EB7E9600CCE550 /* YMTinyVideoCompositionInstruction.m */; };
+		782FA3AA20EB7E9600CCE550 /* YMTinyVideoUrlItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 782FA3A520EB7E9600CCE550 /* YMTinyVideoUrlItem.m */; };
 		782FAACB20E23365001DBAF7 /* PixelBufferRotateTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 782FAAC920E23364001DBAF7 /* PixelBufferRotateTool.m */; };
 		782FAB2B20E63A59001DBAF7 /* MutilDrawEAGLLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 782FAB2A20E63A58001DBAF7 /* MutilDrawEAGLLayer.m */; };
 		7832CA7420E7654F009CC807 /* MultiDrawMetalLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 7832CA7220E7654E009CC807 /* MultiDrawMetalLayer.m */; };
@@ -364,6 +368,14 @@
 		782FA39420EB72B900CCE550 /* YMTinyVideoFFmpegContext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YMTinyVideoFFmpegContext.h; sourceTree = "<group>"; };
 		782FA39520EB72B900CCE550 /* YMTinyVideoFFmpeg.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YMTinyVideoFFmpeg.m; sourceTree = "<group>"; };
 		782FA39620EB72BA00CCE550 /* YMTinyVideoFFmpeg.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YMTinyVideoFFmpeg.h; sourceTree = "<group>"; };
+		782FA39C20EB7E9600CCE550 /* YMTinyVideoCompositor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YMTinyVideoCompositor.m; sourceTree = "<group>"; };
+		782FA39E20EB7E9600CCE550 /* YMTinyVideoCompositionInstruction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YMTinyVideoCompositionInstruction.h; sourceTree = "<group>"; };
+		782FA39F20EB7E9600CCE550 /* YMTinyVideoCompositionEditor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YMTinyVideoCompositionEditor.m; sourceTree = "<group>"; };
+		782FA3A020EB7E9600CCE550 /* YMTinyVideoUrlItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YMTinyVideoUrlItem.h; sourceTree = "<group>"; };
+		782FA3A120EB7E9600CCE550 /* YMTinyVideoCompositionEditor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YMTinyVideoCompositionEditor.h; sourceTree = "<group>"; };
+		782FA3A220EB7E9600CCE550 /* YMTinyVideoCompositionInstruction.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YMTinyVideoCompositionInstruction.m; sourceTree = "<group>"; };
+		782FA3A320EB7E9600CCE550 /* YMTinyVideoCompositor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YMTinyVideoCompositor.h; sourceTree = "<group>"; };
+		782FA3A520EB7E9600CCE550 /* YMTinyVideoUrlItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YMTinyVideoUrlItem.m; sourceTree = "<group>"; };
 		782FAAC920E23364001DBAF7 /* PixelBufferRotateTool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PixelBufferRotateTool.m; sourceTree = "<group>"; };
 		782FAACA20E23364001DBAF7 /* PixelBufferRotateTool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PixelBufferRotateTool.h; sourceTree = "<group>"; };
 		782FAB2920E63A58001DBAF7 /* MutilDrawEAGLLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MutilDrawEAGLLayer.h; sourceTree = "<group>"; };
@@ -1200,6 +1212,22 @@
 			path = libswresample;
 			sourceTree = "<group>";
 		};
+		782FA39B20EB7E9600CCE550 /* transitions */ = {
+			isa = PBXGroup;
+			children = (
+				782FA39C20EB7E9600CCE550 /* YMTinyVideoCompositor.m */,
+				782FA39E20EB7E9600CCE550 /* YMTinyVideoCompositionInstruction.h */,
+				782FA39F20EB7E9600CCE550 /* YMTinyVideoCompositionEditor.m */,
+				782FA3A020EB7E9600CCE550 /* YMTinyVideoUrlItem.h */,
+				782FA3A120EB7E9600CCE550 /* YMTinyVideoCompositionEditor.h */,
+				782FA3A220EB7E9600CCE550 /* YMTinyVideoCompositionInstruction.m */,
+				782FA3A320EB7E9600CCE550 /* YMTinyVideoCompositor.h */,
+				782FA3A520EB7E9600CCE550 /* YMTinyVideoUrlItem.m */,
+			);
+			name = transitions;
+			path = avasset/transitions;
+			sourceTree = "<group>";
+		};
 		7842DA5D20D3A519006B25D1 /* resource */ = {
 			isa = PBXGroup;
 			children = (
@@ -1618,6 +1646,7 @@
 		78B2F34520EB1D310087A90C /* avasset */ = {
 			isa = PBXGroup;
 			children = (
+				782FA39B20EB7E9600CCE550 /* transitions */,
 				78B2F38720EB67980087A90C /* AVKit */,
 				78B2F35020EB22020087A90C /* VideoFileKit.h */,
 				78B2F35120EB22020087A90C /* VideoFileKit.m */,
@@ -1695,12 +1724,12 @@
 				78B2F39D20EB6BED0087A90C /* YMTinyVideoObject.h */,
 				78B2F39E20EB6BED0087A90C /* YMTinyVideoObject.m */,
 				78B2F38820EB67980087A90C /* YCloudVideoInfo.h */,
-				78B2F38B20EB67980087A90C /* YMTinyVideoCVKit.h */,
-				78B2F38D20EB67980087A90C /* YMTinyVideoExtracter.h */,
-				78B2F38E20EB67980087A90C /* YMTinyVideoMediaKit.h */,
 				78B2F39020EB67980087A90C /* YCloudVideoInfo.m */,
+				78B2F38B20EB67980087A90C /* YMTinyVideoCVKit.h */,
 				78B2F39120EB67980087A90C /* YMTinyVideoCVKit.m */,
+				78B2F38E20EB67980087A90C /* YMTinyVideoMediaKit.h */,
 				78B2F39320EB67980087A90C /* YMTinyVideoMediaKit.m */,
+				78B2F38D20EB67980087A90C /* YMTinyVideoExtracter.h */,
 				78B2F39420EB67980087A90C /* YMTinyVideoExtracter.m */,
 			);
 			name = AVKit;
@@ -2057,6 +2086,7 @@
 				78796B701E88EDDE00F93853 /* YUVFileReader.m in Sources */,
 				78B2F37720EB59800087A90C /* YZYPhotoGridViewController.m in Sources */,
 				78B2F37020EB59800087A90C /* UIView+Addition.m in Sources */,
+				782FA3A620EB7E9600CCE550 /* YMTinyVideoCompositor.m in Sources */,
 				782D643920DDF8DB0085FE26 /* MGLFBYUVEAGLayer.m in Sources */,
 				78A21EFF209C0A0600918C6D /* TextureEAGLLayerFBTexture.m in Sources */,
 				DA0E7AFF1C128164003A8C25 /* ViewController.m in Sources */,
@@ -2079,6 +2109,7 @@
 				7856510320984B3C00382E80 /* AACPlayer.m in Sources */,
 				787F33C41FA8AA38009A5C5F /* KxMovieGLView.m in Sources */,
 				7832CA7420E7654F009CC807 /* MultiDrawMetalLayer.m in Sources */,
+				782FA3AA20EB7E9600CCE550 /* YMTinyVideoUrlItem.m in Sources */,
 				DA0E7AFC1C128164003A8C25 /* AppDelegate.m in Sources */,
 				78AE42571E821E5E00D84304 /* VideoFileDecoder.m in Sources */,
 				78DB0C722064DBEF005F87DA /* CameraViewController.m in Sources */,
@@ -2089,6 +2120,7 @@
 				782D642D20DCA2D80085FE26 /* MGLFrameBuffer.m in Sources */,
 				782D643120DCA3130085FE26 /* MGLTools.m in Sources */,
 				780818441E8E0571002E0C0B /* VideoTool.m in Sources */,
+				782FA3A720EB7E9600CCE550 /* YMTinyVideoCompositionEditor.m in Sources */,
 				78B2F35520EB25D20087A90C /* VideoCompositionEditor.m in Sources */,
 				781A882B20BD51EC00E8A51F /* AACEncoder.m in Sources */,
 				782FA24C20EB6CE500CCE550 /* ffmpeg_h264_muxer_mp4v2.c in Sources */,
@@ -2102,6 +2134,7 @@
 				782FA24B20EB6CE500CCE550 /* ffmpeg_filter.c in Sources */,
 				782FA2F620EB708500CCE550 /* YMTinyVideoDispatcher.m in Sources */,
 				787F33C81FA8AAF1009A5C5F /* KXMovieController.m in Sources */,
+				782FA3A820EB7E9600CCE550 /* YMTinyVideoCompositionInstruction.m in Sources */,
 				782FAACB20E23365001DBAF7 /* PixelBufferRotateTool.m in Sources */,
 				782FA39720EB72BA00CCE550 /* YMTinyVideoFFmpegContext.m in Sources */,
 				DAA20BF61C5263FA008DB5AA /* VideoEncoder.m in Sources */,

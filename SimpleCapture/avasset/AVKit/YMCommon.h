@@ -117,4 +117,25 @@ typedef NS_ENUM(NSInteger, YMTinyVideoExposureMode){
     YMTinyVideoExposureModePoint = 1,
     YMTinyVideoExposureModeLock = 2,
 };
+
+
+typedef NS_ENUM(NSInteger ,YMRRotateMode) {
+    // 顺时针方向，protrait位置为原始位置
+    YMRRotateMode0,
+    YMRRotateMode90,
+    YMRRotateMode180,
+    YMRRotateMode270,
+    YMRRotateModeFlipHorizontal0,
+    YMRRotateModeFlipVertical0,
+};
+
+typedef NS_ENUM(NSInteger, YMROrientation) {
+    YMR_ORIENTATION_UP,
+    YMR_ORIENTATION_DOWN,
+    YMR_ORIENTATION_LEFT,
+    YMR_ORIENTATION_RIGHT,
+    YMR_ORIENTATION_NOTFOUND
+};
+
+
 #endif /* YMCommon_h */
