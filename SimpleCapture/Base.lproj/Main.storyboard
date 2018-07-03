@@ -13,7 +13,7 @@
         <!--采集-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="ViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="BYZ-38-t0r" customClass="ViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
                         <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
@@ -92,7 +92,7 @@
                                 <rect key="frame" x="531" y="372" width="51" height="31"/>
                             </switch>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ocu-PU-ppO">
-                                <rect key="frame" x="20" y="437" width="80" height="30"/>
+                                <rect key="frame" x="20" y="486" width="80" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="30" id="NKD-48-Z4O"/>
                                     <constraint firstAttribute="width" constant="80" id="fci-ED-Ra5"/>
@@ -104,7 +104,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EX8-lz-1vF">
-                                <rect key="frame" x="148" y="437" width="72" height="30"/>
+                                <rect key="frame" x="148" y="486" width="72" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="72" id="FxL-ce-oy5"/>
                                     <constraint firstAttribute="height" constant="30" id="Imv-Ci-FW7"/>
@@ -161,7 +161,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="130" y="-6"/>
+            <point key="canvasLocation" x="113" y="-649"/>
         </scene>
         <!--Video View Controller-->
         <scene sceneID="9ga-hp-h0E">
@@ -301,6 +301,44 @@
             </objects>
             <point key="canvasLocation" x="-1626" y="430"/>
         </scene>
+        <!--video-->
+        <scene sceneID="eFO-VM-f6O">
+            <objects>
+                <tableViewController id="kSy-IM-Wmj" customClass="VideoTableViewController" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="MmO-lO-cnp">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="videotableviewcell" textLabel="QWG-i4-XqX" style="IBUITableViewCellStyleDefault" id="Irh-Lx-k9f">
+                                <rect key="frame" x="0.0" y="28" width="375" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Irh-Lx-k9f" id="eKX-lJ-vhd">
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="QWG-i4-XqX">
+                                            <rect key="frame" x="16" y="0.0" width="343" height="43.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="kSy-IM-Wmj" id="cDO-dW-B72"/>
+                            <outlet property="delegate" destination="kSy-IM-Wmj" id="h6V-d9-j3W"/>
+                        </connections>
+                    </tableView>
+                    <tabBarItem key="tabBarItem" title="video" id="4v1-9a-evP"/>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="y2X-Zr-ehA" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="113" y="233"/>
+        </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="1AR-4b-xLy">
             <objects>
@@ -313,8 +351,8 @@
                     </tabBar>
                     <connections>
                         <segue destination="E86-9U-5G5" kind="relationship" relationship="viewControllers" id="FDp-nV-gMH"/>
-                        <segue destination="BYZ-38-t0r" kind="relationship" relationship="viewControllers" id="L8M-FN-zYJ"/>
                         <segue destination="no4-62-k1y" kind="relationship" relationship="viewControllers" id="pJp-t8-ud9"/>
+                        <segue destination="kSy-IM-Wmj" kind="relationship" relationship="viewControllers" id="kAy-kc-4NW"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="rzx-yc-S2H" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -334,7 +372,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ai1-Ql-0MG">
-                                <rect key="frame" x="26" y="64" width="34" height="30"/>
+                                <rect key="frame" x="26" y="20" width="34" height="30"/>
                                 <state key="normal" title="back"/>
                                 <connections>
                                     <action selector="btnClosePressed:" destination="s3f-16-bvJ" eventType="touchUpInside" id="FUT-5o-Gc1"/>
@@ -350,7 +388,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ij1-Ka-Zuj" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="129" y="720"/>
+            <point key="canvasLocation" x="1046" y="-649"/>
         </scene>
         <!--音频-->
         <scene sceneID="EiE-gl-f51">
@@ -423,7 +461,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="rqk-mo-Jc0" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="900" y="900.00000000000011"/>
+            <point key="canvasLocation" x="1598" y="233"/>
         </scene>
     </scenes>
 </document>

@@ -405,6 +405,8 @@ static GLfloat rangeOffset = 16.0;
 - (void)displayingLinkDraw{
     
     dispatch_sync(_queue, ^{
+        
+        
         [EAGLContext setCurrentContext:_context];
         
         glBindFramebuffer(GL_FRAMEBUFFER, _framebufferID);

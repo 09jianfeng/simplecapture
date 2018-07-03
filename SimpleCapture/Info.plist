@@ -26,6 +26,8 @@
 	<string>for test only</string>
 	<key>NSMicrophoneUsageDescription</key>
 	<string>for test only</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>相册</string>
 	<key>UILaunchStoryboardName</key>
 	<string>Main</string>
 	<key>UIMainStoryboardFile</key>
