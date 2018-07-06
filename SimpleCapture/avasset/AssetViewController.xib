@@ -6,11 +6,14 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
+        <capability name="Alignment constraints to the first baseline" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="AssetViewController">
             <connections>
+                <outlet property="labelProgress" destination="Nyz-4D-xwe" id="OgN-Lx-al8"/>
+                <outlet property="labelTimeCost" destination="Kqg-BZ-IoL" id="Pho-0b-r6X"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -19,16 +22,43 @@
             <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BAt-eY-nwR">
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BAt-eY-nwR">
                     <rect key="frame" x="8" y="119" width="62" height="30"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="62" id="NTH-Hv-aiA"/>
+                    </constraints>
                     <state key="normal" title="选择照片"/>
                     <connections>
                         <action selector="seleteVideoBtnPressed:" destination="-1" eventType="touchUpInside" id="2wo-Q1-noc"/>
                     </connections>
                 </button>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0.1" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Nyz-4D-xwe">
+                    <rect key="frame" x="99" y="123" width="118" height="21"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Kqg-BZ-IoL">
+                    <rect key="frame" x="251" y="123" width="97" height="21"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="97" id="QBE-cO-SE0"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstItem="Kqg-BZ-IoL" firstAttribute="leading" secondItem="Nyz-4D-xwe" secondAttribute="trailing" constant="34" id="EGM-NJ-df2"/>
+                <constraint firstAttribute="trailing" secondItem="Kqg-BZ-IoL" secondAttribute="trailing" constant="27" id="Svb-Ai-uah"/>
+                <constraint firstItem="BAt-eY-nwR" firstAttribute="baseline" secondItem="Nyz-4D-xwe" secondAttribute="baseline" id="Xup-dT-BCy"/>
+                <constraint firstItem="Nyz-4D-xwe" firstAttribute="firstBaseline" secondItem="Kqg-BZ-IoL" secondAttribute="firstBaseline" id="cuv-Jv-ekQ"/>
+                <constraint firstItem="BAt-eY-nwR" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="119" id="eIW-gl-bTE"/>
+                <constraint firstItem="Nyz-4D-xwe" firstAttribute="leading" secondItem="BAt-eY-nwR" secondAttribute="trailing" constant="29" id="wUa-Gk-zTc"/>
+                <constraint firstItem="BAt-eY-nwR" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="8" id="zyR-pn-WvI"/>
+            </constraints>
+            <point key="canvasLocation" x="33.5" y="53.5"/>
         </view>
     </objects>
 </document>

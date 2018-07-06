@@ -21,10 +21,13 @@ typedef void (^YMTinyVideoTranscodeFailureBlock)(NSError * err);
 @property (nonatomic, copy) YMTinyVideoTranscodeProgressBlock progressBlock;
 @property (nonatomic, copy) YMTinyVideoTranscodeCompleteBlock completeBlock;
 @property (nonatomic, copy) YMTinyVideoTranscodeFailureBlock failureBlock;
+@property (weak, nonatomic) IBOutlet UILabel *labelProgress;
+@property (weak, nonatomic) IBOutlet UILabel *labelTimeCost;
 @end
 
 @implementation AssetViewController{
     AVAssetDecodeEncode* _encoder;
+    int _beginTime;
 }
 
 - (void)viewDidLoad {
@@ -32,11 +35,19 @@ typedef void (^YMTinyVideoTranscodeFailureBlock)(NSError * err);
     // Do any additional setup after loading the view from its nib.
     
     YMTinyVideoTranscodeCompleteBlock compleBlock = ^{
+        
+        int now = [[[NSDate alloc] init] timeIntervalSince1970];
         NSLog(@"____ complete");
+        dispatch_async(dispatch_get_main_queue(), ^{
+            _labelTimeCost.text = [NSString stringWithFormat:@"%ds",now - _beginTime];
+        });
     };
     
     YMTinyVideoTranscodeProgressBlock progress = ^(CGFloat progress){
         NSLog(@"____ progress %f",progress);
+        dispatch_async(dispatch_get_main_queue(), ^{
+            _labelProgress.text = [NSString stringWithFormat:@"%f",progress];
+        });
     };
     
     YMTinyVideoTranscodeFailureBlock failture = ^(NSError * err){
@@ -70,7 +81,7 @@ typedef void (^YMTinyVideoTranscodeFailureBlock)(NSError * err);
     int width = (int)phasset.pixelWidth;
     int height = (int)phasset.pixelHeight;
     int maxBitrate = 8388608;
-    int iframes = 6;
+    int iframes = 100000;
     int fps = 24;
     
     _encoder.timeRange = CMTimeRangeFromTimeToTime(startTime, endTime);
@@ -96,6 +107,8 @@ typedef void (^YMTinyVideoTranscodeFailureBlock)(NSError * err);
                                };
     
     [self addObserver];
+    
+    _beginTime = [[[NSDate alloc] init] timeIntervalSince1970];
     [_encoder exportCropAsynchronouslyWithCompletionHandler:^{
         if (_encoder.status == AVAssetExportSessionStatusCompleted) {
             NSLog(@"Asset Transcode Completed");
