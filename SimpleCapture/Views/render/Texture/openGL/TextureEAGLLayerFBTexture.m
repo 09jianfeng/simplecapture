@@ -30,7 +30,7 @@ static NSString *const TextureRGBVS = SHADER_STRING
  void main() {
      gl_Position = vec4(aPos,1.0);
      TexCoord = aTextCoord.xy;
-     outColor = acolor.rgb;
+     //outColor = acolor.rgb;
  }
  );
 
@@ -46,7 +46,7 @@ static NSString *const TextureRGBFS = SHADER_STRING
  uniform sampler2D texture;
  void main() {
      //从纹理texture中采样纹理
-     gl_FragColor = texture2D(texture, TexCoord) * vec4(outColor, 1.0);
+     gl_FragColor = texture2D(texture, TexCoord);
  }
  );
 
@@ -226,7 +226,8 @@ static NSString *const ScreenTextureRGBFS = SHADER_STRING
 
 - (void)displayingLinkDraw{
     
-    dispatch_async(_queue, ^{
+    // 如果是dispatch_async 不知道为啥统计面板的CPU耗时会被统计成耗时33ms（感觉是xcode的bug）
+    dispatch_sync(_queue, ^{
         [EAGLContext setCurrentContext:_context];
         
         glBindFramebuffer(GL_FRAMEBUFFER, _framebufferID);
@@ -243,7 +244,7 @@ static NSString *const ScreenTextureRGBFS = SHADER_STRING
         glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
         
         glBindRenderbuffer(GL_RENDERBUFFER, _renderBufferID);
-        [_context presentRenderbuffer:GL_RENDERER];
+        [_context presentRenderbuffer:GL_RENDERBUFFER];
     });
 }
 
@@ -280,20 +281,3 @@ static NSString *const ScreenTextureRGBFS = SHADER_STRING
 }
 
 @end
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

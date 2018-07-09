@@ -499,7 +499,7 @@ static GLfloat rangeOffset = 16.0;
     //presentRenderbuffer 之前要绑定对应的renderbuffer
     glBindRenderbuffer(GL_RENDERBUFFER, _renderBufferID);
     
-    [_context presentRenderbuffer:GL_RENDERER];
+    [_context presentRenderbuffer:GL_RENDERBUFFER];
 }
 
 #pragma mark - openglcontainerDelegate

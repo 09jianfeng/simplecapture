@@ -271,7 +271,9 @@ static NSString *const ScreenTextureRGBFS = SHADER_STRING
     glBindTexture(GL_TEXTURE_2D, _mglFB.bindTexture);
     
     glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
-    [_context presentRenderbuffer:GL_RENDERER];
+    
+    glBindRenderbuffer(GL_RENDERBUFFER, _renderBufferID);
+    [_context presentRenderbuffer:GL_RENDERBUFFER];
 }
 
 #pragma mark - openglcontainerDelegate
