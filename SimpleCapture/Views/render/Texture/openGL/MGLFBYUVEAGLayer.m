@@ -536,6 +536,7 @@ static GLfloat rangeOffset = 16.0;
 
 - (void)removeFromSuperContainer{
     [self removeFromSuperlayer];
+    [_displayLink invalidate];
 }
 
 - (void)rotate:(int)angle{
