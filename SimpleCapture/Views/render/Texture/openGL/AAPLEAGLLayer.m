@@ -110,6 +110,7 @@ static const GLfloat kColorConversion709FullRange[] = {
     BOOL _justRestored;
     uint32_t _timeRestoreFromBackground;
     CADisplayLink *_displayLink;
+    CVPixelBufferRef _myPixelbuffer;
 }
 @property GLuint program;
 
@@ -221,6 +222,10 @@ static VideoFillModeType  fillMode = FillModePreserveAspectRatio;
         _preferredConversion = kColorConversion601;
         
         [self setupGL];
+        
+        NSString *imageName = [NSString stringWithFormat:@"container.jpg"];
+        UIImage *image = [UIImage imageNamed:imageName];
+        _myPixelbuffer = imageToYUVPixelBuffer(image);
         
         _displayLink = [CADisplayLink displayLinkWithTarget:self selector:@selector(displayingLinkDraw)];
         _displayLink.frameInterval = 2.0;
@@ -794,11 +799,7 @@ const GLchar *shader_vsh = (const GLchar*)"attribute vec4 position;"
         return;
     }
     
-    NSString *imageName = [NSString stringWithFormat:@"container.jpg"];
-    UIImage *image = [UIImage imageNamed:imageName];
-    CVPixelBufferRef pixelbuffer = imageToYUVPixelBuffer(image);
-    [self setPixelBuffer:pixelbuffer];
-    CVPixelBufferRelease(pixelbuffer);
+    [self setPixelBuffer:_myPixelbuffer];
 }
 
 - (void)removeFromSuperContainer{

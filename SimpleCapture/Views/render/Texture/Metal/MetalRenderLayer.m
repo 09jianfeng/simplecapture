@@ -66,6 +66,8 @@ typedef enum{
     BOOL _isLastCommandBufferFinish;
     
     CADisplayLink *_displayLink;
+    
+    CVPixelBufferRef _myPixelbuffer;
 }
 
 - (void)dealloc{
@@ -111,6 +113,10 @@ typedef enum{
         _displayLink = [CADisplayLink displayLinkWithTarget:self selector:@selector(displayingLinkDraw)];
         _displayLink.frameInterval = 2.0;
         [_displayLink addToRunLoop:[NSRunLoop currentRunLoop] forMode:NSDefaultRunLoopMode];
+        
+        NSString *imageName = [NSString stringWithFormat:@"container.jpg"];
+        UIImage *image = [UIImage imageNamed:imageName];
+        _myPixelbuffer = imageToYUVPixelBuffer(image);
     }
     return self;
 }
@@ -679,11 +685,7 @@ typedef enum{
         return;
     }
     
-    NSString *imageName = [NSString stringWithFormat:@"container.jpg"];
-    UIImage *image = [UIImage imageNamed:imageName];
-    CVPixelBufferRef pixelbuffer = imageToYUVPixelBuffer(image);
-    [self setPixelBuffer:pixelbuffer];
-    CVPixelBufferRelease(pixelbuffer);
+    [self setPixelBuffer:_myPixelbuffer];
 }
 
 - (void)removeFromSuperContainer{
