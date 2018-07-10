@@ -804,10 +804,6 @@
 				78AE42561E821E5E00D84304 /* VideoFileDecoder.m */,
 				7837825D1E8E34FE00DED271 /* YUVFileTransform.h */,
 				7837825E1E8E34FE00DED271 /* YUVFileTransform.mm */,
-				783782631E8E531100DED271 /* H264VideoDecoder.h */,
-				783782641E8E531100DED271 /* H264VideoDecoder.m */,
-				7888278B1EC45AE2002090DA /* FFMPEGDecodeFilter.h */,
-				7888278C1EC45AE2002090DA /* FFMPEGDecodeFilter.mm */,
 			);
 			path = VideoOutput;
 			sourceTree = "<group>";
@@ -1576,6 +1572,26 @@
 			path = render;
 			sourceTree = "<group>";
 		};
+		78ABE5A120F48B91003DED65 /* Codec */ = {
+			isa = PBXGroup;
+			children = (
+				783782631E8E531100DED271 /* H264VideoDecoder.h */,
+				783782641E8E531100DED271 /* H264VideoDecoder.m */,
+				7888278B1EC45AE2002090DA /* FFMPEGDecodeFilter.h */,
+				7888278C1EC45AE2002090DA /* FFMPEGDecodeFilter.mm */,
+				DAA20BF41C5263FA008DB5AA /* VideoEncoder.h */,
+				DAA20BF51C5263FA008DB5AA /* VideoEncoder.m */,
+			);
+			path = Codec;
+			sourceTree = "<group>";
+		};
+		78ABE5A220F48BD8003DED65 /* MediaSource */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = MediaSource;
+			sourceTree = "<group>";
+		};
 		78AE42631E82264500D84304 /* ViewController */ = {
 			isa = PBXGroup;
 			children = (
@@ -1589,6 +1605,8 @@
 		78AE42641E82265400D84304 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				78ABE5A220F48BD8003DED65 /* MediaSource */,
+				78ABE5A120F48B91003DED65 /* Codec */,
 				78B2F34520EB1D310087A90C /* avasset */,
 				785650FF20984B3C00382E80 /* audio */,
 				780818411E8DF615002E0C0B /* Utils */,
@@ -1609,8 +1627,6 @@
 				DA315F9D1C6F57AD008B9AF3 /* AudioCapture.m */,
 				DAA20BF31C5227A8008DB5AA /* VideoCapture.h */,
 				DAA20BF11C52278E008DB5AA /* VideoCapture.mm */,
-				DAA20BF41C5263FA008DB5AA /* VideoEncoder.h */,
-				DAA20BF51C5263FA008DB5AA /* VideoEncoder.m */,
 			);
 			name = VideoInput;
 			sourceTree = "<group>";
