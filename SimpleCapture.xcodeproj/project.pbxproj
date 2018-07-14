@@ -65,6 +65,8 @@
 		785650FE2098481200382E80 /* AudioViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 785650FD2098481200382E80 /* AudioViewController.m */; };
 		7856510320984B3C00382E80 /* AACPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 7856510020984B3C00382E80 /* AACPlayer.m */; };
 		7856510420984B3C00382E80 /* abc.aac in Resources */ = {isa = PBXBuildFile; fileRef = 7856510120984B3C00382E80 /* abc.aac */; };
+		787064ED20F9916000125239 /* humantest.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 787064EC20F9916000125239 /* humantest.jpg */; };
+		787064EF20F9922700125239 /* humantest2.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 787064EE20F9922700125239 /* humantest2.jpg */; };
 		78796B701E88EDDE00F93853 /* YUVFileReader.m in Sources */ = {isa = PBXBuildFile; fileRef = 78796B6F1E88EDDE00F93853 /* YUVFileReader.m */; };
 		78796B7C1E89010900F93853 /* SimpleCaptureTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 78796B7B1E89010900F93853 /* SimpleCaptureTests.m */; };
 		78796B871E89016700F93853 /* YUVFileReaderTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 78796B861E89016700F93853 /* YUVFileReaderTest.m */; };
@@ -403,6 +405,8 @@
 		7856510020984B3C00382E80 /* AACPlayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AACPlayer.m; sourceTree = "<group>"; };
 		7856510120984B3C00382E80 /* abc.aac */ = {isa = PBXFileReference; lastKnownFileType = file; path = abc.aac; sourceTree = "<group>"; };
 		7856510220984B3C00382E80 /* AACPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AACPlayer.h; sourceTree = "<group>"; };
+		787064EC20F9916000125239 /* humantest.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = humantest.jpg; sourceTree = "<group>"; };
+		787064EE20F9922700125239 /* humantest2.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = humantest2.jpg; sourceTree = "<group>"; };
 		78796B6E1E88EDDE00F93853 /* YUVFileReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = YUVFileReader.h; path = ../YUVFileReader.h; sourceTree = "<group>"; };
 		78796B6F1E88EDDE00F93853 /* YUVFileReader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = YUVFileReader.m; path = ../YUVFileReader.m; sourceTree = "<group>"; };
 		78796B791E89010900F93853 /* SimpleCaptureTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SimpleCaptureTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -1227,6 +1231,8 @@
 		7842DA5D20D3A519006B25D1 /* resource */ = {
 			isa = PBXGroup;
 			children = (
+				787064EE20F9922700125239 /* humantest2.jpg */,
+				787064EC20F9916000125239 /* humantest.jpg */,
 				780448992086F44B00FAE1DF /* container.jpg */,
 				7842DA7320D3A70C006B25D1 /* 1_icon.jpg */,
 				7842DA7220D3A70C006B25D1 /* 2_icon.jpg */,
@@ -1978,7 +1984,9 @@
 				7899157D20B7FFE800F0E665 /* test.pcm in Resources */,
 				789914AC20B7A96400F0E665 /* abc.pcm in Resources */,
 				78DB0C862064DDCA005F87DA /* awesomeface.png in Resources */,
+				787064EF20F9922700125239 /* humantest2.jpg in Resources */,
 				787F33C21FA8AA38009A5C5F /* kxmovie.bundle in Resources */,
+				787064ED20F9916000125239 /* humantest.jpg in Resources */,
 				7842DA8020D3A70D006B25D1 /* 6_icon.jpg in Resources */,
 				7842DA7D20D3A70D006B25D1 /* 4_icon.jpg in Resources */,
 				787F33D11FA8AF7C009A5C5F /* test in Resources */,

@@ -45,7 +45,8 @@ static NSString *const TextureRGBFS = SHADER_STRING
  uniform sampler2D texture;
  void main() {
      //从纹理texture中采样纹理
-     gl_FragColor = texture2D(texture, TexCoord) * vec4(outColor, 1.0);
+//     gl_FragColor = texture2D(texture, TexCoord) * vec4(outColor, 1.0);
+     gl_FragColor = texture2D(texture, TexCoord);
  }
  );
 
@@ -121,10 +122,10 @@ static NSString *const TextureRGBFS = SHADER_STRING
 - (void)setUpGLBuffers{
     float vertices[] = {
         // positions          // colors           // texture coords
-        0.5f,  0.5f, 0.0f,   1.0f, 0.0f, 0.0f,   1.0f, 1.0f, // top right
-        0.5f, -0.5f, 0.0f,   0.0f, 1.0f, 0.0f,   1.0f, 0.0f, // bottom right
-        -0.5f, -0.5f, 0.0f,   0.0f, 0.0f, 1.0f,   0.0f, 0.0f, // bottom left
-        -0.5f,  0.5f, 0.0f,   1.0f, 1.0f, 0.0f,   0.0f, 1.0f  // top left
+        1.0f,  1.0f, 0.0f,   1.0f, 0.0f, 0.0f,   1.0f, 1.0f, // top right
+        1.0f, -1.0f, 0.0f,   0.0f, 1.0f, 0.0f,   1.0f, 0.0f, // bottom right
+        -1.0f, -1.0f, 0.0f,   0.0f, 0.0f, 1.0f,   0.0f, 0.0f, // bottom left
+        -1.0f,  1.0f, 0.0f,   1.0f, 1.0f, 0.0f,   0.0f, 1.0f  // top left
     };
     unsigned int indices[] = {
         0, 1, 3, // first triangle
@@ -168,21 +169,44 @@ static NSString *const TextureRGBFS = SHADER_STRING
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
     
     // load image, create texture and generate mipmaps
-    UIImage *image = [UIImage imageNamed:@"container.jpg"];
+//    UIImage *image = [UIImage imageNamed:@"humantest.jpeg"];
+    UIImage *image = [UIImage imageNamed:@"humantest2.jpg"];
     MImageData* imageData = mglImageDataFromUIImage(image, YES);
-    glTexImage2D(GL_TEXTURE_2D, 0, imageData->format, (GLint)imageData->width, (GLint)imageData->height, 0, imageData->format, imageData->type, imageData->data);
-    glGenerateMipmap(GL_TEXTURE_2D);
     
+    int width = [self suggestTexSize:imageData->width];
+    int heigh = [self suggestTexSize:imageData->height];
+    
+    //宽高必须是2的N次幂,如果是非2次幂的，就要先用glTexImage2D创建一个2次幂函的空纹理，然后用gltexsubimage2d来给这个纹理的部分附值。如果要铺平，就修改纹理坐标。这里就不赘述了
+    glTexImage2D(GL_TEXTURE_2D, 0, imageData->format, (GLint)width, (GLint)heigh, 0, imageData->format, imageData->type,NULL);
+    glTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, imageData->width, imageData->height, imageData->format, imageData->type, imageData->data);
+    
+    glGetError();
+    glGenerateMipmap(GL_TEXTURE_2D);
     mglDestroyImageData(imageData);
     
 }
+
+//拿到最接近2的N次幂的一个值
+- (int)suggestTexSize:(int)size
+{
+    int texSize = 1;
+    while(true)
+    {
+        texSize <<= 1;
+        if(texSize >= size)
+            break ;
+    }
+    return texSize;
+}
+
+
 
 #pragma mark - GLKViewDelegate
 - (void)glkView:(GLKView *)view drawInRect:(CGRect)rect{
     [EAGLContext setCurrentContext:_context];
     // render
     // ------
-    glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
+    glClearColor(0.2f, 0.3f, 1.0f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT);
     
     // render container
