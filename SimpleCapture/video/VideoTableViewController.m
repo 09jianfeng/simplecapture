@@ -27,7 +27,7 @@
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
     
     _data = @[@"show+play demo",
-              @"avasset"];
+              @"转码"];
     
 }
 

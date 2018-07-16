@@ -23,6 +23,8 @@ typedef void (^YMTinyVideoTranscodeFailureBlock)(NSError * err);
 @property (nonatomic, copy) YMTinyVideoTranscodeFailureBlock failureBlock;
 @property (weak, nonatomic) IBOutlet UILabel *labelProgress;
 @property (weak, nonatomic) IBOutlet UILabel *labelTimeCost;
+@property (weak, nonatomic) IBOutlet UILabel *labelVTProgress;
+@property (weak, nonatomic) IBOutlet UILabel *labelVTCost;
 @end
 
 @implementation AssetViewController{
@@ -176,6 +178,9 @@ typedef void (^YMTinyVideoTranscodeFailureBlock)(NSError * err);
             }
         }
     }];
+}
+
+- (IBAction)btnVideoToolboxPressed:(id)sender {
 }
 
 - (void)cancel {

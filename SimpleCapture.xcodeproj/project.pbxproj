@@ -792,6 +792,8 @@
 		780818411E8DF615002E0C0B /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				DA71E0841C56276100080493 /* BitrateMonitor.h */,
+				DA71E0831C56276100080493 /* BitrateMonitor.cpp */,
 				780818421E8E0571002E0C0B /* VideoTool.h */,
 				780818431E8E0571002E0C0B /* VideoTool.m */,
 				78796B6E1E88EDDE00F93853 /* YUVFileReader.h */,
@@ -800,7 +802,7 @@
 			path = Utils;
 			sourceTree = "<group>";
 		};
-		781833541E80FAD000AC768F /* VideoOutput */ = {
+		781833541E80FAD000AC768F /* VideoFileHandle */ = {
 			isa = PBXGroup;
 			children = (
 				78DB576A1E8375B000FBBD99 /* resource.bundle */,
@@ -809,7 +811,7 @@
 				7837825D1E8E34FE00DED271 /* YUVFileTransform.h */,
 				7837825E1E8E34FE00DED271 /* YUVFileTransform.mm */,
 			);
-			path = VideoOutput;
+			path = VideoFileHandle;
 			sourceTree = "<group>";
 		};
 		782D62B520D5FFAB0085FE26 /* openGL */ = {
@@ -1259,6 +1261,8 @@
 		785650FF20984B3C00382E80 /* audio */ = {
 			isa = PBXGroup;
 			children = (
+				DA315F9C1C6F57AD008B9AF3 /* AudioCapture.h */,
+				DA315F9D1C6F57AD008B9AF3 /* AudioCapture.m */,
 				781A883520BD549E00E8A51F /* AudioCaptureSampleBuffer.h */,
 				781A883420BD549D00E8A51F /* AudioCaptureSampleBuffer.m */,
 				781A882920BD51EB00E8A51F /* AACEncoder.h */,
@@ -1277,6 +1281,18 @@
 				781A882720BD46DD00E8A51F /* test.mov */,
 			);
 			path = audio;
+			sourceTree = "<group>";
+		};
+		7857173420FC9C2900E9D3E3 /* video */ = {
+			isa = PBXGroup;
+			children = (
+				78ABE5A120F48B91003DED65 /* Codec */,
+				78B2F34520EB1D310087A90C /* avasset */,
+				78AE42661E82268F00D84304 /* VideoCapture */,
+				781833541E80FAD000AC768F /* VideoFileHandle */,
+			);
+			name = video;
+			path = "New Group";
 			sourceTree = "<group>";
 		};
 		78796B7A1E89010900F93853 /* SimpleCaptureTests */ = {
@@ -1611,30 +1627,24 @@
 		78AE42641E82265400D84304 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				7857173420FC9C2900E9D3E3 /* video */,
 				78ABE5A220F48BD8003DED65 /* MediaSource */,
-				78ABE5A120F48B91003DED65 /* Codec */,
-				78B2F34520EB1D310087A90C /* avasset */,
 				785650FF20984B3C00382E80 /* audio */,
 				780818411E8DF615002E0C0B /* Utils */,
-				78AE42661E82268F00D84304 /* VideoInput */,
-				781833541E80FAD000AC768F /* VideoOutput */,
 			);
 			name = Model;
 			sourceTree = "<group>";
 		};
-		78AE42661E82268F00D84304 /* VideoInput */ = {
+		78AE42661E82268F00D84304 /* VideoCapture */ = {
 			isa = PBXGroup;
 			children = (
 				DA5B1BF41C6743F7005890B1 /* VideoProcessor.h */,
 				DA5B1BF51C6743F7005890B1 /* VideoProcessor.m */,
-				DA71E0841C56276100080493 /* BitrateMonitor.h */,
-				DA71E0831C56276100080493 /* BitrateMonitor.cpp */,
-				DA315F9C1C6F57AD008B9AF3 /* AudioCapture.h */,
-				DA315F9D1C6F57AD008B9AF3 /* AudioCapture.m */,
 				DAA20BF31C5227A8008DB5AA /* VideoCapture.h */,
 				DAA20BF11C52278E008DB5AA /* VideoCapture.mm */,
 			);
-			name = VideoInput;
+			name = VideoCapture;
+			path = ..;
 			sourceTree = "<group>";
 		};
 		78AE42671E8226A600D84304 /* Utils */ = {
@@ -1682,6 +1692,7 @@
 				78B2F35420EB25D20087A90C /* VideoCompositionEditor.m */,
 			);
 			name = avasset;
+			path = ..;
 			sourceTree = "<group>";
 		};
 		78B2F35620EB597F0087A90C /* YZYPhotoPicker */ = {
