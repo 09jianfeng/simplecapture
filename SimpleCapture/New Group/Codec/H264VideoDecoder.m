@@ -117,7 +117,7 @@ void didDecompress( void *decompressionOutputRefCon,
         
         NSLog(@"frame type :%c", [self getFrameType:sampleBuffer]);
         if (status == kCMBlockBufferNoErr && sampleBuffer) {
-            VTDecodeFrameFlags flags = 0;
+            VTDecodeFrameFlags flags = kVTDecodeFrame_EnableAsynchronousDecompression;
             VTDecodeInfoFlags flagOut = 0;
             OSStatus decodeStatus = VTDecompressionSessionDecodeFrame(m_deocderSession,
                                                                       sampleBuffer,

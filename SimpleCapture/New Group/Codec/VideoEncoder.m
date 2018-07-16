@@ -118,10 +118,16 @@ void compressSessionOnEncoded(void *refCon,
     CFDictionarySetValue(sessionAttributes, kVTCompressionPropertyKey_ProfileLevel, kVTProfileLevel_H264_High_AutoLevel);
     CFDictionarySetValue(sessionAttributes, kVTCompressionPropertyKey_RealTime, kCFBooleanFalse);
     
+    /*
     int gop = self.frameRate * kGOPSeconds;
     CFNumberRef gopNum = CFNumberCreate(NULL, kCFNumberSInt32Type, &gop);
     CFDictionarySetValue(sessionAttributes, kVTCompressionPropertyKey_MaxKeyFrameInterval, gopNum);
     CFRelease(gopNum);
+     */
+    
+    status = VTSessionSetProperty_int(_encoderSession,
+                                      kVTCompressionPropertyKey_MaxKeyFrameInterval,
+                                      _keyFrameInterval);
 
     int gopn = kGOPSeconds;
     CFNumberRef gopref = CFNumberCreate(NULL,kCFNumberSInt32Type,&gopn);
@@ -142,6 +148,14 @@ void compressSessionOnEncoded(void *refCon,
     
     status = VTSessionSetProperties(_encoderSession, sessionAttributes);
     
+    status = VTSessionSetProperty_int(_encoderSession,
+                                      kVTCompressionPropertyKey_MaxFrameDelayCount,
+                                      _maxBFrame);
+    
+    status = VTSessionSetProperty(_encoderSession,
+                                  kVTCompressionPropertyKey_AllowFrameReordering,
+                                  (_maxBFrame>0) ? kCFBooleanTrue : kCFBooleanFalse);
+    
     //[self VTSessionSetPropertyDataRateLimits:bitrate];
     [self VTSessionSetDataLimit];
     CHECK_STATUS(status);
@@ -161,6 +175,14 @@ void compressSessionOnEncoded(void *refCon,
     OSStatus status = VTSessionSetProperty_int(_encoderSession,
                                                kVTCompressionPropertyKey_AverageBitRate,
                                                _bitrate * 1024 * 1.0 * 1.0);
+    
+    if (_maxBFrame > 0) {
+        return;
+    }
+    
+    if (!_enableDatalimit) {
+        return;
+    }
     
     int bytesLimit = _bitrate * 1024 * kGOPSeconds / 8;
     int secondLimit = kGOPSeconds;
@@ -269,12 +291,17 @@ void compressSessionOnEncoded(void *refCon,
     }
     
     CFRetain(sampleBuf);
-    dispatch_async(_callbackQueue, ^{
-        //NSLog(@"frame type %c", [self getFrameType:sampleBuf]);
-        
+    
+    NSLog(@"frame type %c", [self getFrameType:sampleBuf]);
+    if (_callbackQueue) {
+        dispatch_async(_callbackQueue, ^{
+            [_encoderDelegate encoderOutput:sampleBuf frameCont:fc];
+            CFRelease(sampleBuf);
+        });
+    }else{
         [_encoderDelegate encoderOutput:sampleBuf frameCont:fc];
         CFRelease(sampleBuf);
-    });
+    }
 }
 
 - (void) setDelegate:(id<VideoEncoderDelegate>)encoderDelegate queue:(dispatch_queue_t)encoderCallbackQueue

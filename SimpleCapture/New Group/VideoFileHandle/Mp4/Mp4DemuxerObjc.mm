@@ -41,6 +41,7 @@ extern "C" {
     self = [super init];
     if (self) {
         _demuxerHandler = mp4DemuxerCreate([path UTF8String]);
+        _stringPath = [path copy];
     }
     return self;
 }
@@ -52,6 +53,7 @@ extern "C" {
     int len = mp4DemuxerReadFrame(_demuxerHandler, &frameData, &pts);
     if (len <= 0) {
         NSLog(@"error len <= 0");
+        _demuxerHandler = nil;
         return nil;
     }
     

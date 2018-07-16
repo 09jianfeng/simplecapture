@@ -30,7 +30,7 @@
 		782EAB8D20FC9E3E00DBD545 /* Mp4MuxerDemuxer.mm in Sources */ = {isa = PBXBuildFile; fileRef = 782EAB8A20FC9E3E00DBD545 /* Mp4MuxerDemuxer.mm */; };
 		782EAB9120FCA11000DBD545 /* Mp4DemuxerObjc.mm in Sources */ = {isa = PBXBuildFile; fileRef = 782EAB9020FCA11000DBD545 /* Mp4DemuxerObjc.mm */; };
 		782EAB9520FCA4B200DBD545 /* VideoConfiguration.m in Sources */ = {isa = PBXBuildFile; fileRef = 782EAB9420FCA4B200DBD545 /* VideoConfiguration.m */; };
-		782EAB9820FCBFDD00DBD545 /* MP4Transform.m in Sources */ = {isa = PBXBuildFile; fileRef = 782EAB9720FCBFDD00DBD545 /* MP4Transform.m */; };
+		782EAB9820FCBFDD00DBD545 /* MP4Transform.mm in Sources */ = {isa = PBXBuildFile; fileRef = 782EAB9720FCBFDD00DBD545 /* MP4Transform.mm */; };
 		782FA24820EB6CE500CCE550 /* ffmpeg_opt.c in Sources */ = {isa = PBXBuildFile; fileRef = 782FA23720EB6CE500CCE550 /* ffmpeg_opt.c */; };
 		782FA24920EB6CE500CCE550 /* common.c in Sources */ = {isa = PBXBuildFile; fileRef = 782FA23820EB6CE500CCE550 /* common.c */; };
 		782FA24A20EB6CE500CCE550 /* ffmpeg_mp4_demux_h264.c in Sources */ = {isa = PBXBuildFile; fileRef = 782FA23D20EB6CE500CCE550 /* ffmpeg_mp4_demux_h264.c */; };
@@ -221,7 +221,7 @@
 		782EAB9320FCA4B200DBD545 /* VideoConfiguration.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VideoConfiguration.h; sourceTree = "<group>"; };
 		782EAB9420FCA4B200DBD545 /* VideoConfiguration.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VideoConfiguration.m; sourceTree = "<group>"; };
 		782EAB9620FCBFDD00DBD545 /* MP4Transform.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MP4Transform.h; sourceTree = "<group>"; };
-		782EAB9720FCBFDD00DBD545 /* MP4Transform.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MP4Transform.m; sourceTree = "<group>"; };
+		782EAB9720FCBFDD00DBD545 /* MP4Transform.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = MP4Transform.mm; sourceTree = "<group>"; };
 		782FA23620EB6CE500CCE550 /* cmdutils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cmdutils.h; sourceTree = "<group>"; };
 		782FA23720EB6CE500CCE550 /* ffmpeg_opt.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = ffmpeg_opt.c; sourceTree = "<group>"; };
 		782FA23820EB6CE500CCE550 /* common.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = common.c; sourceTree = "<group>"; };
@@ -887,7 +887,7 @@
 			isa = PBXGroup;
 			children = (
 				782EAB9620FCBFDD00DBD545 /* MP4Transform.h */,
-				782EAB9720FCBFDD00DBD545 /* MP4Transform.m */,
+				782EAB9720FCBFDD00DBD545 /* MP4Transform.mm */,
 				782EAB8F20FCA11000DBD545 /* Mp4DemuxerObjc.h */,
 				782EAB9020FCA11000DBD545 /* Mp4DemuxerObjc.mm */,
 				782EAB8B20FC9E3E00DBD545 /* Mp4MuxerDemuxer.h */,
@@ -2216,7 +2216,7 @@
 				782FA24D20EB6CE500CCE550 /* ffprobe.c in Sources */,
 				782EAB9120FCA11000DBD545 /* Mp4DemuxerObjc.mm in Sources */,
 				78B2F39920EB67980087A90C /* YMTinyVideoCVKit.m in Sources */,
-				782EAB9820FCBFDD00DBD545 /* MP4Transform.m in Sources */,
+				782EAB9820FCBFDD00DBD545 /* MP4Transform.mm in Sources */,
 				782EAB8D20FC9E3E00DBD545 /* Mp4MuxerDemuxer.mm in Sources */,
 				78B2F34920EB1DBB0087A90C /* AVAssetDecodeEncode.m in Sources */,
 				DA3832881C6DC2E50093BFC1 /* VideoViewController.m in Sources */,

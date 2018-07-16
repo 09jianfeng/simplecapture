@@ -20,6 +20,9 @@
 @property int frameRate;
 @property int bitrate;
 @property OSType pixelFormatType;
+@property int maxBFrame;
+@property int keyFrameInterval;
+@property BOOL enableDatalimit;
 
 - (id) init;
 - (void) reset;
