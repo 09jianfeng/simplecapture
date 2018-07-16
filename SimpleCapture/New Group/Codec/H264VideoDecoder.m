@@ -98,7 +98,7 @@ void didDecompress( void *decompressionOutputRefCon,
     return status == noErr;
 }
 
-- (void)decodeFramCMSamplebufferh264Data:(const uint8_t *)h264Data h264DataSize:(size_t)h264DataSize frameCon:(FrameContext *)frameCon;{
+- (void)decodeFramCMSamplebufferh264Data:(const uint8_t *)h264Data h264DataSize:(size_t)h264DataSize frameCon:(FrameContext *)frameCon{
     
     CMBlockBufferRef blockBuffer = NULL;
     OSStatus status  = CMBlockBufferCreateWithMemoryBlock(kCFAllocatorDefault,
@@ -114,6 +114,8 @@ void didDecompress( void *decompressionOutputRefCon,
                                            m_decoderFormatDescription ,
                                            1, 0, NULL, 1, sampleSizeArray,
                                            &sampleBuffer);
+        
+        NSLog(@"frame type :%c", [self getFrameType:sampleBuffer]);
         if (status == kCMBlockBufferNoErr && sampleBuffer) {
             VTDecodeFrameFlags flags = 0;
             VTDecodeInfoFlags flagOut = 0;
@@ -139,6 +141,29 @@ void didDecompress( void *decompressionOutputRefCon,
         }
         CFRelease(blockBuffer);
     }
+}
+
+- (char)getFrameType:(CMSampleBufferRef)sampleBuffer
+{
+    char *data = NULL;
+    CMBlockBufferRef blockbuf = CMSampleBufferGetDataBuffer(sampleBuffer);
+    CMBlockBufferGetDataPointer(blockbuf, 0, 0, 0, (char**)&data);
+    uint8_t nalutype = data[4] & 0x1f;
+    
+    char frameType = 0;
+    if (nalutype == 0x05) {
+        frameType = 'I';
+    } else if (nalutype == 0x01) {
+        if (data[4] == 0x01) {
+            frameType = 'B';
+        } else {
+            frameType = 'P';
+        }
+    } else {
+        frameType = '?';
+    }
+    
+    return frameType;
 }
 
 @end

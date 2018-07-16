@@ -12,6 +12,7 @@
 #import <Photos/Photos.h>
 #import "VideoItem.h"
 #import "AVAssetDecodeEncode.h"
+#import "MP4Transform.h"
 
 typedef void (^YMTinyVideoTranscodeCompleteBlock)(void);
 typedef void (^YMTinyVideoTranscodeProgressBlock)(CGFloat progress);
@@ -30,6 +31,13 @@ typedef void (^YMTinyVideoTranscodeFailureBlock)(NSError * err);
 @implementation AssetViewController{
     AVAssetDecodeEncode* _encoder;
     int _beginTime;
+    MP4Transform *_mp4Transform;
+}
+
+- (void)dealloc {
+    if (_encoder) {
+        [self removeObserver];
+    }
 }
 
 - (void)viewDidLoad {
@@ -180,15 +188,11 @@ typedef void (^YMTinyVideoTranscodeFailureBlock)(NSError * err);
     }];
 }
 
-- (IBAction)btnVideoToolboxPressed:(id)sender {
-}
-
 - (void)cancel {
     dispatch_async(dispatch_get_main_queue(), ^{
     	[_encoder cancelExport];
     });
 }
-
 
 #pragma mark - kvo
 
@@ -222,9 +226,14 @@ typedef void (^YMTinyVideoTranscodeFailureBlock)(NSError * err);
     }
 }
 
-- (void)dealloc {
-    if (_encoder) {
-        [self removeObserver];
+#pragma mark - vtbox
+
+- (IBAction)btnVideoToolboxPressed:(id)sender {
+    if (!_mp4Transform) {
+        NSString *path = [[NSBundle mainBundle] pathForResource:@"test/test" ofType:@"mp4"];
+        _mp4Transform = [[MP4Transform alloc] initWithMp4Path:path];
     }
+    
+    [_mp4Transform transFormBegin];
 }
 @end

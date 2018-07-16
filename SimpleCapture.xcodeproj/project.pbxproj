@@ -27,6 +27,10 @@
 		782D643120DCA3130085FE26 /* MGLTools.m in Sources */ = {isa = PBXBuildFile; fileRef = 782D642F20DCA3120085FE26 /* MGLTools.m */; };
 		782D643620DCEFCC0085FE26 /* MGLFBEAGLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 782D643520DCEFCC0085FE26 /* MGLFBEAGLayer.m */; };
 		782D643920DDF8DB0085FE26 /* MGLFBYUVEAGLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 782D643820DDF8DB0085FE26 /* MGLFBYUVEAGLayer.m */; };
+		782EAB8D20FC9E3E00DBD545 /* Mp4MuxerDemuxer.mm in Sources */ = {isa = PBXBuildFile; fileRef = 782EAB8A20FC9E3E00DBD545 /* Mp4MuxerDemuxer.mm */; };
+		782EAB9120FCA11000DBD545 /* Mp4DemuxerObjc.mm in Sources */ = {isa = PBXBuildFile; fileRef = 782EAB9020FCA11000DBD545 /* Mp4DemuxerObjc.mm */; };
+		782EAB9520FCA4B200DBD545 /* VideoConfiguration.m in Sources */ = {isa = PBXBuildFile; fileRef = 782EAB9420FCA4B200DBD545 /* VideoConfiguration.m */; };
+		782EAB9820FCBFDD00DBD545 /* MP4Transform.m in Sources */ = {isa = PBXBuildFile; fileRef = 782EAB9720FCBFDD00DBD545 /* MP4Transform.m */; };
 		782FA24820EB6CE500CCE550 /* ffmpeg_opt.c in Sources */ = {isa = PBXBuildFile; fileRef = 782FA23720EB6CE500CCE550 /* ffmpeg_opt.c */; };
 		782FA24920EB6CE500CCE550 /* common.c in Sources */ = {isa = PBXBuildFile; fileRef = 782FA23820EB6CE500CCE550 /* common.c */; };
 		782FA24A20EB6CE500CCE550 /* ffmpeg_mp4_demux_h264.c in Sources */ = {isa = PBXBuildFile; fileRef = 782FA23D20EB6CE500CCE550 /* ffmpeg_mp4_demux_h264.c */; };
@@ -210,6 +214,14 @@
 		782D643520DCEFCC0085FE26 /* MGLFBEAGLayer.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MGLFBEAGLayer.m; sourceTree = "<group>"; };
 		782D643720DDF8DB0085FE26 /* MGLFBYUVEAGLayer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MGLFBYUVEAGLayer.h; sourceTree = "<group>"; };
 		782D643820DDF8DB0085FE26 /* MGLFBYUVEAGLayer.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MGLFBYUVEAGLayer.m; sourceTree = "<group>"; };
+		782EAB8A20FC9E3E00DBD545 /* Mp4MuxerDemuxer.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = Mp4MuxerDemuxer.mm; sourceTree = "<group>"; };
+		782EAB8B20FC9E3E00DBD545 /* Mp4MuxerDemuxer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Mp4MuxerDemuxer.h; sourceTree = "<group>"; };
+		782EAB8F20FCA11000DBD545 /* Mp4DemuxerObjc.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Mp4DemuxerObjc.h; sourceTree = "<group>"; };
+		782EAB9020FCA11000DBD545 /* Mp4DemuxerObjc.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = Mp4DemuxerObjc.mm; sourceTree = "<group>"; };
+		782EAB9320FCA4B200DBD545 /* VideoConfiguration.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VideoConfiguration.h; sourceTree = "<group>"; };
+		782EAB9420FCA4B200DBD545 /* VideoConfiguration.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VideoConfiguration.m; sourceTree = "<group>"; };
+		782EAB9620FCBFDD00DBD545 /* MP4Transform.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MP4Transform.h; sourceTree = "<group>"; };
+		782EAB9720FCBFDD00DBD545 /* MP4Transform.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MP4Transform.m; sourceTree = "<group>"; };
 		782FA23620EB6CE500CCE550 /* cmdutils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cmdutils.h; sourceTree = "<group>"; };
 		782FA23720EB6CE500CCE550 /* ffmpeg_opt.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = ffmpeg_opt.c; sourceTree = "<group>"; };
 		782FA23820EB6CE500CCE550 /* common.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = common.c; sourceTree = "<group>"; };
@@ -805,11 +817,10 @@
 		781833541E80FAD000AC768F /* VideoFileHandle */ = {
 			isa = PBXGroup;
 			children = (
-				78DB576A1E8375B000FBBD99 /* resource.bundle */,
-				78AE42551E821E5E00D84304 /* VideoFileDecoder.h */,
-				78AE42561E821E5E00D84304 /* VideoFileDecoder.m */,
-				7837825D1E8E34FE00DED271 /* YUVFileTransform.h */,
-				7837825E1E8E34FE00DED271 /* YUVFileTransform.mm */,
+				782EAB9320FCA4B200DBD545 /* VideoConfiguration.h */,
+				782EAB9420FCA4B200DBD545 /* VideoConfiguration.m */,
+				782EAB9220FCA48B00DBD545 /* yuv */,
+				782EAB8820FC9E2900DBD545 /* Mp4 */,
 			);
 			path = VideoFileHandle;
 			sourceTree = "<group>";
@@ -870,6 +881,31 @@
 				782D642F20DCA3120085FE26 /* MGLTools.m */,
 			);
 			path = opengl;
+			sourceTree = "<group>";
+		};
+		782EAB8820FC9E2900DBD545 /* Mp4 */ = {
+			isa = PBXGroup;
+			children = (
+				782EAB9620FCBFDD00DBD545 /* MP4Transform.h */,
+				782EAB9720FCBFDD00DBD545 /* MP4Transform.m */,
+				782EAB8F20FCA11000DBD545 /* Mp4DemuxerObjc.h */,
+				782EAB9020FCA11000DBD545 /* Mp4DemuxerObjc.mm */,
+				782EAB8B20FC9E3E00DBD545 /* Mp4MuxerDemuxer.h */,
+				782EAB8A20FC9E3E00DBD545 /* Mp4MuxerDemuxer.mm */,
+			);
+			path = Mp4;
+			sourceTree = "<group>";
+		};
+		782EAB9220FCA48B00DBD545 /* yuv */ = {
+			isa = PBXGroup;
+			children = (
+				78DB576A1E8375B000FBBD99 /* resource.bundle */,
+				78AE42551E821E5E00D84304 /* VideoFileDecoder.h */,
+				78AE42561E821E5E00D84304 /* VideoFileDecoder.m */,
+				7837825D1E8E34FE00DED271 /* YUVFileTransform.h */,
+				7837825E1E8E34FE00DED271 /* YUVFileTransform.mm */,
+			);
+			path = yuv;
 			sourceTree = "<group>";
 		};
 		782FA23520EB6CE500CCE550 /* src */ = {
@@ -2178,7 +2214,10 @@
 				78B2F35220EB22020087A90C /* VideoFileKit.m in Sources */,
 				782FA39820EB72BA00CCE550 /* YMTinyVideoFFmpeg.m in Sources */,
 				782FA24D20EB6CE500CCE550 /* ffprobe.c in Sources */,
+				782EAB9120FCA11000DBD545 /* Mp4DemuxerObjc.mm in Sources */,
 				78B2F39920EB67980087A90C /* YMTinyVideoCVKit.m in Sources */,
+				782EAB9820FCBFDD00DBD545 /* MP4Transform.m in Sources */,
+				782EAB8D20FC9E3E00DBD545 /* Mp4MuxerDemuxer.mm in Sources */,
 				78B2F34920EB1DBB0087A90C /* AVAssetDecodeEncode.m in Sources */,
 				DA3832881C6DC2E50093BFC1 /* VideoViewController.m in Sources */,
 				787F33C31FA8AA38009A5C5F /* KxMovieDecoder.m in Sources */,
@@ -2187,6 +2226,7 @@
 				780448972086E60E00FAE1DF /* MultiTextureEAGLLayer.m in Sources */,
 				DA0E7AF91C128164003A8C25 /* main.m in Sources */,
 				780448A0208749C300FAE1DF /* OpenGLTestVCBase.m in Sources */,
+				782EAB9520FCA4B200DBD545 /* VideoConfiguration.m in Sources */,
 				782D642E20DCA2D80085FE26 /* MGLProgram.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
