@@ -43,10 +43,13 @@ static NSString *const TextureRGBFS = SHADER_STRING
  
  //纹理采样器
  uniform sampler2D texture;
+ 
+ uniform float sliderValue;
+ 
  void main() {
      //从纹理texture中采样纹理
 //     gl_FragColor = texture2D(texture, TexCoord) * vec4(outColor, 1.0);
-     gl_FragColor = texture2D(texture, TexCoord);
+     gl_FragColor = texture2D(texture, TexCoord).rgba;
  }
  );
 
@@ -65,6 +68,7 @@ static NSString *const TextureRGBFS = SHADER_STRING
     GLuint texture0;
     
     CADisplayLink *_displayLink;
+    UISlider *_slider;
 }
 
 - (void)dealloc{
@@ -92,8 +96,19 @@ static NSString *const TextureRGBFS = SHADER_STRING
         _displayLink = [CADisplayLink displayLinkWithTarget:self selector:@selector(displayingLinkDraw)];
         _displayLink.frameInterval = 2.0;
         [_displayLink addToRunLoop:[NSRunLoop currentRunLoop] forMode:NSDefaultRunLoopMode];
+        
+        _slider = [[UISlider alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(frame), 50)];
+        _slider.maximumValue = 100;
+        _slider.minimumValue = 0;
+        _slider.value = 50;
+        [_slider addTarget:self action:@selector(sliderValueDidChage:) forControlEvents:UIControlEventValueChanged];
+        [self addSubview:_slider];
     }
     return self;
+}
+
+- (void)sliderValueDidChage:(id)sender{
+    
 }
 
 - (void)initOpenGL{
@@ -117,6 +132,10 @@ static NSString *const TextureRGBFS = SHADER_STRING
     aPos = [_program attributeIndex:@"aPos"];
     aTextCoord = [_program attributeIndex:@"aTextCoord"];
     acolor = [_program attributeIndex:@"acolor"];
+}
+
+- (void)updateUniformValue{
+    glUniform1f([_program uniformIndex:@"sliderValue"], _slider.value);
 }
 
 - (void)setUpGLBuffers{
@@ -170,16 +189,19 @@ static NSString *const TextureRGBFS = SHADER_STRING
     
     // load image, create texture and generate mipmaps
 //    UIImage *image = [UIImage imageNamed:@"humantest.jpeg"];
-    UIImage *image = [UIImage imageNamed:@"humantest2.jpg"];
+    UIImage *image = [UIImage imageNamed:@"humantest.jpg"];
     MImageData* imageData = mglImageDataFromUIImage(image, YES);
+    glTexImage2D(GL_TEXTURE_2D, 0, imageData->format, (GLint)imageData->width, (GLint)imageData->height, 0, imageData->format, imageData->type,imageData->data);
     
+    /*
     int width = [self suggestTexSize:imageData->width];
     int heigh = [self suggestTexSize:imageData->height];
     
     //宽高必须是2的N次幂,如果是非2次幂的，就要先用glTexImage2D创建一个2次幂函的空纹理，然后用gltexsubimage2d来给这个纹理的部分附值。如果要铺平，就修改纹理坐标。这里就不赘述了
     glTexImage2D(GL_TEXTURE_2D, 0, imageData->format, (GLint)width, (GLint)heigh, 0, imageData->format, imageData->type,NULL);
     glTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, imageData->width, imageData->height, imageData->format, imageData->type, imageData->data);
-    
+    */
+     
     glGetError();
     glGenerateMipmap(GL_TEXTURE_2D);
     mglDestroyImageData(imageData);
@@ -211,6 +233,7 @@ static NSString *const TextureRGBFS = SHADER_STRING
     
     // render container
     [_program use];
+    [self updateUniformValue];
     glBindVertexArrayOES(VAO);
     glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 }

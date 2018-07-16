@@ -19,6 +19,7 @@ typedef struct VideoFormat{
 
 + (NSArray *)videoFilesPathInOri;
 + (NSArray *)videoFilesPathInTransform;
++ (void)copyFileToTransformDir:(NSString *)inputFile;
 
 //输入的格式必须为640x480_xxxx这样的宽高在开头的格式才能解析
 + (VideoFormat)analyseVideoFormatWithFileName:(NSString *)fileName;
@@ -29,5 +30,4 @@ typedef struct VideoFormat{
 - (void)writeH264DataToFile:(NSString *)fileName data:(NSData *)data error:(NSError *)error;
 
 - (NSData *)readOneFrameYUVDataWithFile:(NSString *)fileName error:(NSError *)error;
-
 @end

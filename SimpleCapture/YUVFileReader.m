@@ -55,6 +55,17 @@ static NSString *directoryNameTransformInDoc = @"transform";
     return self;
 }
 
++ (void)copyFileToTransformDir:(NSString *)inputFile{
+    NSFileManager *defaultFile = [NSFileManager defaultManager];
+    NSString *path = [[[YUVFileReader documentPath] stringByAppendingPathComponent:directoryNameInOri] stringByAppendingPathComponent:[inputFile lastPathComponent]];
+    NSError *error;
+    [defaultFile copyItemAtPath:inputFile toPath:path error:&error];
+    if (error) {
+        NSLog(@"____ copy item error %@",error);
+    }
+    
+}
+
 - (void)writeYUVDataToFile:(NSString *)fileName data:(NSData *)data error:(NSError *)error{
     if (!_writeYUVFilePath) {
         self.writeYUVFilePath = [[[YUVFileReader documentPath] stringByAppendingPathComponent:directoryNameTransformInDoc] stringByAppendingPathComponent:fileName];

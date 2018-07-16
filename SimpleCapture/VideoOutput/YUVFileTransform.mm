@@ -75,6 +75,10 @@
     _farmeIndexEncode = 0;
     _frameIndexWrite = 0;
     
+    if (!inputFile) {
+        return;
+    }
+    
     [self readYUVDataFromeFile:inputFile];
     [self beginEncode];
     

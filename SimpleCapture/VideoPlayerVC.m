@@ -10,6 +10,7 @@
 #import "Masonry.h"
 #import <PhotosUI/PhotosUI.h>
 #import "VideoPlayerVC+EvtRe.h"
+#import "YUVFileReader.h"
 
 @interface VideoPlayerVC () <VideoFileDecoderDelegate>
 @end
@@ -47,6 +48,10 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    NSString *inputhPath = [[NSBundle mainBundle] pathForResource:@"test/640x360_ShakeNDry_640x360_14frames" ofType:@"yuv"];
+    [YUVFileReader copyFileToTransformDir:inputhPath];
+    
     [self addVideoSubView];
 }
 
