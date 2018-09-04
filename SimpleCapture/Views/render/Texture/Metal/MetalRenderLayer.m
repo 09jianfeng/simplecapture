@@ -117,6 +117,7 @@ typedef enum{
         NSString *imageName = [NSString stringWithFormat:@"container.jpg"];
         UIImage *image = [UIImage imageNamed:imageName];
         _myPixelbuffer = imageToYUVPixelBuffer(image);
+        _metalFillMode = MetalFillModePreserveAspectRatio;
     }
     return self;
 }
