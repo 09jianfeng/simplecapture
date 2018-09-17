@@ -45,11 +45,31 @@ static NSString *const TextureRGBFS = SHADER_STRING
  uniform sampler2D texture;
  
  uniform float sliderValue;
+ uniform vec2 vecSize;
+ uniform mat2 upsidedown;
  
  void main() {
-     //从纹理texture中采样纹理
+     //跟颜色值混合
 //     gl_FragColor = texture2D(texture, TexCoord) * vec4(outColor, 1.0);
+     
+     //正常显示
      gl_FragColor = texture2D(texture, TexCoord).rgba;
+     
+     /*
+     {//图像翻转
+         vec2 vecImageSize = vecSize;
+         vec2 posNew = vec2(vecImageSize.x - TexCoord.x,vecImageSize.y-TexCoord.y);
+         vec3 irgb = texture2D(texture,posNew).rgb;
+         gl_FragColor = vec4(irgb,1.0);
+     }
+      */
+     
+     /*
+     {//矩阵图像翻转
+         vec3 irgb = texture2D(texture,TexCoord * upsidedown).rgb;
+         gl_FragColor = vec4(irgb,1.0);
+     }
+      */
  }
  );
 
@@ -69,6 +89,8 @@ static NSString *const TextureRGBFS = SHADER_STRING
     
     CADisplayLink *_displayLink;
     UISlider *_slider;
+    uint32_t _imageWidth;
+    uint32_t _imageHeigh;
 }
 
 - (void)dealloc{
@@ -136,6 +158,9 @@ static NSString *const TextureRGBFS = SHADER_STRING
 
 - (void)updateUniformValue{
     glUniform1f([_program uniformIndex:@"sliderValue"], _slider.value);
+    glUniform2f([_program uniformIndex:@"vecSize"], _imageWidth, _imageHeigh);
+    GLfloat upsidedownmat[] = {1.0,0.0,0.0,-1.0};
+    glUniformMatrix2fv([_program uniformIndex:@"upsidedown"], 1, GL_FALSE, upsidedownmat);
 }
 
 - (void)setUpGLBuffers{
@@ -189,15 +214,21 @@ static NSString *const TextureRGBFS = SHADER_STRING
     
     // load image, create texture and generate mipmaps
 //    UIImage *image = [UIImage imageNamed:@"humantest.jpeg"];
+    
+    
     UIImage *image = [UIImage imageNamed:@"humantest.jpg"];
     MImageData* imageData = mglImageDataFromUIImage(image, YES);
-    glTexImage2D(GL_TEXTURE_2D, 0, imageData->format, (GLint)imageData->width, (GLint)imageData->height, 0, imageData->format, imageData->type,imageData->data);
+    _imageWidth = imageData->width;
+    _imageHeigh = imageData->height;
+    {//用glTexImage2D给纹理赋值
+        glTexImage2D(GL_TEXTURE_2D, 0, imageData->format, (GLint)imageData->width, (GLint)imageData->height, 0, imageData->format, imageData->type,imageData->data);
+    }
     
     /*
     int width = [self suggestTexSize:imageData->width];
     int heigh = [self suggestTexSize:imageData->height];
     
-    //宽高必须是2的N次幂,如果是非2次幂的，就要先用glTexImage2D创建一个2次幂函的空纹理，然后用gltexsubimage2d来给这个纹理的部分附值。如果要铺平，就修改纹理坐标。这里就不赘述了
+    //glTexImage2D的宽高必须是2的N次幂才能创建成功,如果是非2次幂的，就要先用glTexImage2D创建一个2次幂函的空纹理，然后用gltexsubimage2d来给这个纹理的部分附值。如果要铺平，就修改纹理坐标。这里就不赘述了
     glTexImage2D(GL_TEXTURE_2D, 0, imageData->format, (GLint)width, (GLint)heigh, 0, imageData->format, imageData->type,NULL);
     glTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, imageData->width, imageData->height, imageData->format, imageData->type, imageData->data);
     */

@@ -27,7 +27,7 @@
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
     
     _tableData = @[@"glkview fb 渲染到纹理",
-                   @"glkview 直接渲染",
+                   @"glkview 直接渲染 美颜算法测试",
                    @"openGL 多重纹理",
                    @"CAEAGLLayer 渲染到纹理",
                    @"metalrenderlayer",
