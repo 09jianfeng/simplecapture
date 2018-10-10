@@ -321,6 +321,7 @@ static NSString *const TextureRGBFS = SHADER_STRING
     _imageWidth = imageData->width;
     _imageHeigh = imageData->height;
     {//用glTexImage2D给纹理赋值
+        //https://stackoverflow.com/questions/12428108/ios-how-to-draw-a-yuv-image-using-opengl glteximage2D	 yuv
         glTexImage2D(GL_TEXTURE_2D, 0, imageData->format, (GLint)imageData->width, (GLint)imageData->height, 0, imageData->format, imageData->type,imageData->data);
     }
     
