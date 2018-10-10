@@ -15,6 +15,7 @@
 #import "MGLCommon.h"
 #import "MGLMatrix.h"
 #import "MGLFrameBuffer.h"
+#import <CoreMedia/CoreMedia.h>
 
 #define STRINGIZE(x) #x
 #define SHADER_STRING(text) @ STRINGIZE(text)
@@ -84,6 +85,8 @@ static NSString *const TextureRGBFS = SHADER_STRING
     
     MGLMatrix *_matrix;
     int _angle;
+    
+    NSOutputStream *_outPutStream;
 }
 
 - (instancetype)init{
@@ -304,5 +307,34 @@ static GLfloat rangeOffset = 16.0;
         [_matrix setRotate:angle xAxis:0.0 yAxis:0.0 zAxis:1.0];
     }
     _angle = angle;
+}
+    
+#pragma mark - write nv12 to file
+- (void)writeSampleBufferData:(CMSampleBufferRef)sampleBuffer{
+    CVPixelBufferRef pixelBuffer = CVPixelBufferRetain(CMSampleBufferGetImageBuffer(sampleBuffer));
+    int width = (int)CVPixelBufferGetWidth(pixelBuffer);
+    int heigh = (int)CVPixelBufferGetHeight(pixelBuffer);
+    
+    CVPixelBufferLockBaseAddress(pixelBuffer, 0);
+    void *baseAddress = CVPixelBufferGetBaseAddress(pixelBuffer);
+    CVPlanarPixelBufferInfo_YCbCrBiPlanar *pi = (CVPlanarPixelBufferInfo_YCbCrBiPlanar*)(baseAddress);
+    size_t yPlaneOffset = CFSwapInt32(pi->componentInfoY.offset);
+    size_t cbcrPlaneOffset = CFSwapInt32(pi->componentInfoCbCr.offset);
+    uint32_t yPlanePitch = CFSwapInt32(pi->componentInfoY.rowBytes);
+    uint32_t cbcrPlanePitch = CFSwapInt32(pi->componentInfoCbCr.rowBytes);
+    
+    
+    // nv12 format
+    for (int i = 0; i < heigh; i++) {
+        //write y
+        [_outPutStream write:baseAddress+yPlaneOffset+yPlanePitch*i maxLength:width];
+    }
+    for (int i = 0; i < heigh/2; i++) {
+        //write uv
+        [_outPutStream write:baseAddress+cbcrPlaneOffset+cbcrPlanePitch*i maxLength:width];
+    }
+    
+    CVPixelBufferUnlockBaseAddress(pixelBuffer, 0);
+    CVPixelBufferRelease(pixelBuffer);
 }
 @end
