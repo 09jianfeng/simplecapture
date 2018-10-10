@@ -137,7 +137,7 @@
 		78DB57ED1E83BFD100FBBD99 /* AAPLEAGLLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 78DB57EC1E83BFD100FBBD99 /* AAPLEAGLLayer.m */; };
 		78EE3B861E8A371D00B66CE1 /* FileChooseVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 78EE3B851E8A371D00B66CE1 /* FileChooseVC.m */; };
 		78FB997A208DDE62000F1448 /* TextureGLKViewFBTexture.m in Sources */ = {isa = PBXBuildFile; fileRef = 78FB9978208DDE62000F1448 /* TextureGLKViewFBTexture.m */; };
-		8350224E82E1EC668F23AFB1 /* libPods-SimpleCapture.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F747D91B738D54E507A7E25A /* libPods-SimpleCapture.a */; };
+		9B9B20CD8E6D6BA97C34CAB4 /* Pods_SimpleCapture.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 40BE5B63698D063C4C3E888B /* Pods_SimpleCapture.framework */; };
 		DA0E7AF91C128164003A8C25 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = DA0E7AF81C128164003A8C25 /* main.m */; };
 		DA0E7AFC1C128164003A8C25 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = DA0E7AFB1C128164003A8C25 /* AppDelegate.m */; };
 		DA0E7AFF1C128164003A8C25 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DA0E7AFE1C128164003A8C25 /* ViewController.m */; };
@@ -179,6 +179,7 @@
 /* Begin PBXFileReference section */
 		1A9E6D278A1582539FFAB121 /* Pods-SimpleCapture.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SimpleCapture.release.xcconfig"; path = "Pods/Target Support Files/Pods-SimpleCapture/Pods-SimpleCapture.release.xcconfig"; sourceTree = "<group>"; };
 		3D2B17E96E0507E76F3E857C /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		40BE5B63698D063C4C3E888B /* Pods_SimpleCapture.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SimpleCapture.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		780448952086E60E00FAE1DF /* MultiTextureEAGLLayer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MultiTextureEAGLLayer.h; sourceTree = "<group>"; };
 		780448962086E60E00FAE1DF /* MultiTextureEAGLLayer.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MultiTextureEAGLLayer.m; sourceTree = "<group>"; };
 		780448992086F44B00FAE1DF /* container.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = container.jpg; sourceTree = "<group>"; };
@@ -753,7 +754,6 @@
 		DAA20BF41C5263FA008DB5AA /* VideoEncoder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VideoEncoder.h; sourceTree = "<group>"; };
 		DAA20BF51C5263FA008DB5AA /* VideoEncoder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VideoEncoder.m; sourceTree = "<group>"; };
 		DAA20BF71C535713008DB5AA /* SCCommon.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SCCommon.h; sourceTree = "<group>"; };
-		F747D91B738D54E507A7E25A /* libPods-SimpleCapture.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-SimpleCapture.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		FB2C0D24FFA0450E2EBBA0D8 /* Pods-SimpleCapture.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SimpleCapture.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SimpleCapture/Pods-SimpleCapture.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -778,8 +778,8 @@
 				78AE42621E8220F800D84304 /* libz.tbd in Frameworks */,
 				7899155D20B7B6FC00F0E665 /* libGPUImage.a in Frameworks */,
 				DA315FA21C702476008B9AF3 /* CoreAudio.framework in Frameworks */,
-				8350224E82E1EC668F23AFB1 /* libPods-SimpleCapture.a in Frameworks */,
 				7899157720B7B71A00F0E665 /* libyuv.a in Frameworks */,
+				9B9B20CD8E6D6BA97C34CAB4 /* Pods_SimpleCapture.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1890,7 +1890,7 @@
 				DA315FA11C702476008B9AF3 /* CoreAudio.framework */,
 				DA315F9F1C70246D008B9AF3 /* AudioUnit.framework */,
 				3D2B17E96E0507E76F3E857C /* libPods.a */,
-				F747D91B738D54E507A7E25A /* libPods-SimpleCapture.a */,
+				40BE5B63698D063C4C3E888B /* Pods_SimpleCapture.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -1972,9 +1972,9 @@
 				DA0E7AF01C128164003A8C25 /* Sources */,
 				DA0E7AF11C128164003A8C25 /* Frameworks */,
 				DA0E7AF21C128164003A8C25 /* Resources */,
-				49E24D416AF5FD33432B2096 /* [CP] Embed Pods Frameworks */,
 				DBA5EB0B5FD8E578D1F3795C /* [CP] Copy Pods Resources */,
 				782FA39920EB76BD00CCE550 /* CopyFiles */,
+				BC2BE46B430E71D4A911A6EE /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -2079,21 +2079,6 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		49E24D416AF5FD33432B2096 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-SimpleCapture/Pods-SimpleCapture-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 		A058BA14B3FAE574C6B2BEEC /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -2112,6 +2097,34 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
+		BC2BE46B430E71D4A911A6EE /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-SimpleCapture/Pods-SimpleCapture-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/Bolts/Bolts.framework",
+				"${BUILT_PRODUCTS_DIR}/CocoaLumberjack/CocoaLumberjack.framework",
+				"${BUILT_PRODUCTS_DIR}/GCDWebServer/GCDWebServer.framework",
+				"${BUILT_PRODUCTS_DIR}/KVOController/KVOController.framework",
+				"${BUILT_PRODUCTS_DIR}/Masonry/Masonry.framework",
+				"${BUILT_PRODUCTS_DIR}/NSLogger/NSLogger.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Bolts.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CocoaLumberjack.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GCDWebServer.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/KVOController.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Masonry.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/NSLogger.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-SimpleCapture/Pods-SimpleCapture-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		DBA5EB0B5FD8E578D1F3795C /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -2119,11 +2132,11 @@
 			);
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-SimpleCapture/Pods-SimpleCapture-resources.sh",
-				"${PODS_ROOT}/yyvideolib/resource/yyvideolib/yyvideolib.bundle",
+				"${PODS_ROOT}/Facebook-iOS-SDK/FacebookSDKs-iOS-universal-4.36.0/iOS/FacebookSDKStrings.bundle",
 			);
 			name = "[CP] Copy Pods Resources";
 			outputPaths = (
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/FacebookSDKStrings.bundle",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
