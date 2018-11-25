@@ -2,8 +2,8 @@
 //  VRPlayerView.h
 //  VRPlayer
 //
-//  Created by huafeng chen on 16/3/30.
-//  Copyright © 2016年 huafeng chen. All rights reserved.
+//  Created by JFChen on 2018/6/23.
+//  Copyright © 2018年 duowan. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>

@@ -126,7 +126,6 @@
 		78D62EFA1E84CB5600D8629C /* PhotosUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 78D62EF91E84CB5600D8629C /* PhotosUI.framework */; };
 		78D62EFD1E85045600D8629C /* VideoPlayerVC+EvtRe.m in Sources */ = {isa = PBXBuildFile; fileRef = 78D62EFC1E85045600D8629C /* VideoPlayerVC+EvtRe.m */; };
 		78DB0C722064DBEF005F87DA /* CameraViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 78DB0C712064DBEF005F87DA /* CameraViewController.m */; };
-		78DB0C832064DDCA005F87DA /* container.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 78DB0C7F2064DDCA005F87DA /* container.jpg */; };
 		78DB0C842064DDCA005F87DA /* camera.fs in Resources */ = {isa = PBXBuildFile; fileRef = 78DB0C802064DDCA005F87DA /* camera.fs */; };
 		78DB0C852064DDCA005F87DA /* camera.vs in Resources */ = {isa = PBXBuildFile; fileRef = 78DB0C812064DDCA005F87DA /* camera.vs */; };
 		78DB0C862064DDCA005F87DA /* awesomeface.png in Resources */ = {isa = PBXBuildFile; fileRef = 78DB0C822064DDCA005F87DA /* awesomeface.png */; };
@@ -137,7 +136,7 @@
 		78DB57ED1E83BFD100FBBD99 /* AAPLEAGLLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 78DB57EC1E83BFD100FBBD99 /* AAPLEAGLLayer.m */; };
 		78EE3B861E8A371D00B66CE1 /* FileChooseVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 78EE3B851E8A371D00B66CE1 /* FileChooseVC.m */; };
 		78FB997A208DDE62000F1448 /* TextureGLKViewFBTexture.m in Sources */ = {isa = PBXBuildFile; fileRef = 78FB9978208DDE62000F1448 /* TextureGLKViewFBTexture.m */; };
-		9B9B20CD8E6D6BA97C34CAB4 /* Pods_SimpleCapture.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 40BE5B63698D063C4C3E888B /* Pods_SimpleCapture.framework */; };
+		CBE4D7DF34B4AA6E5B7D72BA /* libPods-SimpleCapture.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DBC6B3ACB29063BE9573AA8E /* libPods-SimpleCapture.a */; };
 		DA0E7AF91C128164003A8C25 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = DA0E7AF81C128164003A8C25 /* main.m */; };
 		DA0E7AFC1C128164003A8C25 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = DA0E7AFB1C128164003A8C25 /* AppDelegate.m */; };
 		DA0E7AFF1C128164003A8C25 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DA0E7AFE1C128164003A8C25 /* ViewController.m */; };
@@ -179,7 +178,6 @@
 /* Begin PBXFileReference section */
 		1A9E6D278A1582539FFAB121 /* Pods-SimpleCapture.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SimpleCapture.release.xcconfig"; path = "Pods/Target Support Files/Pods-SimpleCapture/Pods-SimpleCapture.release.xcconfig"; sourceTree = "<group>"; };
 		3D2B17E96E0507E76F3E857C /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		40BE5B63698D063C4C3E888B /* Pods_SimpleCapture.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SimpleCapture.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		780448952086E60E00FAE1DF /* MultiTextureEAGLLayer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MultiTextureEAGLLayer.h; sourceTree = "<group>"; };
 		780448962086E60E00FAE1DF /* MultiTextureEAGLLayer.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MultiTextureEAGLLayer.m; sourceTree = "<group>"; };
 		780448992086F44B00FAE1DF /* container.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = container.jpg; sourceTree = "<group>"; };
@@ -408,6 +406,7 @@
 		783782631E8E531100DED271 /* H264VideoDecoder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = H264VideoDecoder.h; sourceTree = "<group>"; };
 		783782641E8E531100DED271 /* H264VideoDecoder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = H264VideoDecoder.m; sourceTree = "<group>"; };
 		783782661E8E654E00DED271 /* libc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++.tbd"; path = "usr/lib/libc++.tbd"; sourceTree = SDKROOT; };
+		7839ED6921970D9E008437A8 /* TextureGLKViewShader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TextureGLKViewShader.h; sourceTree = "<group>"; };
 		7842DA7020D3A70C006B25D1 /* 8_icon.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 8_icon.jpg; sourceTree = "<group>"; };
 		7842DA7120D3A70C006B25D1 /* 9_icon.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 9_icon.jpg; sourceTree = "<group>"; };
 		7842DA7220D3A70C006B25D1 /* 2_icon.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 2_icon.jpg; sourceTree = "<group>"; };
@@ -711,7 +710,6 @@
 		78D62EFC1E85045600D8629C /* VideoPlayerVC+EvtRe.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "VideoPlayerVC+EvtRe.m"; sourceTree = "<group>"; };
 		78DB0C702064DBEF005F87DA /* CameraViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CameraViewController.h; sourceTree = "<group>"; };
 		78DB0C712064DBEF005F87DA /* CameraViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CameraViewController.m; sourceTree = "<group>"; };
-		78DB0C7F2064DDCA005F87DA /* container.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = container.jpg; sourceTree = "<group>"; };
 		78DB0C802064DDCA005F87DA /* camera.fs */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = camera.fs; sourceTree = "<group>"; };
 		78DB0C812064DDCA005F87DA /* camera.vs */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = camera.vs; sourceTree = "<group>"; };
 		78DB0C822064DDCA005F87DA /* awesomeface.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = awesomeface.png; sourceTree = "<group>"; };
@@ -754,6 +752,7 @@
 		DAA20BF41C5263FA008DB5AA /* VideoEncoder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VideoEncoder.h; sourceTree = "<group>"; };
 		DAA20BF51C5263FA008DB5AA /* VideoEncoder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VideoEncoder.m; sourceTree = "<group>"; };
 		DAA20BF71C535713008DB5AA /* SCCommon.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SCCommon.h; sourceTree = "<group>"; };
+		DBC6B3ACB29063BE9573AA8E /* libPods-SimpleCapture.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-SimpleCapture.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		FB2C0D24FFA0450E2EBBA0D8 /* Pods-SimpleCapture.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SimpleCapture.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SimpleCapture/Pods-SimpleCapture.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -779,7 +778,7 @@
 				7899155D20B7B6FC00F0E665 /* libGPUImage.a in Frameworks */,
 				DA315FA21C702476008B9AF3 /* CoreAudio.framework in Frameworks */,
 				7899157720B7B71A00F0E665 /* libyuv.a in Frameworks */,
-				9B9B20CD8E6D6BA97C34CAB4 /* Pods_SimpleCapture.framework in Frameworks */,
+				CBE4D7DF34B4AA6E5B7D72BA /* libPods-SimpleCapture.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -846,6 +845,7 @@
 				780448962086E60E00FAE1DF /* MultiTextureEAGLLayer.m */,
 				7832CA7520E777E5009CC807 /* MultiTextureYUVGLLayer.h */,
 				7832CA7620E777E5009CC807 /* MultiTextureYUVGLLayer.m */,
+				7839ED6921970D9E008437A8 /* TextureGLKViewShader.h */,
 				780448A8208833DB00FAE1DF /* TextureGLKView.h */,
 				780448A9208833DC00FAE1DF /* TextureGLKView.m */,
 				78FB9979208DDE62000F1448 /* TextureGLKViewFBTexture.h */,
@@ -1852,7 +1852,6 @@
 		78DB0C7E2064DDCA005F87DA /* resource */ = {
 			isa = PBXGroup;
 			children = (
-				78DB0C7F2064DDCA005F87DA /* container.jpg */,
 				78DB0C802064DDCA005F87DA /* camera.fs */,
 				78DB0C812064DDCA005F87DA /* camera.vs */,
 				78DB0C822064DDCA005F87DA /* awesomeface.png */,
@@ -1890,7 +1889,7 @@
 				DA315FA11C702476008B9AF3 /* CoreAudio.framework */,
 				DA315F9F1C70246D008B9AF3 /* AudioUnit.framework */,
 				3D2B17E96E0507E76F3E857C /* libPods.a */,
-				40BE5B63698D063C4C3E888B /* Pods_SimpleCapture.framework */,
+				DBC6B3ACB29063BE9573AA8E /* libPods-SimpleCapture.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -1972,9 +1971,7 @@
 				DA0E7AF01C128164003A8C25 /* Sources */,
 				DA0E7AF11C128164003A8C25 /* Frameworks */,
 				DA0E7AF21C128164003A8C25 /* Resources */,
-				DBA5EB0B5FD8E578D1F3795C /* [CP] Copy Pods Resources */,
 				782FA39920EB76BD00CCE550 /* CopyFiles */,
-				BC2BE46B430E71D4A911A6EE /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -2069,7 +2066,6 @@
 				7842DA7920D3A70D006B25D1 /* 8_icon.jpg in Resources */,
 				DA0E7B021C128164003A8C25 /* Main.storyboard in Resources */,
 				78DB0C842064DDCA005F87DA /* camera.fs in Resources */,
-				78DB0C832064DDCA005F87DA /* container.jpg in Resources */,
 				7842DA7F20D3A70D006B25D1 /* 5_icon.jpg in Resources */,
 				78DB0C852064DDCA005F87DA /* camera.vs in Resources */,
 				78B2F37420EB59800087A90C /* arrow@3x.png in Resources */,
@@ -2095,52 +2091,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		BC2BE46B430E71D4A911A6EE /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-SimpleCapture/Pods-SimpleCapture-frameworks.sh",
-				"${BUILT_PRODUCTS_DIR}/Bolts/Bolts.framework",
-				"${BUILT_PRODUCTS_DIR}/CocoaLumberjack/CocoaLumberjack.framework",
-				"${BUILT_PRODUCTS_DIR}/GCDWebServer/GCDWebServer.framework",
-				"${BUILT_PRODUCTS_DIR}/KVOController/KVOController.framework",
-				"${BUILT_PRODUCTS_DIR}/Masonry/Masonry.framework",
-				"${BUILT_PRODUCTS_DIR}/NSLogger/NSLogger.framework",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Bolts.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CocoaLumberjack.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GCDWebServer.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/KVOController.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Masonry.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/NSLogger.framework",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-SimpleCapture/Pods-SimpleCapture-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		DBA5EB0B5FD8E578D1F3795C /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-SimpleCapture/Pods-SimpleCapture-resources.sh",
-				"${PODS_ROOT}/Facebook-iOS-SDK/FacebookSDKs-iOS-universal-4.36.0/iOS/FacebookSDKStrings.bundle",
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/FacebookSDKStrings.bundle",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-SimpleCapture/Pods-SimpleCapture-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
