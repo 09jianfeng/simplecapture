@@ -30,7 +30,22 @@
     GLuint texture0;
     
     CADisplayLink *_displayLink;
-    UISlider *_slider;
+    
+    UISlider *_beautySlider;
+    float _beautyLevel;
+    UISlider *_toneSlider;
+    float _toneLevel;
+    UISlider *_brightSlider;
+    float _brightLevel;
+    UISlider *_offsetSlider;
+    float _texelOffset;
+    
+    int _paramsLocation;
+    int _brightnessLocation;
+    int _singleStepOffsetLocation;
+    int _texelWidthLocation;
+    int _texelHeightLocation;
+    
     uint32_t _imageWidth;
     uint32_t _imageHeigh;
 }
@@ -40,6 +55,15 @@
     glDeleteBuffers(1, &VBO);
     glDeleteBuffers(1, &EBO);
     NSLog(@"textureglkview dealloc");
+}
+
+- (void)layoutSubviews{
+    [super layoutSubviews];
+    
+    for (int tag = 1; tag < 5; tag++) {
+        UISlider *slider = [self viewWithTag:tag];
+        slider.frame = CGRectMake(0, self.frame.size.height - tag * 30, self.frame.size.width, 30);
+    }
 }
 
 - (instancetype)initWithFrame:(CGRect)frame{
@@ -61,18 +85,94 @@
         _displayLink.frameInterval = 2.0;
         [_displayLink addToRunLoop:[NSRunLoop currentRunLoop] forMode:NSDefaultRunLoopMode];
         
-        _slider = [[UISlider alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(frame), 50)];
-        _slider.maximumValue = 100;
-        _slider.minimumValue = 0;
-        _slider.value = 50;
-        [_slider addTarget:self action:@selector(sliderValueDidChage:) forControlEvents:UIControlEventValueChanged];
-        [self addSubview:_slider];
+        _beautySlider = [[UISlider alloc] initWithFrame:CGRectMake(0, CGRectGetHeight(frame) - 50, CGRectGetWidth(frame), 30)];
+        _beautySlider.maximumValue = 2.5;
+        _beautySlider.minimumValue = 0;
+        _beautySlider.value = 1.0;
+        _beautySlider.tag = 1;
+        [_beautySlider addTarget:self action:@selector(sliderValueDidChage:) forControlEvents:UIControlEventValueChanged];
+        [self addSubview:_beautySlider];
+        
+        _toneSlider = [[UISlider alloc] initWithFrame:CGRectMake(0, CGRectGetHeight(frame) - 50, CGRectGetWidth(frame), 30)];
+        _toneSlider.maximumValue = 5;
+        _toneSlider.minimumValue = -5;
+        _toneSlider.value = 0.0;
+        _toneSlider.tag = 2;
+        [_toneSlider addTarget:self action:@selector(sliderValueDidChage:) forControlEvents:UIControlEventValueChanged];
+        [self addSubview:_toneSlider];
+        
+        _brightSlider = [[UISlider alloc] initWithFrame:CGRectMake(0, CGRectGetHeight(frame) - 50, CGRectGetWidth(frame), 30)];
+        _brightSlider.maximumValue = 1;
+        _brightSlider.minimumValue = 0;
+        _brightSlider.value = 0.5;
+        _brightSlider.tag = 3;
+        [_brightSlider addTarget:self action:@selector(sliderValueDidChage:) forControlEvents:UIControlEventValueChanged];
+        [self addSubview:_brightSlider];
+        
+        _offsetSlider = [[UISlider alloc] initWithFrame:CGRectMake(0, CGRectGetHeight(frame) - 50, CGRectGetWidth(frame), 30)];
+        _offsetSlider.maximumValue = 10;
+        _offsetSlider.minimumValue = -10;
+        _offsetSlider.value = 0.5;
+        _offsetSlider.tag = 4;
+        [_offsetSlider addTarget:self action:@selector(sliderValueDidChage:) forControlEvents:UIControlEventValueChanged];
+        [self addSubview:_offsetSlider];
+
     }
     return self;
 }
 
 - (void)sliderValueDidChage:(id)sender{
-    
+    UISlider *slider = (UISlider *)sender;
+    switch (slider.tag) {
+        case 1:
+            [self setBeautyLevel:slider.value];
+            break;
+        case 2:
+            [self setToneLevel:slider.value];
+            break;
+        case 3:
+            [self setBrightLevel:slider.value];
+            break;
+        case 4:
+            [self setTexelOffset:slider.value];
+            break;
+            
+        default:
+            break;
+    }
+}
+
+- (void)setParams:(float)beauty tone:(float)tone{
+    _beautyLevel=beauty;
+    _toneLevel = tone;
+    float vector[4];
+    vector[0] = 1.0f - 0.6f * beauty;
+    vector[1] = 1.0f - 0.3f * beauty;
+    vector[2] = 0.1f + 0.3f * tone;
+    vector[3] = 0.1f + 0.3f * tone;
+//    glUniformMatrix2fv([_program uniformIndex:@"params"], 1, GL_FALSE, vector);
+    glUniform4f([_program uniformIndex:@"params"], vector[0],  vector[1],  vector[2],  vector[3]);
+}
+
+-(void)setTexelOffset:(float)texelOffset{
+    _texelOffset = texelOffset;
+    glUniform1f([_program uniformIndex:@"texelWidthOffset"], texelOffset/_imageWidth);
+    glUniform1f([_program uniformIndex:@"texelHeightOffset"], texelOffset/_imageHeigh);
+}
+
+-(void)setToneLevel:(float)toneLeve{
+    _toneLevel = toneLeve;
+    [self setParams:_beautyLevel tone:_toneLevel];
+}
+
+-(void)setBeautyLevel:(float)beautyLeve {
+    _beautyLevel = beautyLeve;
+    [self setParams:_beautyLevel tone:_toneLevel];
+}
+
+-(void)setBrightLevel:(float)brightLevel {
+    _brightLevel = brightLevel;
+    glUniform1f([_program uniformIndex:@"brightness"], 0.6f * (-0.5f + brightLevel));
 }
 
 - (void)initOpenGL{
@@ -99,7 +199,7 @@
 }
 
 - (void)updateUniformValue{
-    glUniform1f([_program uniformIndex:@"sliderValue"], _slider.value);
+    glUniform1f([_program uniformIndex:@"sliderValue"], _beautySlider.value);
     glUniform2f([_program uniformIndex:@"vecSize"], _imageWidth, _imageHeigh);
     GLfloat upsidedownmat[] = {1.0,0.0,0.0,-1.0};
     glUniformMatrix2fv([_program uniformIndex:@"upsidedown"], 1, GL_FALSE, upsidedownmat);
