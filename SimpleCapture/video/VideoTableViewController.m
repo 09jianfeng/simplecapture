@@ -12,6 +12,7 @@
 #import "VideoPlayerVC.h"
 #import "KXMovieController.h"
 #import "AVCamManualCameraViewController.h"
+#import "RosyWriterViewController.h"
 
 @interface VideoTableViewController ()
 
@@ -36,6 +37,7 @@
               @"ffmpeg 转码",
               @"kxController",
               @"ManualCamera",
+              @"视频滤镜",
               ];
     
 }
@@ -101,6 +103,13 @@
             [self.navigationController pushViewController:vc animated:YES];
         }
             break;
+        case 6:
+        {
+            RosyWriterViewController *vc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"RosyWriterViewController"];
+            [self.navigationController pushViewController:vc animated:YES];
+        }
+            break;
+
             
         default:
             break;
