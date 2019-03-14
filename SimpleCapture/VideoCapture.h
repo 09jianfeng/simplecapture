@@ -15,5 +15,6 @@
 - (void) start;
 - (void) stop;
 - (void) setTargetBitrate:(int)bitrateInKbps;
+- (void) setTapPosition:(CGPoint)position;
 
 @end

@@ -122,6 +122,7 @@
 		78B2F39A20EB67980087A90C /* YMTinyVideoMediaKit.m in Sources */ = {isa = PBXBuildFile; fileRef = 78B2F39320EB67980087A90C /* YMTinyVideoMediaKit.m */; };
 		78B2F39B20EB67980087A90C /* YMTinyVideoExtracter.m in Sources */ = {isa = PBXBuildFile; fileRef = 78B2F39420EB67980087A90C /* YMTinyVideoExtracter.m */; };
 		78B2F39F20EB6BEE0087A90C /* YMTinyVideoObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 78B2F39E20EB6BED0087A90C /* YMTinyVideoObject.m */; };
+		78C573D7221BE9A400C06956 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 78C573D6221BE9A400C06956 /* AVFoundation.framework */; };
 		78D62EF81E84CB4B00D8629C /* Photos.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 78D62EF71E84CB4B00D8629C /* Photos.framework */; };
 		78D62EFA1E84CB5600D8629C /* PhotosUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 78D62EF91E84CB5600D8629C /* PhotosUI.framework */; };
 		78D62EFD1E85045600D8629C /* VideoPlayerVC+EvtRe.m in Sources */ = {isa = PBXBuildFile; fileRef = 78D62EFC1E85045600D8629C /* VideoPlayerVC+EvtRe.m */; };
@@ -704,6 +705,7 @@
 		78B2F39420EB67980087A90C /* YMTinyVideoExtracter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YMTinyVideoExtracter.m; sourceTree = "<group>"; };
 		78B2F39D20EB6BED0087A90C /* YMTinyVideoObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YMTinyVideoObject.h; sourceTree = "<group>"; };
 		78B2F39E20EB6BED0087A90C /* YMTinyVideoObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YMTinyVideoObject.m; sourceTree = "<group>"; };
+		78C573D6221BE9A400C06956 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		78D62EF71E84CB4B00D8629C /* Photos.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Photos.framework; path = System/Library/Frameworks/Photos.framework; sourceTree = SDKROOT; };
 		78D62EF91E84CB5600D8629C /* PhotosUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PhotosUI.framework; path = System/Library/Frameworks/PhotosUI.framework; sourceTree = SDKROOT; };
 		78D62EFB1E85045600D8629C /* VideoPlayerVC+EvtRe.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "VideoPlayerVC+EvtRe.h"; sourceTree = "<group>"; };
@@ -769,6 +771,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				78C573D7221BE9A400C06956 /* AVFoundation.framework in Frameworks */,
 				782FA2F320EB6F2600CCE550 /* ffmpegframework.framework in Frameworks */,
 				780448AC20883B0F00FAE1DF /* GLKit.framework in Frameworks */,
 				78D62EFA1E84CB5600D8629C /* PhotosUI.framework in Frameworks */,
@@ -1880,6 +1883,7 @@
 		91F7F595AF800493DF65C790 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				78C573D6221BE9A400C06956 /* AVFoundation.framework */,
 				780448AB20883B0F00FAE1DF /* GLKit.framework */,
 				783782661E8E654E00DED271 /* libc++.tbd */,
 				78D62EF91E84CB5600D8629C /* PhotosUI.framework */,

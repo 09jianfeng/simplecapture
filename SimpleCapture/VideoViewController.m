@@ -59,6 +59,15 @@
 
     _segmentedControl.selectedSegmentIndex = 1;
     [self onSegmentedControlClicked:nil];
+    
+    UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(gestureTap:)];
+    [self.view addGestureRecognizer:tapGesture];
+}
+
+- (void)gestureTap:(UITapGestureRecognizer *)gesture{
+    CGPoint position = [gesture locationInView:self.view];
+    NSLog(@"tap position %@",NSStringFromCGPoint(position));
+    [_videoCapture setTapPosition:position];
 }
 
 - (void)viewDidDisappear:(BOOL)animated

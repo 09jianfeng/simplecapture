@@ -159,6 +159,10 @@ struct CaptureStat {
           _stat.playFrameCount);
 }
 
+- (void) setTapPosition:(CGPoint)position{
+    
+}
+
 - (void)onApplicationWillEnterForeground:(NSNotification *)notification
 {
     @synchronized(self) {
