@@ -8,6 +8,7 @@
 
 #import "VideoTableViewController.h"
 #import "AssetViewController.h"
+#import "AVCamCameraViewController.h"
 
 @interface VideoTableViewController ()
 
@@ -27,7 +28,9 @@
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
     
     _data = @[@"show+play demo",
-              @"转码"];
+              @"转码",
+              @"camera",
+              ];
     
 }
 
@@ -70,7 +73,8 @@
             break;
         case 2:
         {
-            
+            AVCamCameraViewController *vc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"AVCamCameraViewController"];
+            [self.navigationController pushViewController:vc animated:YES];
         }
             break;
 

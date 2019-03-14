@@ -83,6 +83,9 @@
 		787F33C81FA8AAF1009A5C5F /* KXMovieController.m in Sources */ = {isa = PBXBuildFile; fileRef = 787F33C71FA8AAF1009A5C5F /* KXMovieController.m */; };
 		787F33D11FA8AF7C009A5C5F /* test in Resources */ = {isa = PBXBuildFile; fileRef = 787F33D01FA8AF7C009A5C5F /* test */; };
 		7888278D1EC45AE2002090DA /* FFMPEGDecodeFilter.mm in Sources */ = {isa = PBXBuildFile; fileRef = 7888278C1EC45AE2002090DA /* FFMPEGDecodeFilter.mm */; };
+		7893142F223A7A2600686848 /* AVCamPreviewView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7893142C223A7A2500686848 /* AVCamPreviewView.m */; };
+		78931430223A7A2600686848 /* AVCamCameraViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7893142D223A7A2500686848 /* AVCamCameraViewController.m */; };
+		78931431223A7A2600686848 /* AVCamPhotoCaptureDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 7893142E223A7A2500686848 /* AVCamPhotoCaptureDelegate.m */; };
 		789914AA20B7A93100F0E665 /* PCMPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 789914A920B7A93100F0E665 /* PCMPlayer.m */; };
 		789914AC20B7A96400F0E665 /* abc.pcm in Resources */ = {isa = PBXBuildFile; fileRef = 789914AB20B7A94700F0E665 /* abc.pcm */; };
 		7899155D20B7B6FC00F0E665 /* libGPUImage.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7899155C20B7B6FB00F0E665 /* libGPUImage.a */; };
@@ -446,6 +449,12 @@
 		787F33D01FA8AF7C009A5C5F /* test */ = {isa = PBXFileReference; lastKnownFileType = folder; path = test; sourceTree = "<group>"; };
 		7888278B1EC45AE2002090DA /* FFMPEGDecodeFilter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FFMPEGDecodeFilter.h; sourceTree = "<group>"; };
 		7888278C1EC45AE2002090DA /* FFMPEGDecodeFilter.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = FFMPEGDecodeFilter.mm; sourceTree = "<group>"; };
+		78931429223A7A2500686848 /* AVCamPreviewView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AVCamPreviewView.h; sourceTree = "<group>"; };
+		7893142A223A7A2500686848 /* AVCamPhotoCaptureDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AVCamPhotoCaptureDelegate.h; sourceTree = "<group>"; };
+		7893142B223A7A2500686848 /* AVCamCameraViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AVCamCameraViewController.h; sourceTree = "<group>"; };
+		7893142C223A7A2500686848 /* AVCamPreviewView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AVCamPreviewView.m; sourceTree = "<group>"; };
+		7893142D223A7A2500686848 /* AVCamCameraViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AVCamCameraViewController.m; sourceTree = "<group>"; };
+		7893142E223A7A2500686848 /* AVCamPhotoCaptureDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AVCamPhotoCaptureDelegate.m; sourceTree = "<group>"; };
 		789914A820B7A93100F0E665 /* PCMPlayer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PCMPlayer.h; sourceTree = "<group>"; };
 		789914A920B7A93100F0E665 /* PCMPlayer.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PCMPlayer.m; sourceTree = "<group>"; };
 		789914AB20B7A94700F0E665 /* abc.pcm */ = {isa = PBXFileReference; lastKnownFileType = file; path = abc.pcm; sourceTree = "<group>"; };
@@ -1372,6 +1381,19 @@
 			path = kxmovie;
 			sourceTree = "<group>";
 		};
+		78931428223A7A2500686848 /* capture */ = {
+			isa = PBXGroup;
+			children = (
+				78931429223A7A2500686848 /* AVCamPreviewView.h */,
+				7893142A223A7A2500686848 /* AVCamPhotoCaptureDelegate.h */,
+				7893142B223A7A2500686848 /* AVCamCameraViewController.h */,
+				7893142C223A7A2500686848 /* AVCamPreviewView.m */,
+				7893142D223A7A2500686848 /* AVCamCameraViewController.m */,
+				7893142E223A7A2500686848 /* AVCamPhotoCaptureDelegate.m */,
+			);
+			path = capture;
+			sourceTree = "<group>";
+		};
 		789914AD20B7B6E800F0E665 /* Third */ = {
 			isa = PBXGroup;
 			children = (
@@ -1821,6 +1843,7 @@
 		78DB0C6E2064DA48005F87DA /* video */ = {
 			isa = PBXGroup;
 			children = (
+				78931428223A7A2500686848 /* capture */,
 				78B2F38320EB62A00087A90C /* Asset */,
 				78B2F34120EB16F60087A90C /* show+player */,
 				78B2F34220EB173C0087A90C /* VideoTableViewController.h */,
@@ -2136,6 +2159,7 @@
 				DA5B1BF61C6743F7005890B1 /* VideoProcessor.m in Sources */,
 				782FA24F20EB6CE500CCE550 /* ffmpeg.c in Sources */,
 				782FA24820EB6CE500CCE550 /* ffmpeg_opt.c in Sources */,
+				78931431223A7A2600686848 /* AVCamPhotoCaptureDelegate.m in Sources */,
 				78796B701E88EDDE00F93853 /* YUVFileReader.m in Sources */,
 				78B2F37720EB59800087A90C /* YZYPhotoGridViewController.m in Sources */,
 				78B2F37020EB59800087A90C /* UIView+Addition.m in Sources */,
@@ -2196,6 +2220,7 @@
 				78B2F37C20EB59800087A90C /* YZYAlbumDropView.m in Sources */,
 				78B2F35220EB22020087A90C /* VideoFileKit.m in Sources */,
 				782FA39820EB72BA00CCE550 /* YMTinyVideoFFmpeg.m in Sources */,
+				78931430223A7A2600686848 /* AVCamCameraViewController.m in Sources */,
 				782FA24D20EB6CE500CCE550 /* ffprobe.c in Sources */,
 				782EAB9120FCA11000DBD545 /* Mp4DemuxerObjc.mm in Sources */,
 				78B2F39920EB67980087A90C /* YMTinyVideoCVKit.m in Sources */,
@@ -2207,6 +2232,7 @@
 				78B2F37B20EB59800087A90C /* YZYPhotoDataManager.m in Sources */,
 				78B2F39F20EB6BEE0087A90C /* YMTinyVideoObject.m in Sources */,
 				780448972086E60E00FAE1DF /* MultiTextureEAGLLayer.m in Sources */,
+				7893142F223A7A2600686848 /* AVCamPreviewView.m in Sources */,
 				DA0E7AF91C128164003A8C25 /* main.m in Sources */,
 				780448A0208749C300FAE1DF /* OpenGLTestVCBase.m in Sources */,
 				782EAB9520FCA4B200DBD545 /* VideoConfiguration.m in Sources */,
@@ -2384,7 +2410,7 @@
 					"$(PROJECT_DIR)/Third/ffmpeg/include",
 				);
 				INFOPLIST_FILE = SimpleCapture/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -2420,7 +2446,7 @@
 					"$(PROJECT_DIR)/Third/ffmpeg/include",
 				);
 				INFOPLIST_FILE = SimpleCapture/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
