@@ -1385,13 +1385,35 @@
 			isa = PBXGroup;
 			children = (
 				78931429223A7A2500686848 /* AVCamPreviewView.h */,
-				7893142A223A7A2500686848 /* AVCamPhotoCaptureDelegate.h */,
-				7893142B223A7A2500686848 /* AVCamCameraViewController.h */,
 				7893142C223A7A2500686848 /* AVCamPreviewView.m */,
-				7893142D223A7A2500686848 /* AVCamCameraViewController.m */,
+				7893142A223A7A2500686848 /* AVCamPhotoCaptureDelegate.h */,
 				7893142E223A7A2500686848 /* AVCamPhotoCaptureDelegate.m */,
+				7893142D223A7A2500686848 /* AVCamCameraViewController.m */,
+				7893142B223A7A2500686848 /* AVCamCameraViewController.h */,
 			);
 			path = capture;
+			sourceTree = "<group>";
+		};
+		78931432223A7C6300686848 /* videoPlayer */ = {
+			isa = PBXGroup;
+			children = (
+				787F33C61FA8AAF1009A5C5F /* KXMovieController.h */,
+				787F33C71FA8AAF1009A5C5F /* KXMovieController.m */,
+			);
+			name = videoPlayer;
+			sourceTree = "<group>";
+		};
+		78931433223A7C9100686848 /* ffmpegTranVideo */ = {
+			isa = PBXGroup;
+			children = (
+				78EE3B841E8A371D00B66CE1 /* FileChooseVC.h */,
+				78EE3B851E8A371D00B66CE1 /* FileChooseVC.m */,
+				78AE42681E82271600D84304 /* VideoPlayerVC.h */,
+				78AE42691E82271600D84304 /* VideoPlayerVC.m */,
+				78D62EFB1E85045600D8629C /* VideoPlayerVC+EvtRe.h */,
+				78D62EFC1E85045600D8629C /* VideoPlayerVC+EvtRe.m */,
+			);
+			name = ffmpegTranVideo;
 			sourceTree = "<group>";
 		};
 		789914AD20B7B6E800F0E665 /* Third */ = {
@@ -1727,23 +1749,15 @@
 			name = Utils;
 			sourceTree = "<group>";
 		};
-		78B2F34120EB16F60087A90C /* show+player */ = {
+		78B2F34120EB16F60087A90C /* captureSampleBuffer */ = {
 			isa = PBXGroup;
 			children = (
-				787F33C61FA8AAF1009A5C5F /* KXMovieController.h */,
-				787F33C71FA8AAF1009A5C5F /* KXMovieController.m */,
 				DA0E7AFD1C128164003A8C25 /* ViewController.h */,
 				DA0E7AFE1C128164003A8C25 /* ViewController.m */,
 				DA3832861C6DC2E50093BFC1 /* VideoViewController.h */,
 				DA3832871C6DC2E50093BFC1 /* VideoViewController.m */,
-				78AE42681E82271600D84304 /* VideoPlayerVC.h */,
-				78AE42691E82271600D84304 /* VideoPlayerVC.m */,
-				78D62EFB1E85045600D8629C /* VideoPlayerVC+EvtRe.h */,
-				78D62EFC1E85045600D8629C /* VideoPlayerVC+EvtRe.m */,
-				78EE3B841E8A371D00B66CE1 /* FileChooseVC.h */,
-				78EE3B851E8A371D00B66CE1 /* FileChooseVC.m */,
 			);
-			name = "show+player";
+			name = captureSampleBuffer;
 			sourceTree = "<group>";
 		};
 		78B2F34520EB1D310087A90C /* avasset */ = {
@@ -1843,9 +1857,11 @@
 		78DB0C6E2064DA48005F87DA /* video */ = {
 			isa = PBXGroup;
 			children = (
+				78931433223A7C9100686848 /* ffmpegTranVideo */,
+				78931432223A7C6300686848 /* videoPlayer */,
 				78931428223A7A2500686848 /* capture */,
 				78B2F38320EB62A00087A90C /* Asset */,
-				78B2F34120EB16F60087A90C /* show+player */,
+				78B2F34120EB16F60087A90C /* captureSampleBuffer */,
 				78B2F34220EB173C0087A90C /* VideoTableViewController.h */,
 				78B2F34320EB173C0087A90C /* VideoTableViewController.m */,
 			);

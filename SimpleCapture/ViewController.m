@@ -101,8 +101,6 @@
     
 }
 - (IBAction)kxmoviePlayBtnPressed:(id)sender {
-    KXMovieController *kxmov = [KXMovieController new];
-    [self.navigationController pushViewController:kxmov animated:YES];
 }
 
 - (void)requestCameraPermissionWithCompletion:(void(^)(BOOL granted))completionBlock {

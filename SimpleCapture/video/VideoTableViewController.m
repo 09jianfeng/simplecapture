@@ -9,6 +9,8 @@
 #import "VideoTableViewController.h"
 #import "AssetViewController.h"
 #import "AVCamCameraViewController.h"
+#import "VideoPlayerVC.h"
+#import "KXMovieController.h"
 
 @interface VideoTableViewController ()
 
@@ -27,9 +29,11 @@
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
     
-    _data = @[@"show+play demo",
-              @"转码",
-              @"camera",
+    _data = @[@"camera+samplebuffer output",
+              @"AVAsset 转码",
+              @"camera+photo/moviefile output",
+              @"ffmpeg 转码",
+              @"kxController",
               ];
     
 }
@@ -74,6 +78,18 @@
         case 2:
         {
             AVCamCameraViewController *vc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"AVCamCameraViewController"];
+            [self.navigationController pushViewController:vc animated:YES];
+        }
+            break;
+        case 3:
+        {
+            VideoPlayerVC *vc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"VideoPlayerVC"];
+            [self.navigationController pushViewController:vc animated:YES];
+        }
+            break;
+        case 4:
+        {
+            KXMovieController *vc = [KXMovieController new];
             [self.navigationController pushViewController:vc animated:YES];
         }
             break;

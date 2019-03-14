@@ -64,15 +64,6 @@
                                     <action selector="onFpsValueChanged:" destination="BYZ-38-t0r" eventType="valueChanged" id="dky-Ps-Ip6"/>
                                 </connections>
                             </slider>
-                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TA6-pb-alJ">
-                                <rect key="frame" x="148" y="486" width="305" height="30"/>
-                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
-                                <color key="tintColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <state key="normal" title="Start Capture"/>
-                                <connections>
-                                    <action selector="onStartVideoCaptureClicked:" destination="BYZ-38-t0r" eventType="touchUpInside" id="GLU-FA-7Y8"/>
-                                </connections>
-                            </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="Stabilization:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="p4z-Sc-d3N">
                                 <rect key="frame" x="20" y="428" width="319" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
@@ -91,33 +82,18 @@
                             <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Bkh-Kk-vU3">
                                 <rect key="frame" x="531" y="372" width="51" height="31"/>
                             </switch>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ocu-PU-ppO">
-                                <rect key="frame" x="20" y="486" width="80" height="30"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="30" id="NKD-48-Z4O"/>
-                                    <constraint firstAttribute="width" constant="80" id="fci-ED-Ra5"/>
-                                </constraints>
-                                <state key="normal" title="videoPlayer"/>
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TA6-pb-alJ">
+                                <rect key="frame" x="136" y="551" width="102" height="30"/>
+                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="tintColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <state key="normal" title="Start Capture"/>
                                 <connections>
-                                    <action selector="btnVideoPlayerPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="MlF-J2-QcL"/>
-                                    <segue destination="s3f-16-bvJ" kind="show" id="xXI-yI-2eF"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EX8-lz-1vF">
-                                <rect key="frame" x="148" y="486" width="72" height="30"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="72" id="FxL-ce-oy5"/>
-                                    <constraint firstAttribute="height" constant="30" id="Imv-Ci-FW7"/>
-                                </constraints>
-                                <state key="normal" title="KXMovie"/>
-                                <connections>
-                                    <action selector="kxmoviePlayBtnPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="kx3-mQ-GBh"/>
+                                    <action selector="onStartVideoCaptureClicked:" destination="BYZ-38-t0r" eventType="touchUpInside" id="GLU-FA-7Y8"/>
                                 </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="EX8-lz-1vF" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" constant="-3.5" id="3Pd-zv-CE9"/>
                             <constraint firstAttribute="trailingMargin" secondItem="wTe-tS-34h" secondAttribute="trailing" id="4PR-vQ-EFW"/>
                             <constraint firstItem="e1e-tk-V85" firstAttribute="top" secondItem="wTe-tS-34h" secondAttribute="bottom" constant="30" id="4nF-gS-fyW"/>
                             <constraint firstItem="wTe-tS-34h" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="6yy-U7-7IV"/>
@@ -126,18 +102,15 @@
                             <constraint firstItem="0jy-S4-oym" firstAttribute="trailing" secondItem="8bC-Xf-vdC" secondAttribute="trailingMargin" id="Fob-Kk-jCA"/>
                             <constraint firstItem="Bkh-Kk-vU3" firstAttribute="trailing" secondItem="8bC-Xf-vdC" secondAttribute="trailingMargin" id="Gfm-Y0-Los"/>
                             <constraint firstAttribute="trailingMargin" secondItem="4Ux-21-cp9" secondAttribute="trailing" id="OHG-ge-eDt"/>
-                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="EX8-lz-1vF" secondAttribute="bottom" constant="107" id="R1q-dW-u63"/>
                             <constraint firstItem="OOp-6p-0eg" firstAttribute="top" secondItem="z25-tX-81j" secondAttribute="bottom" constant="20" id="TP7-Ab-wjD"/>
                             <constraint firstItem="0jy-S4-oym" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="U4v-Tn-yM7"/>
                             <constraint firstItem="z25-tX-81j" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="UMK-cy-lhO"/>
                             <constraint firstItem="4Ux-21-cp9" firstAttribute="centerY" secondItem="p4z-Sc-d3N" secondAttribute="centerY" id="V8d-eu-Buc"/>
-                            <constraint firstItem="ocu-PU-ppO" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="4" id="X8r-zi-reS"/>
                             <constraint firstItem="GVU-TV-rT4" firstAttribute="top" secondItem="0jy-S4-oym" secondAttribute="bottom" constant="30" id="eDa-8D-73W"/>
                             <constraint firstItem="z25-tX-81j" firstAttribute="trailing" secondItem="8bC-Xf-vdC" secondAttribute="trailingMargin" id="gIL-xS-Db6"/>
                             <constraint firstItem="vpV-UJ-Ngd" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="20" id="gpB-Y7-nwf"/>
                             <constraint firstAttribute="trailingMargin" secondItem="vpV-UJ-Ngd" secondAttribute="trailing" id="iUH-GD-e3B"/>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="TA6-pb-alJ" secondAttribute="bottom" constant="40" id="isw-3m-9Qn"/>
-                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="ocu-PU-ppO" secondAttribute="bottom" constant="107" id="jrL-H8-IOq"/>
                             <constraint firstItem="p4z-Sc-d3N" firstAttribute="top" secondItem="GVU-TV-rT4" secondAttribute="bottom" constant="30" id="jv0-va-0li"/>
                             <constraint firstItem="wTe-tS-34h" firstAttribute="top" secondItem="vpV-UJ-Ngd" secondAttribute="bottom" constant="30" id="ooh-E0-qgO"/>
                             <constraint firstItem="TA6-pb-alJ" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="qu2-2A-xyR"/>
@@ -161,7 +134,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="113" y="-649"/>
+            <point key="canvasLocation" x="8.8000000000000007" y="-649.02548725637189"/>
         </scene>
         <!--Video View Controller-->
         <scene sceneID="9ga-hp-h0E">
@@ -362,7 +335,7 @@
         <!--Video PlayerVC-->
         <scene sceneID="43v-W0-nUW">
             <objects>
-                <viewController id="s3f-16-bvJ" customClass="VideoPlayerVC" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="VideoPlayerVC" useStoryboardIdentifierAsRestorationIdentifier="YES" id="s3f-16-bvJ" customClass="VideoPlayerVC" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="JZX-G3-ua7"/>
                         <viewControllerLayoutGuide type="bottom" id="uGo-tN-PT6"/>
@@ -388,7 +361,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ij1-Ka-Zuj" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1046" y="-649"/>
+            <point key="canvasLocation" x="716" y="-627"/>
         </scene>
         <!--音频-->
         <scene sceneID="EiE-gl-f51">
@@ -896,7 +869,7 @@
                     </connections>
                 </tapGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="-777" y="-1186"/>
+            <point key="canvasLocation" x="-1314" y="-712"/>
         </scene>
     </scenes>
     <resources>
