@@ -818,7 +818,7 @@
 			path = Texture;
 			sourceTree = "<group>";
 		};
-		780818411E8DF615002E0C0B /* Utils */ = {
+		780818411E8DF615002E0C0B /* Video */ = {
 			isa = PBXGroup;
 			children = (
 				DA71E0841C56276100080493 /* BitrateMonitor.h */,
@@ -828,18 +828,8 @@
 				78796B6E1E88EDDE00F93853 /* YUVFileReader.h */,
 				78796B6F1E88EDDE00F93853 /* YUVFileReader.m */,
 			);
+			name = Video;
 			path = Utils;
-			sourceTree = "<group>";
-		};
-		781833541E80FAD000AC768F /* VideoFileHandle */ = {
-			isa = PBXGroup;
-			children = (
-				782EAB9320FCA4B200DBD545 /* VideoConfiguration.h */,
-				782EAB9420FCA4B200DBD545 /* VideoConfiguration.m */,
-				782EAB9220FCA48B00DBD545 /* yuv */,
-				782EAB8820FC9E2900DBD545 /* Mp4 */,
-			);
-			path = VideoFileHandle;
 			sourceTree = "<group>";
 		};
 		782D62B520D5FFAB0085FE26 /* openGL */ = {
@@ -1308,8 +1298,8 @@
 		785650FB2098479400382E80 /* Audio */ = {
 			isa = PBXGroup;
 			children = (
-				785650FC2098481200382E80 /* AudioViewController.h */,
-				785650FD2098481200382E80 /* AudioViewController.m */,
+				78931435223A7FF600686848 /* Model */,
+				78931434223A7FE900686848 /* VC */,
 			);
 			name = Audio;
 			sourceTree = "<group>";
@@ -1339,18 +1329,6 @@
 				781A882720BD46DD00E8A51F /* test.mov */,
 			);
 			path = audio;
-			sourceTree = "<group>";
-		};
-		7857173420FC9C2900E9D3E3 /* video */ = {
-			isa = PBXGroup;
-			children = (
-				78ABE5A120F48B91003DED65 /* Codec */,
-				78B2F34520EB1D310087A90C /* avasset */,
-				78AE42661E82268F00D84304 /* VideoCapture */,
-				781833541E80FAD000AC768F /* VideoFileHandle */,
-			);
-			name = video;
-			path = "New Group";
 			sourceTree = "<group>";
 		};
 		78796B7A1E89010900F93853 /* SimpleCaptureTests */ = {
@@ -1406,6 +1384,7 @@
 		78931433223A7C9100686848 /* ffmpegTranVideo */ = {
 			isa = PBXGroup;
 			children = (
+				78ABE5A120F48B91003DED65 /* Model */,
 				78EE3B841E8A371D00B66CE1 /* FileChooseVC.h */,
 				78EE3B851E8A371D00B66CE1 /* FileChooseVC.m */,
 				78AE42681E82271600D84304 /* VideoPlayerVC.h */,
@@ -1414,6 +1393,43 @@
 				78D62EFC1E85045600D8629C /* VideoPlayerVC+EvtRe.m */,
 			);
 			name = ffmpegTranVideo;
+			sourceTree = "<group>";
+		};
+		78931434223A7FE900686848 /* VC */ = {
+			isa = PBXGroup;
+			children = (
+				785650FC2098481200382E80 /* AudioViewController.h */,
+				785650FD2098481200382E80 /* AudioViewController.m */,
+			);
+			name = VC;
+			sourceTree = "<group>";
+		};
+		78931435223A7FF600686848 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				785650FF20984B3C00382E80 /* audio */,
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
+		78931436223A801900686848 /* VC */ = {
+			isa = PBXGroup;
+			children = (
+				78A21EF8209C069700918C6D /* OpenglTableViewController.h */,
+				78A21EF9209C069700918C6D /* OpenglTableViewController.m */,
+			);
+			path = VC;
+			sourceTree = "<group>";
+		};
+		78931437223A809F00686848 /* VC */ = {
+			isa = PBXGroup;
+			children = (
+				DA0E7AFD1C128164003A8C25 /* ViewController.h */,
+				DA0E7AFE1C128164003A8C25 /* ViewController.m */,
+				DA3832861C6DC2E50093BFC1 /* VideoViewController.h */,
+				DA3832871C6DC2E50093BFC1 /* VideoViewController.m */,
+			);
+			name = VC;
 			sourceTree = "<group>";
 		};
 		789914AD20B7B6E800F0E665 /* Third */ = {
@@ -1687,7 +1703,7 @@
 			path = render;
 			sourceTree = "<group>";
 		};
-		78ABE5A120F48B91003DED65 /* Codec */ = {
+		78ABE5A120F48B91003DED65 /* Model */ = {
 			isa = PBXGroup;
 			children = (
 				783782631E8E531100DED271 /* H264VideoDecoder.h */,
@@ -1697,38 +1713,20 @@
 				DAA20BF41C5263FA008DB5AA /* VideoEncoder.h */,
 				DAA20BF51C5263FA008DB5AA /* VideoEncoder.m */,
 			);
-			path = Codec;
+			path = Model;
 			sourceTree = "<group>";
 		};
-		78ABE5A220F48BD8003DED65 /* MediaSource */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = MediaSource;
-			sourceTree = "<group>";
-		};
-		78AE42631E82264500D84304 /* ViewController */ = {
+		78AE42631E82264500D84304 /* Scene */ = {
 			isa = PBXGroup;
 			children = (
 				785650FB2098479400382E80 /* Audio */,
 				78DB0C6F2064DB75005F87DA /* OpenGLTest */,
 				78DB0C6E2064DA48005F87DA /* video */,
 			);
-			name = ViewController;
+			name = Scene;
 			sourceTree = "<group>";
 		};
-		78AE42641E82265400D84304 /* Model */ = {
-			isa = PBXGroup;
-			children = (
-				7857173420FC9C2900E9D3E3 /* video */,
-				78ABE5A220F48BD8003DED65 /* MediaSource */,
-				785650FF20984B3C00382E80 /* audio */,
-				780818411E8DF615002E0C0B /* Utils */,
-			);
-			name = Model;
-			sourceTree = "<group>";
-		};
-		78AE42661E82268F00D84304 /* VideoCapture */ = {
+		78AE42661E82268F00D84304 /* Model */ = {
 			isa = PBXGroup;
 			children = (
 				DA5B1BF41C6743F7005890B1 /* VideoProcessor.h */,
@@ -1736,13 +1734,17 @@
 				DAA20BF31C5227A8008DB5AA /* VideoCapture.h */,
 				DAA20BF11C52278E008DB5AA /* VideoCapture.mm */,
 			);
-			name = VideoCapture;
-			path = ..;
+			name = Model;
 			sourceTree = "<group>";
 		};
 		78AE42671E8226A600D84304 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				782EAB9320FCA4B200DBD545 /* VideoConfiguration.h */,
+				782EAB9420FCA4B200DBD545 /* VideoConfiguration.m */,
+				782EAB9220FCA48B00DBD545 /* yuv */,
+				782EAB8820FC9E2900DBD545 /* Mp4 */,
+				780818411E8DF615002E0C0B /* Video */,
 				782D643220DCA31E0085FE26 /* opengl */,
 				DAA20BF71C535713008DB5AA /* SCCommon.h */,
 			);
@@ -1752,15 +1754,13 @@
 		78B2F34120EB16F60087A90C /* captureSampleBuffer */ = {
 			isa = PBXGroup;
 			children = (
-				DA0E7AFD1C128164003A8C25 /* ViewController.h */,
-				DA0E7AFE1C128164003A8C25 /* ViewController.m */,
-				DA3832861C6DC2E50093BFC1 /* VideoViewController.h */,
-				DA3832871C6DC2E50093BFC1 /* VideoViewController.m */,
+				78931437223A809F00686848 /* VC */,
+				78AE42661E82268F00D84304 /* Model */,
 			);
 			name = captureSampleBuffer;
 			sourceTree = "<group>";
 		};
-		78B2F34520EB1D310087A90C /* avasset */ = {
+		78B2F34520EB1D310087A90C /* Model */ = {
 			isa = PBXGroup;
 			children = (
 				782FA39B20EB7E9600CCE550 /* transitions */,
@@ -1776,8 +1776,7 @@
 				78B2F35320EB25D20087A90C /* VideoCompositionEditor.h */,
 				78B2F35420EB25D20087A90C /* VideoCompositionEditor.m */,
 			);
-			name = avasset;
-			path = ..;
+			name = Model;
 			sourceTree = "<group>";
 		};
 		78B2F35620EB597F0087A90C /* YZYPhotoPicker */ = {
@@ -1822,6 +1821,7 @@
 		78B2F38320EB62A00087A90C /* Asset */ = {
 			isa = PBXGroup;
 			children = (
+				78B2F34520EB1D310087A90C /* Model */,
 				78B2F37E20EB629A0087A90C /* AssetViewController.h */,
 				78B2F37F20EB629A0087A90C /* AssetViewController.m */,
 				78B2F38020EB629A0087A90C /* AssetViewController.xib */,
@@ -1871,8 +1871,8 @@
 		78DB0C6F2064DB75005F87DA /* OpenGLTest */ = {
 			isa = PBXGroup;
 			children = (
-				78A21EF8209C069700918C6D /* OpenglTableViewController.h */,
-				78A21EF9209C069700918C6D /* OpenglTableViewController.m */,
+				78931436223A801900686848 /* VC */,
+				78DB57EA1E83BFB800FBBD99 /* Views */,
 			);
 			name = OpenGLTest;
 			sourceTree = "<group>";
@@ -1963,9 +1963,7 @@
 			isa = PBXGroup;
 			children = (
 				78AE42671E8226A600D84304 /* Utils */,
-				78DB57EA1E83BFB800FBBD99 /* Views */,
-				78AE42641E82265400D84304 /* Model */,
-				78AE42631E82264500D84304 /* ViewController */,
+				78AE42631E82264500D84304 /* Scene */,
 				DA0E7AFA1C128164003A8C25 /* AppDelegate.h */,
 				DA0E7AFB1C128164003A8C25 /* AppDelegate.m */,
 				DA0E7B001C128164003A8C25 /* Main.storyboard */,
