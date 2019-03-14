@@ -18,6 +18,9 @@
 		78118230223AA12200FD03ED /* AVCamPreviewView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7811822D223AA12200FD03ED /* AVCamPreviewView.m */; };
 		78118231223AA12200FD03ED /* AVCamCameraViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7811822E223AA12200FD03ED /* AVCamCameraViewController.m */; };
 		78118232223AA12200FD03ED /* AVCamPhotoCaptureDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 7811822F223AA12200FD03ED /* AVCamPhotoCaptureDelegate.m */; };
+		7811823A223AA1C500FD03ED /* AVCamManualPreviewView.m in Sources */ = {isa = PBXBuildFile; fileRef = 78118236223AA1C500FD03ED /* AVCamManualPreviewView.m */; };
+		7811823B223AA1C500FD03ED /* AVCamManualPhotoCaptureDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 78118237223AA1C500FD03ED /* AVCamManualPhotoCaptureDelegate.m */; };
+		7811823C223AA1C500FD03ED /* AVCamManualCameraViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 78118238223AA1C500FD03ED /* AVCamManualCameraViewController.m */; };
 		781A882620BD46B800E8A51F /* AudioUnitPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 781A882520BD46B800E8A51F /* AudioUnitPlayer.m */; };
 		781A882820BD46DD00E8A51F /* test.mov in Resources */ = {isa = PBXBuildFile; fileRef = 781A882720BD46DD00E8A51F /* test.mov */; };
 		781A882B20BD51EC00E8A51F /* AACEncoder.m in Sources */ = {isa = PBXBuildFile; fileRef = 781A882A20BD51EC00E8A51F /* AACEncoder.m */; };
@@ -203,6 +206,12 @@
 		7811822D223AA12200FD03ED /* AVCamPreviewView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AVCamPreviewView.m; sourceTree = "<group>"; };
 		7811822E223AA12200FD03ED /* AVCamCameraViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AVCamCameraViewController.m; sourceTree = "<group>"; };
 		7811822F223AA12200FD03ED /* AVCamPhotoCaptureDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AVCamPhotoCaptureDelegate.m; sourceTree = "<group>"; };
+		78118234223AA1C500FD03ED /* AVCamManualCameraViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AVCamManualCameraViewController.h; sourceTree = "<group>"; };
+		78118235223AA1C500FD03ED /* AVCamManualPhotoCaptureDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AVCamManualPhotoCaptureDelegate.h; sourceTree = "<group>"; };
+		78118236223AA1C500FD03ED /* AVCamManualPreviewView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AVCamManualPreviewView.m; sourceTree = "<group>"; };
+		78118237223AA1C500FD03ED /* AVCamManualPhotoCaptureDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AVCamManualPhotoCaptureDelegate.m; sourceTree = "<group>"; };
+		78118238223AA1C500FD03ED /* AVCamManualCameraViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AVCamManualCameraViewController.m; sourceTree = "<group>"; };
+		78118239223AA1C500FD03ED /* AVCamManualPreviewView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AVCamManualPreviewView.h; sourceTree = "<group>"; };
 		781A882420BD46B800E8A51F /* AudioUnitPlayer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AudioUnitPlayer.h; sourceTree = "<group>"; };
 		781A882520BD46B800E8A51F /* AudioUnitPlayer.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AudioUnitPlayer.m; sourceTree = "<group>"; };
 		781A882720BD46DD00E8A51F /* test.mov */ = {isa = PBXFileReference; lastKnownFileType = video.quicktime; path = test.mov; sourceTree = "<group>"; };
@@ -845,6 +854,19 @@
 			name = automodecamera;
 			path = SimpleCapture/automodecamera;
 			sourceTree = SOURCE_ROOT;
+		};
+		78118233223AA1C500FD03ED /* manulModeCamera */ = {
+			isa = PBXGroup;
+			children = (
+				78118234223AA1C500FD03ED /* AVCamManualCameraViewController.h */,
+				78118235223AA1C500FD03ED /* AVCamManualPhotoCaptureDelegate.h */,
+				78118236223AA1C500FD03ED /* AVCamManualPreviewView.m */,
+				78118237223AA1C500FD03ED /* AVCamManualPhotoCaptureDelegate.m */,
+				78118238223AA1C500FD03ED /* AVCamManualCameraViewController.m */,
+				78118239223AA1C500FD03ED /* AVCamManualPreviewView.h */,
+			);
+			path = manulModeCamera;
+			sourceTree = "<group>";
 		};
 		782D62B520D5FFAB0085FE26 /* openGL */ = {
 			isa = PBXGroup;
@@ -1861,6 +1883,7 @@
 				78931433223A7C9100686848 /* ffmpegTranVideo */,
 				78931432223A7C6300686848 /* videoPlayer */,
 				78118229223AA12200FD03ED /* automodecamera */,
+				78118233223AA1C500FD03ED /* manulModeCamera */,
 				78B2F38320EB62A00087A90C /* Asset */,
 				78B2F34120EB16F60087A90C /* captureSampleBuffer */,
 				78B2F34220EB173C0087A90C /* VideoTableViewController.h */,
@@ -2216,6 +2239,7 @@
 				782FA3A720EB7E9600CCE550 /* YMTinyVideoCompositionEditor.m in Sources */,
 				78B2F35520EB25D20087A90C /* VideoCompositionEditor.m in Sources */,
 				78118230223AA12200FD03ED /* AVCamPreviewView.m in Sources */,
+				7811823B223AA1C500FD03ED /* AVCamManualPhotoCaptureDelegate.m in Sources */,
 				781A882B20BD51EC00E8A51F /* AACEncoder.m in Sources */,
 				782FA24C20EB6CE500CCE550 /* ffmpeg_h264_muxer_mp4v2.c in Sources */,
 				782FA24920EB6CE500CCE550 /* common.c in Sources */,
@@ -2248,8 +2272,10 @@
 				78B2F37B20EB59800087A90C /* YZYPhotoDataManager.m in Sources */,
 				78B2F39F20EB6BEE0087A90C /* YMTinyVideoObject.m in Sources */,
 				780448972086E60E00FAE1DF /* MultiTextureEAGLLayer.m in Sources */,
+				7811823C223AA1C500FD03ED /* AVCamManualCameraViewController.m in Sources */,
 				DA0E7AF91C128164003A8C25 /* main.m in Sources */,
 				780448A0208749C300FAE1DF /* OpenGLTestVCBase.m in Sources */,
+				7811823A223AA1C500FD03ED /* AVCamManualPreviewView.m in Sources */,
 				782EAB9520FCA4B200DBD545 /* VideoConfiguration.m in Sources */,
 				782D642E20DCA2D80085FE26 /* MGLProgram.m in Sources */,
 				78A02CBD213EB8CC00A60388 /* VideoVRView.m in Sources */,

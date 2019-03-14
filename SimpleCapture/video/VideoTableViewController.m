@@ -11,6 +11,7 @@
 #import "AVCamCameraViewController.h"
 #import "VideoPlayerVC.h"
 #import "KXMovieController.h"
+#import "AVCamManualCameraViewController.h"
 
 @interface VideoTableViewController ()
 
@@ -31,9 +32,10 @@
     
     _data = @[@"camera+samplebuffer output",
               @"AVAsset 转码",
-              @"camera+photo/moviefile output",
+              @"AutoCamera+photo/moviefile output",
               @"ffmpeg 转码",
               @"kxController",
+              @"ManualCamera",
               ];
     
 }
@@ -93,7 +95,12 @@
             [self.navigationController pushViewController:vc animated:YES];
         }
             break;
-
+        case 5:
+        {
+            AVCamManualCameraViewController *vc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"AVCamManualCameraViewController"];
+            [self.navigationController pushViewController:vc animated:YES];
+        }
+            break;
             
         default:
             break;
