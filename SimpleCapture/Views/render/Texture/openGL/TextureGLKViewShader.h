@@ -195,38 +195,22 @@ static NSString *const TextureRGBVS = SHADER_STRING
 // fragment shader
 static NSString *const TextureRGBFS = SHADER_STRING
 (
- 
-// //指明精度
-// precision mediump float;
-//
-// //纹理坐标，从顶点着色器那里传过来
-// varying mediump vec2 TexCoord;
-// varying mediump vec3 outColor;
-//
-// //纹理采样器
-// uniform sampler2D texture;
-//
-// void main() {
-//     //跟颜色值混合
-//    gl_FragColor = texture2D(texture, TexCoord) * vec4(outColor, 1.0);
- 
-     precision highp float;
-     varying highp vec2 textureCoordinate;
+ precision highp float;
+ varying highp vec2 textureCoordinate;
 
-      uniform sampler2D vTexture;
+  uniform sampler2D vTexture;
 
-      uniform highp vec2 singleStepOffset;
-      uniform highp vec4 params;
-      uniform highp float brightness;
-      uniform float texelWidthOffset;
-      uniform float texelHeightOffset;
+  uniform highp vec4 params;
+  uniform highp float brightness;
+  uniform float texelWidthOffset;
+  uniform float texelHeightOffset;
 
-      const highp vec3 W = vec3(0.299, 0.587, 0.114);
-      const highp mat3 saturateMatrix = mat3(
-          1.1102, -0.0598, -0.061,
-          -0.0774, 1.0826, -0.1186,
-          -0.0228, -0.0228, 1.1772);
-      highp vec2 blurCoordinates[24];
+  const highp vec3 W = vec3(0.299, 0.587, 0.114);
+  const highp mat3 saturateMatrix = mat3(
+      1.1102, -0.0598, -0.061,
+      -0.0774, 1.0826, -0.1186,
+      -0.0228, -0.0228, 1.1772);
+  highp vec2 blurCoordinates[24];
 
 highp float hardLight(highp float color) {
       if (color <= 0.5)
