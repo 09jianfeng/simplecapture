@@ -23,7 +23,6 @@
 		7811823C223AA1C500FD03ED /* AVCamManualCameraViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 78118238223AA1C500FD03ED /* AVCamManualCameraViewController.m */; };
 		78118257223AA3D900FD03ED /* RosyWriterCPURenderer.m in Sources */ = {isa = PBXBuildFile; fileRef = 7811823E223AA3D900FD03ED /* RosyWriterCPURenderer.m */; };
 		78118258223AA3D900FD03ED /* RosyWriterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7811823F223AA3D900FD03ED /* RosyWriterViewController.m */; };
-		78118259223AA3D900FD03ED /* RosyWriterAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 78118244223AA3D900FD03ED /* RosyWriterAppDelegate.m */; };
 		7811825A223AA3D900FD03ED /* RosyWriterOpenCVRenderer.mm in Sources */ = {isa = PBXBuildFile; fileRef = 78118245223AA3D900FD03ED /* RosyWriterOpenCVRenderer.mm */; };
 		7811825B223AA3D900FD03ED /* OpenGLPixelBufferView.m in Sources */ = {isa = PBXBuildFile; fileRef = 78118248223AA3D900FD03ED /* OpenGLPixelBufferView.m */; };
 		7811825C223AA3D900FD03ED /* MovieRecorder.m in Sources */ = {isa = PBXBuildFile; fileRef = 78118249223AA3D900FD03ED /* MovieRecorder.m */; };
@@ -234,7 +233,6 @@
 		78118241223AA3D900FD03ED /* RosyWriterRenderer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RosyWriterRenderer.h; sourceTree = "<group>"; };
 		78118242223AA3D900FD03ED /* RosyWriterOpenCVRenderer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RosyWriterOpenCVRenderer.h; sourceTree = "<group>"; };
 		78118243223AA3D900FD03ED /* RosyWriterOpenGLRenderer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RosyWriterOpenGLRenderer.h; sourceTree = "<group>"; };
-		78118244223AA3D900FD03ED /* RosyWriterAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RosyWriterAppDelegate.m; sourceTree = "<group>"; };
 		78118245223AA3D900FD03ED /* RosyWriterOpenCVRenderer.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = RosyWriterOpenCVRenderer.mm; sourceTree = "<group>"; };
 		78118246223AA3D900FD03ED /* RosyWriterCapturePipeline.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RosyWriterCapturePipeline.h; sourceTree = "<group>"; };
 		78118248223AA3D900FD03ED /* OpenGLPixelBufferView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OpenGLPixelBufferView.m; sourceTree = "<group>"; };
@@ -248,7 +246,6 @@
 		78118251223AA3D900FD03ED /* RosyWriterCIFilterRenderer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RosyWriterCIFilterRenderer.m; sourceTree = "<group>"; };
 		78118252223AA3D900FD03ED /* RosyWriterCPURenderer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RosyWriterCPURenderer.h; sourceTree = "<group>"; };
 		78118253223AA3D900FD03ED /* RosyWriterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RosyWriterViewController.h; sourceTree = "<group>"; };
-		78118254223AA3D900FD03ED /* RosyWriterAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RosyWriterAppDelegate.h; sourceTree = "<group>"; };
 		78118255223AA3D900FD03ED /* RosyWriterOpenGLRenderer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RosyWriterOpenGLRenderer.m; sourceTree = "<group>"; };
 		78118256223AA3D900FD03ED /* RosyWriterCapturePipeline.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RosyWriterCapturePipeline.m; sourceTree = "<group>"; };
 		78118263223AA3FF00FD03ED /* myFilter.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = myFilter.fsh; sourceTree = "<group>"; };
@@ -920,21 +917,19 @@
 			children = (
 				78118262223AA3FF00FD03ED /* Shaders */,
 				78118247223AA3D900FD03ED /* Utilities */,
-				7811823E223AA3D900FD03ED /* RosyWriterCPURenderer.m */,
-				7811823F223AA3D900FD03ED /* RosyWriterViewController.m */,
-				78118240223AA3D900FD03ED /* RosyWriterCIFilterRenderer.h */,
-				78118241223AA3D900FD03ED /* RosyWriterRenderer.h */,
-				78118242223AA3D900FD03ED /* RosyWriterOpenCVRenderer.h */,
-				78118243223AA3D900FD03ED /* RosyWriterOpenGLRenderer.h */,
-				78118244223AA3D900FD03ED /* RosyWriterAppDelegate.m */,
-				78118245223AA3D900FD03ED /* RosyWriterOpenCVRenderer.mm */,
-				78118246223AA3D900FD03ED /* RosyWriterCapturePipeline.h */,
-				78118251223AA3D900FD03ED /* RosyWriterCIFilterRenderer.m */,
-				78118252223AA3D900FD03ED /* RosyWriterCPURenderer.h */,
 				78118253223AA3D900FD03ED /* RosyWriterViewController.h */,
-				78118254223AA3D900FD03ED /* RosyWriterAppDelegate.h */,
-				78118255223AA3D900FD03ED /* RosyWriterOpenGLRenderer.m */,
+				7811823F223AA3D900FD03ED /* RosyWriterViewController.m */,
+				78118246223AA3D900FD03ED /* RosyWriterCapturePipeline.h */,
 				78118256223AA3D900FD03ED /* RosyWriterCapturePipeline.m */,
+				78118241223AA3D900FD03ED /* RosyWriterRenderer.h */,
+				7811823E223AA3D900FD03ED /* RosyWriterCPURenderer.m */,
+				78118252223AA3D900FD03ED /* RosyWriterCPURenderer.h */,
+				78118240223AA3D900FD03ED /* RosyWriterCIFilterRenderer.h */,
+				78118251223AA3D900FD03ED /* RosyWriterCIFilterRenderer.m */,
+				78118242223AA3D900FD03ED /* RosyWriterOpenCVRenderer.h */,
+				78118245223AA3D900FD03ED /* RosyWriterOpenCVRenderer.mm */,
+				78118243223AA3D900FD03ED /* RosyWriterOpenGLRenderer.h */,
+				78118255223AA3D900FD03ED /* RosyWriterOpenGLRenderer.m */,
 			);
 			path = AVFounVideofilter;
 			sourceTree = "<group>";
@@ -942,11 +937,11 @@
 		78118247223AA3D900FD03ED /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
-				78118248223AA3D900FD03ED /* OpenGLPixelBufferView.m */,
-				78118249223AA3D900FD03ED /* MovieRecorder.m */,
-				7811824A223AA3D900FD03ED /* OpenGLPixelBufferView.h */,
 				7811824B223AA3D900FD03ED /* GL */,
+				7811824A223AA3D900FD03ED /* OpenGLPixelBufferView.h */,
+				78118248223AA3D900FD03ED /* OpenGLPixelBufferView.m */,
 				78118250223AA3D900FD03ED /* MovieRecorder.h */,
+				78118249223AA3D900FD03ED /* MovieRecorder.m */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -2364,7 +2359,6 @@
 				78EE3B861E8A371D00B66CE1 /* FileChooseVC.m in Sources */,
 				78B2F34F20EB214A0087A90C /* AudioItem.m in Sources */,
 				782D642B20DCA2D80085FE26 /* MGLTexture.m in Sources */,
-				78118259223AA3D900FD03ED /* RosyWriterAppDelegate.m in Sources */,
 				782FA24B20EB6CE500CCE550 /* ffmpeg_filter.c in Sources */,
 				78118257223AA3D900FD03ED /* RosyWriterCPURenderer.m in Sources */,
 				782FA2F620EB708500CCE550 /* YMTinyVideoDispatcher.m in Sources */,

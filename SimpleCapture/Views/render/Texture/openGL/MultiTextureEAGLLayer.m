@@ -250,7 +250,7 @@ static NSString *const TextureRGBFS = SHADER_STRING
     }
     mglDestroyImageData(imageData);
     
-    // render container
+    // 0,1,2,3... 分别对应着片段着色器的texture0，texture1...
     [_program use];
     for(int i = 0; i < 9; i++){
         glUniform1i(uniform[i],i);

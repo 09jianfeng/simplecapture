@@ -39,7 +39,7 @@
 
 #define RETAINED_BUFFER_COUNT 6
 
-#define RECORD_AUDIO 0
+#define RECORD_AUDIO 1
 
 #define LOG_STATUS_TRANSITIONS 0
 
@@ -192,19 +192,16 @@ typedef NS_ENUM( NSInteger, RosyWriterRecordingStatus )
 	if ( [_captureSession canAddInput:audioIn] ) {
 		[_captureSession addInput:audioIn];
 	}
-	[audioIn release];
 	
 	AVCaptureAudioDataOutput *audioOut = [[AVCaptureAudioDataOutput alloc] init];
 	// Put audio on its own queue to ensure that our video processing doesn't cause us to drop audio
 	dispatch_queue_t audioCaptureQueue = dispatch_queue_create( "com.apple.sample.capturepipeline.audio", DISPATCH_QUEUE_SERIAL );
 	[audioOut setSampleBufferDelegate:self queue:audioCaptureQueue];
-	[audioCaptureQueue release];
 	
 	if ( [_captureSession canAddOutput:audioOut] ) {
 		[_captureSession addOutput:audioOut];
 	}
 	_audioConnection = [audioOut connectionWithMediaType:AVMediaTypeAudio];
-	[audioOut release];
 #endif // RECORD_AUDIO
 	
 	/* Video */
