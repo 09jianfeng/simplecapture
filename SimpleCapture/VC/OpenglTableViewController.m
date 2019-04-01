@@ -26,17 +26,17 @@
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
     
-    _tableData = @[@"glkview fb 渲染到纹理",
-                   @"glkview 直接渲染 美颜算法测试",
-                   @"openGL 多重纹理",
-                   @"CAEAGLLayer 渲染到纹理",
-                   @"metalrenderlayer",
-                   @"AAPLEAGLlayer",
+    _tableData = @[@"TextureGLKViewFBTexture",
+                   @"TextureGLKView",
+                   @"MultiTextureEAGLLayer",
+                   @"TextureEAGLLayerFBTexture",
+                   @"MetalRenderLayer",
+                   @"AAPLEAGLLayer",
                    @"MultiDrawMetalLayer",
-                   @"MGLFramebufferEAGL",
+                   @"MGLFBEAGLayer",
                    @"MGLFBYUVEAGLayer",
                    @"MutilDrawEAGLLayer",
-                   @"YUVGLLayer 多重纹理"];
+                   @"MultiTextureYUVGLLayer"];
 }
 
 - (void)didReceiveMemoryWarning {
