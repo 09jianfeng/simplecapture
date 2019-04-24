@@ -123,6 +123,7 @@
             NSLog(@"AudioUnitGetProperty error, ret: %d", status);
         }
         
+        //render callback是播放的回调用。
         AURenderCallbackStruct playCallback;
         playCallback.inputProc = PlayCallback;
         playCallback.inputProcRefCon = (__bridge void *)self;
@@ -184,7 +185,7 @@
              NSLog(@"AudioUnitGetProperty error, ret: %d", status);
          }
         
-        // set callback
+        // set callback. inputCallback: 是采集的回掉
         AURenderCallbackStruct recordCallback;
         recordCallback.inputProc = RecordCallback;
         recordCallback.inputProcRefCon = (__bridge void *)self;
@@ -224,6 +225,8 @@ static OSStatus RecordCallback(void *inRefCon,
     
     NSLog(@"ioActionFlags：%d inTimeStamp:%f inBusNumber:%d inNumberFrames:%d size1 = %d", *ioActionFlags, inTimeStamp->mSampleTime, inBusNumber , inNumberFrames, vc->buffList->mBuffers[0].mDataByteSize);
     [vc writePCMData:vc->buffList->mBuffers[0].mData size:vc->buffList->mBuffers[0].mDataByteSize];
+    NSLog(@"ioActionFlags：%d inTimeStamp:%f inBusNumber:%d inNumberFrames:%d size1 = %d", *ioActionFlags, inTimeStamp->mSampleTime, inBusNumber , inNumberFrames, vc->buffList->mBuffers[1].mDataByteSize);
+    [vc writePCMData:vc->buffList->mBuffers[1].mData size:vc->buffList->mBuffers[1].mDataByteSize];
     
     return noErr;
 }

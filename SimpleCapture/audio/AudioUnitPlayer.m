@@ -25,7 +25,7 @@ const uint32_t CONST_BUFFER_SIZE = 0x10000;
     
     SInt64 readedPacket; // 已读的packet数量
     UInt64 packetNums; // 总的packet数量
-    UInt64 packetNumsInBuffer; // buffer中最多的buffer数量
+    UInt64 packetNumsInBuffer; // buffer中packet的数量
     
     AudioUnit audioUnit;
     AudioBufferList *buffList;

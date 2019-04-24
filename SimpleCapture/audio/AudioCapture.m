@@ -53,7 +53,7 @@ static OSStatus auRenderCallback(void *							inRefCon,
     
     OSStatus renderErr = AudioUnitRender(p->_remoteIOUnit, ioActionFlags,
                                          inTimeStamp, 1, inNumberFrames, ioData);
-
+    NSLog(@"audioUnit capture:%d",inNumberFrames);
     return renderErr;
 }
 
@@ -65,6 +65,9 @@ static OSStatus auRenderCallback(void *							inRefCon,
     // set Category for Play and Record
     [_audioSession setCategory:AVAudioSessionCategoryPlayAndRecord error:&error];
     [_audioSession setPreferredSampleRate:(double)_sampleRate error:&error];
+    [_audioSession setPreferredIOBufferDuration:0.05 error:&error];
+    [_audioSession setPreferredInputNumberOfChannels:2 error:&error];
+    [_audioSession setPreferredOutputNumberOfChannels:2 error:&error];
     
     //init RemoteIO
     CheckError(NewAUGraph(&_auGraph), "couldn't NewAUGraph");
@@ -84,6 +87,7 @@ static OSStatus auRenderCallback(void *							inRefCon,
     //set BUS
     UInt32 oneFlag = 1;
     UInt32 busZero = 0;
+    //播放音频文件就是在bus 0传送数据。也就是说bus0（element0）代表的是扬声器。bus0的scope代表的是扬声器的scope_Input，跟scope_Output。
     CheckError(AudioUnitSetProperty(_remoteIOUnit,
                                     kAudioOutputUnitProperty_EnableIO,
                                     kAudioUnitScope_Output,
@@ -92,36 +96,13 @@ static OSStatus auRenderCallback(void *							inRefCon,
                                     sizeof(oneFlag)),"couldn't kAudioOutputUnitProperty_EnableIO with kAudioUnitScope_Output");
 
     UInt32 busOne = 1;
+    //bus 1输入在Remote IO 默认是关闭的，在录音的状态下 需要把bus 1设置成开启状态。bus1（element0）代表的是麦克风采集组件.
     CheckError(AudioUnitSetProperty(_remoteIOUnit,
                                     kAudioOutputUnitProperty_EnableIO,
                                     kAudioUnitScope_Input,
                                     busOne,
                                     &oneFlag,
                                     sizeof(oneFlag)),"couldn't kAudioOutputUnitProperty_EnableIO with kAudioUnitScope_Input");
-    
-    //init audio stream desciption
-    AudioStreamBasicDescription effectDataFormat;
-    UInt32 propSize = sizeof(effectDataFormat);
-    CheckError(AudioUnitGetProperty(_remoteIOUnit,
-                                    kAudioUnitProperty_StreamFormat,
-                                    kAudioUnitScope_Output,
-                                    0,
-                                    &effectDataFormat,
-                                    &propSize),"couldn't get kAudioUnitProperty_StreamFormat with kAudioUnitScope_Output");
-    
-    CheckError(AudioUnitSetProperty(_remoteIOUnit,
-                                    kAudioUnitProperty_StreamFormat,
-                                    kAudioUnitScope_Output,
-                                    1,
-                                    &effectDataFormat,
-                                    propSize),"couldn't set kAudioUnitProperty_StreamFormat with kAudioUnitScope_Output");
-    
-    CheckError(AudioUnitSetProperty(_remoteIOUnit,
-                                    kAudioUnitProperty_StreamFormat,
-                                    kAudioUnitScope_Input,
-                                    0,
-                                    &effectDataFormat,
-                                    propSize),"couldn't set kAudioUnitProperty_StreamFormat with kAudioUnitScope_Input");
     
     AURenderCallbackStruct inputProc;
     inputProc.inputProc = auRenderCallback;

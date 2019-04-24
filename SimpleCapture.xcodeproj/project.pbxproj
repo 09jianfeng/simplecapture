@@ -1445,6 +1445,8 @@
 				780BA6EB21100239003CB330 /* AudioTools.m */,
 				DA315F9C1C6F57AD008B9AF3 /* AudioCapture.h */,
 				DA315F9D1C6F57AD008B9AF3 /* AudioCapture.m */,
+				789914A820B7A93100F0E665 /* PCMPlayer.h */,
+				789914A920B7A93100F0E665 /* PCMPlayer.m */,
 				781A883520BD549E00E8A51F /* AudioCaptureSampleBuffer.h */,
 				781A883420BD549D00E8A51F /* AudioCaptureSampleBuffer.m */,
 				781A882920BD51EB00E8A51F /* AACEncoder.h */,
@@ -1452,8 +1454,6 @@
 				7856510220984B3C00382E80 /* AACPlayer.h */,
 				7856510020984B3C00382E80 /* AACPlayer.m */,
 				7856510120984B3C00382E80 /* abc.aac */,
-				789914A820B7A93100F0E665 /* PCMPlayer.h */,
-				789914A920B7A93100F0E665 /* PCMPlayer.m */,
 				789914AB20B7A94700F0E665 /* abc.pcm */,
 				7899157920B7FFC300F0E665 /* AccompanimentPlay.h */,
 				7899157A20B7FFC300F0E665 /* AccompanimentPlay.m */,
@@ -2180,6 +2180,7 @@
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
+				English,
 				en,
 				Base,
 			);

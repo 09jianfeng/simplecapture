@@ -11,8 +11,8 @@
 #import <AVFoundation/AVFoundation.h>
 #import <assert.h>
 
-#define INPUT_BUS 1
-#define OUTPUT_BUS 0
+#define INPUT_BUS 1   //audiounit的 bus 1输入在Remote IO 默认是关闭的，在录音的状态下 需要把bus 1设置成开启状态。bus1（element0）代表的是麦克风采集组件.
+#define OUTPUT_BUS 0  //audiounit 播放音频文件就是在bus 0传送数据。也就是说bus0（element0）代表的是扬声器。bus0的scope代表的是扬声器的scope_Input，跟scope_Output。
 
 @implementation PCMPlayer
 {
@@ -91,7 +91,7 @@
     }
     
     
-    // callback
+    // render callback。 播放回调用
     AURenderCallbackStruct playCallback;
     playCallback.inputProc = PlayCallback;
     playCallback.inputProcRefCon = (__bridge void *)self;
