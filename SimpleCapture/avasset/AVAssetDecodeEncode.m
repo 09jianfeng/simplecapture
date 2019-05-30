@@ -13,6 +13,7 @@
 #define YM_TINYVIDEO_PLAYER_FPS 60
 
 @interface AVAssetDecodeEncode()
+
 @property (nonatomic, assign, readwrite) float progress;
 @property (nonatomic, strong) AVAssetReader * reader;
 @property (nonatomic, strong) AVAssetReaderTrackOutput * videoOutput;
@@ -25,6 +26,7 @@
 @property (nonatomic, strong) dispatch_queue_t inputQueue;
 @property (nonatomic, copy) void (^completionHandler)(void);
 @property (nonatomic, strong) NSArray<AudioItem *> *audioItems;
+
 @end
 
 @implementation AVAssetDecodeEncode{
@@ -470,4 +472,5 @@
     _frameInterval = 0;
     _frameCount = 0;
 }
+
 @end

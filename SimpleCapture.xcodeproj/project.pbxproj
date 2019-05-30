@@ -157,6 +157,7 @@
 		78DB57E91E83B9E000FBBD99 /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 78DB57E81E83B9E000FBBD99 /* CoreVideo.framework */; };
 		78DB57ED1E83BFD100FBBD99 /* AAPLEAGLLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 78DB57EC1E83BFD100FBBD99 /* AAPLEAGLLayer.m */; };
 		78EE3B861E8A371D00B66CE1 /* FileChooseVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 78EE3B851E8A371D00B66CE1 /* FileChooseVC.m */; };
+		78EF554D229FAC350094B303 /* AssetTools.m in Sources */ = {isa = PBXBuildFile; fileRef = 78EF554C229FAC350094B303 /* AssetTools.m */; };
 		78FB997A208DDE62000F1448 /* TextureGLKViewFBTexture.m in Sources */ = {isa = PBXBuildFile; fileRef = 78FB9978208DDE62000F1448 /* TextureGLKViewFBTexture.m */; };
 		CBE4D7DF34B4AA6E5B7D72BA /* libPods-SimpleCapture.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DBC6B3ACB29063BE9573AA8E /* libPods-SimpleCapture.a */; };
 		DA0E7AF91C128164003A8C25 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = DA0E7AF81C128164003A8C25 /* main.m */; };
@@ -784,6 +785,8 @@
 		78DB57EC1E83BFD100FBBD99 /* AAPLEAGLLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AAPLEAGLLayer.m; sourceTree = "<group>"; };
 		78EE3B841E8A371D00B66CE1 /* FileChooseVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FileChooseVC.h; sourceTree = "<group>"; };
 		78EE3B851E8A371D00B66CE1 /* FileChooseVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FileChooseVC.m; sourceTree = "<group>"; };
+		78EF554B229FAC350094B303 /* AssetTools.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AssetTools.h; sourceTree = "<group>"; };
+		78EF554C229FAC350094B303 /* AssetTools.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AssetTools.m; sourceTree = "<group>"; };
 		78FB9978208DDE62000F1448 /* TextureGLKViewFBTexture.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TextureGLKViewFBTexture.m; sourceTree = "<group>"; };
 		78FB9979208DDE62000F1448 /* TextureGLKViewFBTexture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TextureGLKViewFBTexture.h; sourceTree = "<group>"; };
 		860317BD2340D95B23E7E974 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
@@ -1946,6 +1949,8 @@
 				78B2F37E20EB629A0087A90C /* AssetViewController.h */,
 				78B2F37F20EB629A0087A90C /* AssetViewController.m */,
 				78B2F38020EB629A0087A90C /* AssetViewController.xib */,
+				78EF554B229FAC350094B303 /* AssetTools.h */,
+				78EF554C229FAC350094B303 /* AssetTools.m */,
 			);
 			name = Asset;
 			sourceTree = "<group>";
@@ -2347,6 +2352,7 @@
 				780818441E8E0571002E0C0B /* VideoTool.m in Sources */,
 				782FA3A720EB7E9600CCE550 /* YMTinyVideoCompositionEditor.m in Sources */,
 				78B2F35520EB25D20087A90C /* VideoCompositionEditor.m in Sources */,
+				78EF554D229FAC350094B303 /* AssetTools.m in Sources */,
 				78118230223AA12200FD03ED /* AVCamPreviewView.m in Sources */,
 				7811823B223AA1C500FD03ED /* AVCamManualPhotoCaptureDelegate.m in Sources */,
 				781A882B20BD51EC00E8A51F /* AACEncoder.m in Sources */,
