@@ -44,7 +44,6 @@
 		78D62EFA1E84CB5600D8629C /* PhotosUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 78D62EF91E84CB5600D8629C /* PhotosUI.framework */; };
 		78D62EFD1E85045600D8629C /* VideoPlayerVC+EvtRe.m in Sources */ = {isa = PBXBuildFile; fileRef = 78D62EFC1E85045600D8629C /* VideoPlayerVC+EvtRe.m */; };
 		78DB0C722064DBEF005F87DA /* CameraViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 78DB0C712064DBEF005F87DA /* CameraViewController.m */; };
-		78DB0C832064DDCA005F87DA /* container.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 78DB0C7F2064DDCA005F87DA /* container.jpg */; };
 		78DB0C842064DDCA005F87DA /* camera.fs in Resources */ = {isa = PBXBuildFile; fileRef = 78DB0C802064DDCA005F87DA /* camera.fs */; };
 		78DB0C852064DDCA005F87DA /* camera.vs in Resources */ = {isa = PBXBuildFile; fileRef = 78DB0C812064DDCA005F87DA /* camera.vs */; };
 		78DB0C862064DDCA005F87DA /* awesomeface.png in Resources */ = {isa = PBXBuildFile; fileRef = 78DB0C822064DDCA005F87DA /* awesomeface.png */; };
@@ -350,7 +349,6 @@
 		78D62EFC1E85045600D8629C /* VideoPlayerVC+EvtRe.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "VideoPlayerVC+EvtRe.m"; sourceTree = "<group>"; };
 		78DB0C702064DBEF005F87DA /* CameraViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CameraViewController.h; sourceTree = "<group>"; };
 		78DB0C712064DBEF005F87DA /* CameraViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CameraViewController.m; sourceTree = "<group>"; };
-		78DB0C7F2064DDCA005F87DA /* container.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = container.jpg; sourceTree = "<group>"; };
 		78DB0C802064DDCA005F87DA /* camera.fs */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = camera.fs; sourceTree = "<group>"; };
 		78DB0C812064DDCA005F87DA /* camera.vs */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = camera.vs; sourceTree = "<group>"; };
 		78DB0C822064DDCA005F87DA /* awesomeface.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = awesomeface.png; sourceTree = "<group>"; };
@@ -1007,7 +1005,6 @@
 		78DB0C7E2064DDCA005F87DA /* resource */ = {
 			isa = PBXGroup;
 			children = (
-				78DB0C7F2064DDCA005F87DA /* container.jpg */,
 				78DB0C802064DDCA005F87DA /* camera.fs */,
 				78DB0C812064DDCA005F87DA /* camera.vs */,
 				78DB0C822064DDCA005F87DA /* awesomeface.png */,
@@ -1301,8 +1298,6 @@
 				DA0E7AF01C128164003A8C25 /* Sources */,
 				DA0E7AF11C128164003A8C25 /* Frameworks */,
 				DA0E7AF21C128164003A8C25 /* Resources */,
-				49E24D416AF5FD33432B2096 /* [CP] Embed Pods Frameworks */,
-				DBA5EB0B5FD8E578D1F3795C /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -1330,7 +1325,7 @@
 					};
 					DA0E7AF31C128164003A8C25 = {
 						CreatedOnToolsVersion = 7.1.1;
-						DevelopmentTeam = 7H57TJHB75;
+						DevelopmentTeam = 67Q24N9KP5;
 					};
 				};
 			};
@@ -1339,6 +1334,7 @@
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
+				English,
 				en,
 				Base,
 			);
@@ -1376,7 +1372,6 @@
 				7804489A2086F44C00FAE1DF /* container.jpg in Resources */,
 				DA0E7B021C128164003A8C25 /* Main.storyboard in Resources */,
 				78DB0C842064DDCA005F87DA /* camera.fs in Resources */,
-				78DB0C832064DDCA005F87DA /* container.jpg in Resources */,
 				78DB0C852064DDCA005F87DA /* camera.vs in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1384,21 +1379,6 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		49E24D416AF5FD33432B2096 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-SimpleCapture/Pods-SimpleCapture-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 		A058BA14B3FAE574C6B2BEEC /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -1415,24 +1395,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		DBA5EB0B5FD8E578D1F3795C /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-SimpleCapture/Pods-SimpleCapture-resources.sh",
-				"${PODS_ROOT}/yyvideolib/resource/yyvideolib/yyvideolib.bundle",
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-SimpleCapture/Pods-SimpleCapture-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -1646,7 +1608,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = 7H57TJHB75;
+				DEVELOPMENT_TEAM = 67Q24N9KP5;
 				ENABLE_BITCODE = NO;
 				HEADER_SEARCH_PATHS = (
 					"${PODS_ROOT}/gpuimagesdk/include",
@@ -1678,7 +1640,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = 7H57TJHB75;
+				DEVELOPMENT_TEAM = 67Q24N9KP5;
 				ENABLE_BITCODE = NO;
 				HEADER_SEARCH_PATHS = (
 					"${PODS_ROOT}/gpuimagesdk/include",
