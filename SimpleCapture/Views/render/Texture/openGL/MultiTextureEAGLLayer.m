@@ -232,11 +232,12 @@ static NSString *const TextureRGBFS = SHADER_STRING
     // load image, create texture and generate mipmaps
     
     glGenTextures(9, textures);
-    NSString *imageName = [NSString stringWithFormat:@"container.jpg"];
-    UIImage *image = [UIImage imageNamed:imageName];
-    MImageData* imageData = mglImageDataFromUIImage(image, YES);
     
     for(int i = 0; i < 9; i++){
+        NSString *imageName = [NSString stringWithFormat:@"%d_icon.jpg", i+1];
+        UIImage *image = [UIImage imageNamed:imageName];
+        MImageData* imageData = mglImageDataFromUIImage(image, YES);
+        
         glActiveTexture(GL_TEXTURE0+i);
         glBindTexture(GL_TEXTURE_2D, textures[i]); // all upcoming GL_TEXTURE_2D operations now have effect on this texture object
         // set the texture wrapping parameters
@@ -247,8 +248,8 @@ static NSString *const TextureRGBFS = SHADER_STRING
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
         glTexImage2D(GL_TEXTURE_2D, 0, imageData->format, (GLint)imageData->width, (GLint)imageData->height, 0, imageData->format, imageData->type, imageData->data);
 //        glGenerateMipmap(GL_TEXTURE_2D);
+        mglDestroyImageData(imageData);
     }
-    mglDestroyImageData(imageData);
     
     // 0,1,2,3... 分别对应着片段着色器的texture0，texture1...
     [_program use];

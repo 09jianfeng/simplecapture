@@ -179,11 +179,12 @@ static NSString *const ScreenTextureRGBFS = SHADER_STRING
         glFramebufferTexture2D ( GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, offscreenTextureId, 0 );
         glBindTexture ( GL_TEXTURE_2D, offscreenTextureId );
         
-        GLuint depthRenderbuffer;
-        glGenRenderbuffers(1, &depthRenderbuffer);
-        glBindRenderbuffer(GL_RENDERBUFFER, depthRenderbuffer);
         glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT16, offscreenTextureWidth, offscreenTextureHeight);
-        glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, depthRenderbuffer);
+        //不用深度缓冲区
+//        GLuint depthRenderbuffer;
+//        glGenRenderbuffers(1, &depthRenderbuffer);
+//        glBindRenderbuffer(GL_RENDERBUFFER, depthRenderbuffer);
+//        glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, depthRenderbuffer);
         
         if ( GL_FRAMEBUFFER_COMPLETE != glCheckFramebufferStatus ( GL_FRAMEBUFFER ) )
         {
