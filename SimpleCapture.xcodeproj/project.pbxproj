@@ -877,8 +877,6 @@
 		780818411E8DF615002E0C0B /* Video */ = {
 			isa = PBXGroup;
 			children = (
-				DA71E0841C56276100080493 /* BitrateMonitor.h */,
-				DA71E0831C56276100080493 /* BitrateMonitor.cpp */,
 				780818421E8E0571002E0C0B /* VideoTool.h */,
 				780818431E8E0571002E0C0B /* VideoTool.m */,
 				78796B6E1E88EDDE00F93853 /* YUVFileReader.h */,
@@ -1815,6 +1813,15 @@
 			path = libs;
 			sourceTree = "<group>";
 		};
+		78A0DF3822A6468B00A5FE1B /* CrossPlatform */ = {
+			isa = PBXGroup;
+			children = (
+				DA71E0841C56276100080493 /* BitrateMonitor.h */,
+				DA71E0831C56276100080493 /* BitrateMonitor.cpp */,
+			);
+			path = CrossPlatform;
+			sourceTree = "<group>";
+		};
 		78A21EFB209C092000918C6D /* render */ = {
 			isa = PBXGroup;
 			children = (
@@ -2093,6 +2100,7 @@
 		DA0E7AF61C128164003A8C25 /* SimpleCapture */ = {
 			isa = PBXGroup;
 			children = (
+				78A0DF3822A6468B00A5FE1B /* CrossPlatform */,
 				78AE42671E8226A600D84304 /* Utils */,
 				78AE42631E82264500D84304 /* Scene */,
 				DA0E7AFA1C128164003A8C25 /* AppDelegate.h */,
