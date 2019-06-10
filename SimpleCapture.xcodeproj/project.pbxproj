@@ -119,6 +119,7 @@
 		78A0DF5B22A6706800A5FE1B /* platform.mm in Sources */ = {isa = PBXBuildFile; fileRef = 78A0DF5922A6706800A5FE1B /* platform.mm */; };
 		78A0DF5F22A671C300A5FE1B /* XThread.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 78A0DF5D22A671C300A5FE1B /* XThread.cpp */; };
 		78A0DF6222A7CBAB00A5FE1B /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 78A0DF6122A7CBAB00A5FE1B /* Accelerate.framework */; };
+		78A0DF7A22AE2FF000A5FE1B /* PixelBufferConvertTool.mm in Sources */ = {isa = PBXBuildFile; fileRef = 78A0DF7922AE2FEF00A5FE1B /* PixelBufferConvertTool.mm */; };
 		78A21EFA209C069700918C6D /* OpenglTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A21EF9209C069700918C6D /* OpenglTableViewController.m */; };
 		78A21EFF209C0A0600918C6D /* TextureEAGLLayerFBTexture.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A21EFE209C0A0600918C6D /* TextureEAGLLayerFBTexture.m */; };
 		78AE42571E821E5E00D84304 /* VideoFileDecoder.m in Sources */ = {isa = PBXBuildFile; fileRef = 78AE42561E821E5E00D84304 /* VideoFileDecoder.m */; };
@@ -740,6 +741,8 @@
 		78A0DF5D22A671C300A5FE1B /* XThread.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = XThread.cpp; sourceTree = "<group>"; };
 		78A0DF5E22A671C300A5FE1B /* UintHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UintHelper.h; sourceTree = "<group>"; };
 		78A0DF6122A7CBAB00A5FE1B /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
+		78A0DF7822AE2FEF00A5FE1B /* PixelBufferConvertTool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PixelBufferConvertTool.h; sourceTree = "<group>"; };
+		78A0DF7922AE2FEF00A5FE1B /* PixelBufferConvertTool.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = PixelBufferConvertTool.mm; sourceTree = "<group>"; };
 		78A21EF8209C069700918C6D /* OpenglTableViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OpenglTableViewController.h; sourceTree = "<group>"; };
 		78A21EF9209C069700918C6D /* OpenglTableViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OpenglTableViewController.m; sourceTree = "<group>"; };
 		78A21EFD209C0A0600918C6D /* TextureEAGLLayerFBTexture.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TextureEAGLLayerFBTexture.h; sourceTree = "<group>"; };
@@ -1879,6 +1882,8 @@
 		78A0DF5522A6703800A5FE1B /* iosPlatform */ = {
 			isa = PBXGroup;
 			children = (
+				78A0DF7822AE2FEF00A5FE1B /* PixelBufferConvertTool.h */,
+				78A0DF7922AE2FEF00A5FE1B /* PixelBufferConvertTool.mm */,
 				78A0DF5A22A6706800A5FE1B /* platform.h */,
 				78A0DF5922A6706800A5FE1B /* platform.mm */,
 				78A0DF5622A6703800A5FE1B /* taskqueue.h */,
@@ -2449,6 +2454,7 @@
 				782D642B20DCA2D80085FE26 /* MGLTexture.m in Sources */,
 				782FA24B20EB6CE500CCE550 /* ffmpeg_filter.c in Sources */,
 				78118257223AA3D900FD03ED /* RosyWriterCPURenderer.m in Sources */,
+				78A0DF7A22AE2FF000A5FE1B /* PixelBufferConvertTool.mm in Sources */,
 				782FA2F620EB708500CCE550 /* YMTinyVideoDispatcher.m in Sources */,
 				787F33C81FA8AAF1009A5C5F /* KXMovieController.m in Sources */,
 				782FA3A820EB7E9600CCE550 /* YMTinyVideoCompositionInstruction.m in Sources */,
