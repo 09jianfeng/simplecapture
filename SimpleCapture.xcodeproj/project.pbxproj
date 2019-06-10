@@ -118,6 +118,7 @@
 		78A0DF5822A6703800A5FE1B /* taskqueue.mm in Sources */ = {isa = PBXBuildFile; fileRef = 78A0DF5722A6703800A5FE1B /* taskqueue.mm */; };
 		78A0DF5B22A6706800A5FE1B /* platform.mm in Sources */ = {isa = PBXBuildFile; fileRef = 78A0DF5922A6706800A5FE1B /* platform.mm */; };
 		78A0DF5F22A671C300A5FE1B /* XThread.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 78A0DF5D22A671C300A5FE1B /* XThread.cpp */; };
+		78A0DF6222A7CBAB00A5FE1B /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 78A0DF6122A7CBAB00A5FE1B /* Accelerate.framework */; };
 		78A21EFA209C069700918C6D /* OpenglTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A21EF9209C069700918C6D /* OpenglTableViewController.m */; };
 		78A21EFF209C0A0600918C6D /* TextureEAGLLayerFBTexture.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A21EFE209C0A0600918C6D /* TextureEAGLLayerFBTexture.m */; };
 		78AE42571E821E5E00D84304 /* VideoFileDecoder.m in Sources */ = {isa = PBXBuildFile; fileRef = 78AE42561E821E5E00D84304 /* VideoFileDecoder.m */; };
@@ -738,6 +739,7 @@
 		78A0DF5C22A671C300A5FE1B /* XThread.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XThread.h; sourceTree = "<group>"; };
 		78A0DF5D22A671C300A5FE1B /* XThread.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = XThread.cpp; sourceTree = "<group>"; };
 		78A0DF5E22A671C300A5FE1B /* UintHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UintHelper.h; sourceTree = "<group>"; };
+		78A0DF6122A7CBAB00A5FE1B /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
 		78A21EF8209C069700918C6D /* OpenglTableViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OpenglTableViewController.h; sourceTree = "<group>"; };
 		78A21EF9209C069700918C6D /* OpenglTableViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OpenglTableViewController.m; sourceTree = "<group>"; };
 		78A21EFD209C0A0600918C6D /* TextureEAGLLayerFBTexture.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TextureEAGLLayerFBTexture.h; sourceTree = "<group>"; };
@@ -864,6 +866,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				78A0DF6222A7CBAB00A5FE1B /* Accelerate.framework in Frameworks */,
 				7811826E223AA60700FD03ED /* CoreImage.framework in Frameworks */,
 				7811826C223AA5EC00FD03ED /* ImageIO.framework in Frameworks */,
 				7811826A223AA5DE00FD03ED /* CoreGraphics.framework in Frameworks */,
@@ -2120,6 +2123,7 @@
 		91F7F595AF800493DF65C790 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				78A0DF6122A7CBAB00A5FE1B /* Accelerate.framework */,
 				7811826D223AA60700FD03ED /* CoreImage.framework */,
 				7811826B223AA5EC00FD03ED /* ImageIO.framework */,
 				78118269223AA5DD00FD03ED /* CoreGraphics.framework */,
