@@ -38,8 +38,8 @@
     _bitrateStepper.stepValue = 50;
     _bitrateStepper.value = _config.bitrateInKbps;
     
-    _audioCapture = [[AudioCapture alloc] init];
-    [_audioCapture start];
+//    _audioCapture = [[AudioCapture alloc] init];
+//    [_audioCapture start];
     
     _videoCapture = [[VideoCapture alloc] init];
     [_videoCapture setConfig:_config];
@@ -57,7 +57,7 @@
     [self.view addSubview:_videoCapture.processorPreviewView];
     [self.view sendSubviewToBack:_videoCapture.processorPreviewView];
 
-    _segmentedControl.selectedSegmentIndex = 1;
+    _segmentedControl.selectedSegmentIndex = 0;
     [self onSegmentedControlClicked:nil];
     
     UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(gestureTap:)];
@@ -83,7 +83,7 @@
 
 - (void)onStatusTimeout:(NSTimer*)theTimer
 {
-    _statusLabel.text = [NSString stringWithFormat:@"Bitrate:%d kbps, FPS:%d", _videoCapture.actuallyBitrate / 1000, _videoCapture.actuallyFps];
+    _statusLabel.text = [NSString stringWithFormat:@"FPS:%d", _videoCapture.actuallyFps];
 }
 
 - (IBAction)onBitrateChanged:(id)sender

@@ -122,6 +122,20 @@
 -(IBAction)onStartVideoCaptureClicked:(id)sender
 {
     
+    //获取磁盘大小、剩余空间
+    NSDictionary *systemAttributes = [[NSFileManager defaultManager] fileSystemAttributesAtPath:NSHomeDirectory()];
+    NSString *diskTotalSize = [systemAttributes objectForKey:@"NSFileSystemSize"];
+    NSLog(@"磁盘大小：%@ B", diskTotalSize);
+    NSLog(@"磁盘大小：%.2f GB", [diskTotalSize floatValue]/1024/1024/1024);
+    NSString *diskFreeSize = [systemAttributes objectForKey:@"NSFileSystemFreeSize"];
+    NSLog(@"可用空间：%@ B", diskFreeSize);
+    NSLog(@"可用空间：%.2f GB", [diskFreeSize floatValue]/1024/1024/1024);
+    if ([diskFreeSize floatValue]/1024/1024/1024 < 4.0) {
+        UIAlertController *alertVC = [UIAlertController alertControllerWithTitle:@"注意" message:@"剩下空间不足4G了" preferredStyle:UIAlertControllerStyleAlert];
+        [self presentViewController:alertVC animated:YES completion:nil];
+        return;
+    }
+    
     VideoConfig config;
     config.cameraPosition = (int)_cameraPositionOption.selectedSegmentIndex;
     config.orientation = VideoOrientationPortrait;
@@ -130,7 +144,7 @@
     config.frameRate = (int)_fpsSlider.value;
     config.enableBeautyFilter = _videoBeautyFilterSwitch.on;
     config.devicePixelFormatType = kCVPixelFormatType_420YpCbCr8BiPlanarFullRange;
-    config.outputPixelFormatType = kCVPixelFormatType_32BGRA;
+    config.outputPixelFormatType = kCVPixelFormatType_420YpCbCr8BiPlanarFullRange;
     config.enableStabilization = _stabilizationSwitch.on;
 
     UIStoryboard *sb = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
@@ -153,3 +167,20 @@
 }
 
 @end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

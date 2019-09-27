@@ -111,7 +111,8 @@ typedef enum{
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(layerDidEnterBackground:) name:UIApplicationDidEnterBackgroundNotification object:nil];
         
         _displayLink = [CADisplayLink displayLinkWithTarget:self selector:@selector(displayingLinkDraw)];
-        _displayLink.frameInterval = 2.0;
+//        _displayLink.frameInterval = 3.0;
+        _displayLink.preferredFramesPerSecond = 24;
         [_displayLink addToRunLoop:[NSRunLoop currentRunLoop] forMode:NSDefaultRunLoopMode];
         
         NSString *imageName = [NSString stringWithFormat:@"container.jpg"];

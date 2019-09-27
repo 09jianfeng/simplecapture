@@ -15,8 +15,8 @@
 #include <AVFoundation/AVFoundation.h>
 #import <UIKit/UIScreen.h>
 #include <OpenGLES/EAGL.h>
-#include <OpenGLES/ES2/gl.h>
-#include <OpenGLES/ES2/glext.h>
+#include <OpenGLES/ES3/gl.h>
+#include <OpenGLES/ES3/glext.h>
 #include <time.h>
 #include <sys/time.h>
 #include "MGLCommon.h"
@@ -203,7 +203,7 @@ static VideoFillModeType  fillMode = FillModePreserveAspectRatio;
         self.contentsScale = scale;
 
         self.opaque = TRUE;
-        self.drawableProperties = @{ kEAGLDrawablePropertyRetainedBacking :[NSNumber numberWithBool:YES]};
+        self.drawableProperties = @{ kEAGLDrawablePropertyRetainedBacking :[NSNumber numberWithBool:NO]};
 
         [self setFrame:frame];
         
@@ -318,7 +318,7 @@ static VideoFillModeType  fillMode = FillModePreserveAspectRatio;
 
     glActiveTexture(GL_TEXTURE0);
     
-    CVReturn err = CVOpenGLESTextureCacheCreateTextureFromImage(kCFAllocatorDefault,
+    CVReturn err = CVOpenGLESTextureCacheCreateTextureFromImage(NULL,
                                                                 _videoTextureCache,
                                                                 pixelBuffer,
                                                                 NULL,
@@ -343,7 +343,7 @@ static VideoFillModeType  fillMode = FillModePreserveAspectRatio;
     if(planeCount == 2) {
         // UV-plane.
         glActiveTexture(GL_TEXTURE1);
-        err = CVOpenGLESTextureCacheCreateTextureFromImage(kCFAllocatorDefault,
+        err = CVOpenGLESTextureCacheCreateTextureFromImage(NULL,
                                                            _videoTextureCache,
                                                            pixelBuffer,
                                                            NULL,
@@ -482,7 +482,7 @@ static VideoFillModeType  fillMode = FillModePreserveAspectRatio;
     
     // Create CVOpenGLESTextureCacheRef for optimal CVPixelBufferRef to GLES texture conversion.
     if (!_videoTextureCache) {
-        CVReturn err = CVOpenGLESTextureCacheCreate(kCFAllocatorDefault, NULL, _context, NULL, &_videoTextureCache);
+        CVReturn err = CVOpenGLESTextureCacheCreate(NULL, NULL, _context, NULL, &_videoTextureCache);
         if (err != noErr) {
             NSLog(@"Error at CVOpenGLESTextureCacheCreate %d", err);
             return;

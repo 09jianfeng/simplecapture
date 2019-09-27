@@ -122,6 +122,9 @@ struct CaptureStat {
 #endif
     
     CaptureStat _stat;
+    unsigned char *_pColorBarBuffer;
+    uint64_t _timestamp;
+    int _frameCount;
 }
 @end
 
@@ -148,6 +151,7 @@ struct CaptureStat {
                                    selector: @selector(onTick:)
                                    userInfo: nil repeats:YES];
     
+    _pColorBarBuffer = (unsigned char*)malloc(1920*1080*2);
     return [super init];
 }
 
@@ -570,8 +574,18 @@ struct CaptureStat {
             //NSLog(@"Face detect time: %lld", GetTickCount64() - begin);
 #endif
             _stat.captureFrameCount++;
-            CFRetain(sampleBuffer);
-            [_processor process:sampleBuffer];
+//            CFRetain(sampleBuffer);
+//            [_processor process:sampleBuffer];
+            
+            _frameCount++;
+            uint64_t now = GetTickCount64();
+            if (now - _timestamp > 1000) {
+                _timestamp = now;
+                NSLog(@"frameCount:%d", _frameCount);
+                _actuallyFps = _frameCount - 1;
+                _frameCount = 0;
+            }
+            [self SaveCaptureBufferToFile:sampleBuffer];
         }
     }
     
@@ -641,5 +655,49 @@ struct CaptureStat {
 #endif
 }
 
+
+- (NSString *)getPathForWrite
+{
+    NSArray *pathes = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *documentDirectory = [pathes objectAtIndex:0];
+    return documentDirectory;
+}
+
+FILE *ColorTest_dumpfile;
+
+-(void)SaveCaptureBufferToFile:(CMSampleBufferRef)sampleBuffer
+{
+    if (!ColorTest_dumpfile)
+    {
+        NSString *ColorTestOutput = [NSString stringWithFormat:@"%@/%@%@", [self getPathForWrite], [NSDate date],@"CaptureTest.yuv"];
+        const char *ColorTestName = [ColorTestOutput cStringUsingEncoding:NSASCIIStringEncoding];
+        ColorTest_dumpfile = fopen(ColorTestName, "wd");
+        if (!ColorTest_dumpfile)
+        {
+            NSLog(@"fopen file  error!! \n");
+            return ;
+        }
+    }
+    CVPixelBufferRef pixelBuffer = CMSampleBufferGetImageBuffer(sampleBuffer);
+    CVPixelBufferLockBaseAddress(pixelBuffer, 0);
+    unsigned char* yplane = (unsigned char*)CVPixelBufferGetBaseAddressOfPlane(pixelBuffer, 0);
+    unsigned char* uvplane = (unsigned char*)CVPixelBufferGetBaseAddressOfPlane(pixelBuffer, 1);
+    size_t iWith = CVPixelBufferGetWidth(pixelBuffer);
+    size_t iHeight = CVPixelBufferGetHeight(pixelBuffer);
+    
+    int iLenY = (int)iWith * (int)iHeight;
+    int iLenU = iLenY/4;
+    int i ,j;
+    memcpy(_pColorBarBuffer, yplane, iLenY);
+    for ( j = 0,  i = 0; j < iLenY/2; j+=2, i++)
+    {
+        _pColorBarBuffer[iLenY + i] = uvplane[j];
+        _pColorBarBuffer[iLenY + iLenU + i] = uvplane[j+1];
+    }
+    
+    fwrite(_pColorBarBuffer, 1, iWith*iHeight*3/2, ColorTest_dumpfile);
+    
+    CVPixelBufferUnlockBaseAddress(pixelBuffer, 0);
+}
 
 @end

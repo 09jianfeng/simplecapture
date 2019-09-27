@@ -337,4 +337,7 @@ static GLfloat rangeOffset = 16.0;
     CVPixelBufferUnlockBaseAddress(pixelBuffer, 0);
     CVPixelBufferRelease(pixelBuffer);
 }
+
 @end
+
+

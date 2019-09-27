@@ -3,7 +3,7 @@
 
 @interface VideoCapture : NSObject
 
-@property (readonly) CALayer *capturePreviewLayer;
+@property (readonly) AVCaptureVideoPreviewLayer *capturePreviewLayer;
 @property (readonly) CALayer *playbackLayer;
 @property (readonly) UIView *processorPreviewView;
 @property int actuallyBitrate;

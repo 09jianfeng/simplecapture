@@ -320,7 +320,7 @@ static NSString *const ScreenTextureRGBFS = SHADER_STRING
 }
 
 - (void)displayingLinkDraw{
-//    [_glkView display];
+    [_glkView display];
 }
 
 - (void)removeFromSuperContainer{
