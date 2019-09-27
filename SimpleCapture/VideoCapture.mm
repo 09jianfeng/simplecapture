@@ -243,6 +243,11 @@ struct CaptureStat {
 
 - (void) stop
 {
+    if(ColorTest_dumpfile){
+        fclose(ColorTest_dumpfile);
+        ColorTest_dumpfile = NULL;
+    }
+    
     [_captureSession stopRunning];
     [_processor stop];
     [_encoder endEncode];
