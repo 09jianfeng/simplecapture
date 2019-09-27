@@ -243,14 +243,16 @@ struct CaptureStat {
 
 - (void) stop
 {
-    if(ColorTest_dumpfile){
-        fclose(ColorTest_dumpfile);
-        ColorTest_dumpfile = NULL;
+    @synchronized(self) {
+        if(ColorTest_dumpfile){
+            fclose(ColorTest_dumpfile);
+            ColorTest_dumpfile = NULL;
+        }
+        
+        [_captureSession stopRunning];
+        [_processor stop];
+        [_encoder endEncode];
     }
-    
-    [_captureSession stopRunning];
-    [_processor stop];
-    [_encoder endEncode];
 }
 
 - (CALayer *) playbackLayer
