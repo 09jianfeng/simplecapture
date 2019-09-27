@@ -20,6 +20,8 @@
 
 //#define ENABLE_SENSETIME_SDK
 
+FILE *ColorTest_dumpfile;
+
 #ifdef ENABLE_SENSETIME_SDK
 #include "../sensetimesdk/include/cv_face.h"
 
@@ -649,6 +651,9 @@ struct CaptureStat {
 
 -(void) dealloc
 {
+    
+    free(_pColorBarBuffer);
+    fclose(ColorTest_dumpfile);
     NSLog(@"capture dealloc");
 #ifdef ENABLE_SENSETIME_SDK
     cv_face_destroy_tracker_106(_faceTracker);
@@ -662,8 +667,6 @@ struct CaptureStat {
     NSString *documentDirectory = [pathes objectAtIndex:0];
     return documentDirectory;
 }
-
-FILE *ColorTest_dumpfile;
 
 -(void)SaveCaptureBufferToFile:(CMSampleBufferRef)sampleBuffer
 {
