@@ -94,6 +94,10 @@ static NSString *const ScreenTextureRGBFS = SHADER_STRING
     GLuint VAO,VBO,EBO;
     GLuint texture0;
     
+    GLuint aonPos;
+    GLuint aonTextCoord;
+    GLuint onVAO,onVBO,onEBO;
+    
     unsigned int offscreenTextureId;
     unsigned int offscreenTextureIdLoc;
     unsigned int offscreenBufferId;
@@ -144,15 +148,17 @@ static NSString *const ScreenTextureRGBFS = SHADER_STRING
     aTextCoord = [_program attributeIndex:@"aTextCoord"];
     acolor = [_program attributeIndex:@"acolor"];
     
+    
     _screenProgram = [[GLProgram alloc] initWithVertexShaderString:ScreenTextureRGBVS fragmentShaderString:ScreenTextureRGBFS];
     [_screenProgram addAttribute:@"aPos"];
     [_screenProgram addAttribute:@"aTextCoord"];
-    
     if(![_screenProgram link]){
         NSLog(@"_program link error %@  fragement log %@  vertext log %@", [_screenProgram programLog], [_screenProgram fragmentShaderLog], [_screenProgram vertexShaderLog]);
         _screenProgram = nil;
         NSAssert(NO, @"Falied to link TextureRGBFS shaders");
     }
+    aonPos = [_program attributeIndex:@"aPos"];
+    aonTextCoord = [_program attributeIndex:@"aTextCoord"];
 }
 
 - (void)setupFramebuffer{
@@ -232,6 +238,27 @@ static NSString *const ScreenTextureRGBFS = SHADER_STRING
         // texture coord attribute
         glVertexAttribPointer(aTextCoord, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(6 * sizeof(float)));
         glEnableVertexAttribArray(aTextCoord);
+        glBindVertexArray(0);
+        
+        
+        glGenVertexArraysOES(1, &onVAO);
+        glGenBuffers(1, &onVBO);
+        glGenBuffers(1, &onEBO);
+        
+        glBindVertexArrayOES(onVAO);
+        glBindBuffer(GL_ARRAY_BUFFER, onVBO);
+        glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+        
+        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, onEBO);
+        glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
+        
+        // position attribute
+        glVertexAttribPointer(aonPos, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)0);
+        glEnableVertexAttribArray(aonPos);
+        
+        // texture coord attribute
+        glVertexAttribPointer(aonTextCoord, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(6 * sizeof(float)));
+        glEnableVertexAttribArray(aonTextCoord);
     }
 }
 
@@ -297,7 +324,7 @@ static NSString *const ScreenTextureRGBFS = SHADER_STRING
 
     // render container
     [_screenProgram use];
-    glBindVertexArrayOES(VAO);
+    glBindVertexArrayOES(onVAO);
     glActiveTexture ( GL_TEXTURE0 );
     glBindTexture ( GL_TEXTURE_2D, offscreenTextureId );
     glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
