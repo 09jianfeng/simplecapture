@@ -7,6 +7,7 @@ Implements the photo capture delegate.
 
 
 #import "AVCamPhotoCaptureDelegate.h"
+#import <CoreImage/CoreImage.h>
 
 @import Photos;
 

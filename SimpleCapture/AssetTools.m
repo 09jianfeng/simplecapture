@@ -9,6 +9,7 @@
 #import "AssetTools.h"
 #import <CoreMedia/CoreMedia.h>
 #import <AVFoundation/AVFoundation.h>
+#import <UIKit/UIKit.h>
 
 @implementation AssetTools
 
@@ -397,5 +398,259 @@
     
 }
 
+#pragma mark - 添加水印
++ (void)writeImageAsMovie:(UIImage *)image
+                     watermark:(UIImage *)watermark
+                        toPath:(NSString*)path
+                          size:(CGSize)size
+                      duration:(double)duration
+                           fps:(int)fps
+             withCallbackBlock:(void(^)(BOOL success))callbackBlock
+{
+    [[NSFileManager defaultManager] removeItemAtPath:path error:NULL];
+    
+    NSError *error = nil;
+    AVAssetWriter *videoWriter = [[AVAssetWriter alloc] initWithURL:[NSURL fileURLWithPath:path]
+                                                           fileType:AVFileTypeMPEG4
+                                                              error:&error];
+    if (error) {
+        if (callbackBlock) {
+            callbackBlock(NO);
+        }
+        return;
+    }
+    NSParameterAssert(videoWriter);
+    
+    NSDictionary *videoSettings = @{AVVideoCodecKey: AVVideoCodecH264,
+                                    AVVideoWidthKey: [NSNumber numberWithInt:size.width],
+                                    AVVideoHeightKey: [NSNumber numberWithInt:size.height]};
+    
+    AVAssetWriterInput* writerInput = [AVAssetWriterInput assetWriterInputWithMediaType:AVMediaTypeVideo
+                                                                         outputSettings:videoSettings];
+    
+    AVAssetWriterInputPixelBufferAdaptor *adaptor = [AVAssetWriterInputPixelBufferAdaptor assetWriterInputPixelBufferAdaptorWithAssetWriterInput:writerInput
+                                                                                                                     sourcePixelBufferAttributes:nil];
+    NSParameterAssert(writerInput);
+    NSParameterAssert([videoWriter canAddInput:writerInput]);
+    [videoWriter addInput:writerInput];
+    
+    //Start a session:
+    [videoWriter startWriting];
+    [videoWriter startSessionAtSourceTime:kCMTimeZero];
+    
+    CVPixelBufferRef buffer;
+    CVPixelBufferPoolCreatePixelBuffer(NULL, adaptor.pixelBufferPool, &buffer);
+    
+    CMTime presentTime = CMTimeMake(0, fps);
+    
+    while (1)
+    {
+        if(writerInput.readyForMoreMediaData){
+            buffer = [AssetTools pixelBufferFromCGImage:[image CGImage] watermark:[watermark CGImage] size:size];
+            BOOL appendSuccess = [AssetTools appendToAdapter:adaptor
+                                                                  pixelBuffer:buffer
+                                                                       atTime:presentTime
+                                                                    withInput:writerInput];
+            
+            NSAssert(appendSuccess, @"Failed to append");
+            
+            CMTime endTime = CMTimeMakeWithSeconds(duration, fps);
+            BOOL appendSuccess2 = [AssetTools appendToAdapter:adaptor
+                                                                   pixelBuffer:buffer
+                                                                        atTime:endTime
+                                                                     withInput:writerInput];
+            
+            NSAssert(appendSuccess2, @"Failed to append");
+            
+            
+            //Finish the session:
+            [writerInput markAsFinished];
+            
+            [videoWriter finishWritingWithCompletionHandler:^{
+                NSLog(@"Successfully closed video writer");
+                if (videoWriter.status == AVAssetWriterStatusCompleted) {
+                    if (callbackBlock) {
+                        callbackBlock(YES);
+                    }
+                } else {
+                    if (callbackBlock) {
+                        callbackBlock(NO);
+                    }
+                }
+            }];
+            CVPixelBufferPoolRelease(adaptor.pixelBufferPool);
+            break;
+        }
+    }
+}
 
++ (CVPixelBufferRef)pixelBufferFromCGImage:(CGImageRef)image
+                                 watermark:(CGImageRef)watermark
+                                      size:(CGSize)imageSize
+{
+    NSDictionary *options = @{(id)kCVPixelBufferCGImageCompatibilityKey: @YES,
+                              (id)kCVPixelBufferCGBitmapContextCompatibilityKey: @YES};
+    CVPixelBufferRef pxbuffer = NULL;
+    CVReturn status = CVPixelBufferCreate(kCFAllocatorDefault, imageSize.width,
+                                          imageSize.height, kCVPixelFormatType_32ARGB, (__bridge CFDictionaryRef) options,
+                                          &pxbuffer);
+    NSParameterAssert(status == kCVReturnSuccess && pxbuffer != NULL);
+    
+    CVPixelBufferLockBaseAddress(pxbuffer, 0);
+    void *pxdata = CVPixelBufferGetBaseAddress(pxbuffer);
+    NSParameterAssert(pxdata != NULL);
+    
+    CGColorSpaceRef rgbColorSpace = CGColorSpaceCreateDeviceRGB();
+    CGContextRef context = CGBitmapContextCreate(pxdata, imageSize.width,
+                                                 imageSize.height, 8, 4*imageSize.width, rgbColorSpace,
+                                                 kCGImageAlphaNoneSkipFirst);
+    NSParameterAssert(context);
+    
+    CGContextDrawImage(context, CGRectMake(0 + (imageSize.width-CGImageGetWidth(image))/2,
+                                           (imageSize.height-CGImageGetHeight(image))/2,
+                                           CGImageGetWidth(image),
+                                           CGImageGetHeight(image)), image);
+    if (watermark) {
+        CGContextDrawImage(context, CGRectMake(0 + (imageSize.width-CGImageGetWidth(watermark))/2,
+                                               (imageSize.height-CGImageGetHeight(watermark))/2,
+                                               CGImageGetWidth(watermark),
+                                               CGImageGetHeight(watermark)), watermark);
+    }
+    CGColorSpaceRelease(rgbColorSpace);
+    CGContextRelease(context);
+    
+    CVPixelBufferUnlockBaseAddress(pxbuffer, 0);
+    
+    return pxbuffer;
+}
+
++ (BOOL)appendToAdapter:(AVAssetWriterInputPixelBufferAdaptor*)adaptor
+            pixelBuffer:(CVPixelBufferRef)buffer
+                 atTime:(CMTime)presentTime
+              withInput:(AVAssetWriterInput*)writerInput
+{
+    while (!writerInput.readyForMoreMediaData) {
+        usleep(1);
+    }
+    
+    return [adaptor appendPixelBuffer:buffer withPresentationTime:presentTime];
+}
+
+#pragma mark - 截取视频
++ (void)trimVideoWithVideoUrlStr:(NSURL *)videoUrl captureVideoWithStartTime:(double)start endTime:(double)end outputPath:(NSURL *)outputURL completion:(void(^)(NSURL *outputURL,NSError *error))completionHandle {
+    CMTime startTime = CMTimeMakeWithSeconds(start, 1);
+    CMTime videoDuration = CMTimeMakeWithSeconds(end - start, 1);
+    CMTimeRange videoTimeRange = CMTimeRangeMake(startTime, videoDuration);
+    
+    AVAssetExportSession *session = [AVAssetExportSession exportSessionWithAsset:[AVAsset assetWithURL:videoUrl] presetName:AVAssetExportPresetMediumQuality];
+    session.outputURL = outputURL;
+    session.outputFileType = AVFileTypeMPEG4;
+    session.timeRange = videoTimeRange;
+    session.shouldOptimizeForNetworkUse = YES;
+    [session exportAsynchronouslyWithCompletionHandler:^{
+        if (completionHandle) {
+            if (session.error) {
+                completionHandle(nil,session.error);
+            }else {
+                completionHandle(outputURL,nil);
+            }
+        }
+    }];
+}
+
+#pragma mark - 重设视频分辨率
++ (void)resizeVideoWithAssetURL:(NSURL *)assetURL outputURL:(NSURL *)outputURL preferSize:(CGSize)preferSize doneHandler:(void(^)(NSURL *outputURL,NSError *error))doneHandler {
+    AVURLAsset *asset = [[AVURLAsset alloc] initWithURL:assetURL options:nil];
+    
+    AVAssetTrack *assetVideoTrack = nil;
+    AVAssetTrack *assetAudioTrack = nil;
+    
+    if ([[asset tracksWithMediaType:AVMediaTypeVideo] count] != 0) {
+        assetVideoTrack = [asset tracksWithMediaType:AVMediaTypeVideo][0];
+    }
+    if ([[asset tracksWithMediaType:AVMediaTypeAudio] count] != 0) {
+        assetAudioTrack = [asset tracksWithMediaType:AVMediaTypeAudio][0];
+    }
+    
+    NSError *error = nil;
+    
+    AVMutableComposition* mixComposition = [AVMutableComposition composition];
+    if (assetVideoTrack) {
+        AVMutableCompositionTrack *compositionVideoTrack = [mixComposition addMutableTrackWithMediaType:AVMediaTypeVideo preferredTrackID:kCMPersistentTrackID_Invalid];
+        [compositionVideoTrack insertTimeRange:CMTimeRangeMake(kCMTimeZero, asset.duration) ofTrack:assetVideoTrack atTime:kCMTimeZero error:&error];
+    }
+    if (assetAudioTrack) {
+        AVMutableCompositionTrack *compositionAudioTrack = [mixComposition addMutableTrackWithMediaType:AVMediaTypeAudio preferredTrackID:kCMPersistentTrackID_Invalid];
+        [compositionAudioTrack insertTimeRange:CMTimeRangeMake(kCMTimeZero, asset.duration) ofTrack:assetAudioTrack atTime:kCMTimeZero error:&error];
+    }
+    
+    AVMutableVideoComposition *mutableVideoComposition = [AVMutableVideoComposition videoComposition];
+    mutableVideoComposition.renderSize = preferSize;
+    mutableVideoComposition.frameDuration = CMTimeMake(1, 24);
+    
+    AVMutableVideoCompositionInstruction *instruction = [AVMutableVideoCompositionInstruction videoCompositionInstruction];
+    instruction.timeRange = CMTimeRangeMake(kCMTimeZero, [mixComposition duration]);
+    AVMutableVideoCompositionLayerInstruction *layerInstruction = [AVMutableVideoCompositionLayerInstruction videoCompositionLayerInstructionWithAssetTrack:(mixComposition.tracks)[0]];
+    BOOL isPortrait_ = [AssetTools isVideoPortrait:asset];
+    CGAffineTransform t = CGAffineTransformIdentity;
+    if (isPortrait_) {
+        t = CGAffineTransformRotate(t, M_PI_2);
+        t = CGAffineTransformTranslate(t, 0, -preferSize.width);
+    }
+    preferSize = isPortrait_ ? CGSizeMake(preferSize.height, preferSize.width):preferSize;
+    t = CGAffineTransformScale(t, preferSize.width / assetVideoTrack.naturalSize.width, preferSize.height / assetVideoTrack.naturalSize.height);
+    [layerInstruction setTransform:t  atTime:kCMTimeZero];
+    
+    instruction.layerInstructions = @[layerInstruction];
+    mutableVideoComposition.instructions = @[instruction];
+    
+    if ([[NSFileManager defaultManager] fileExistsAtPath:outputURL.path]) {
+        [[NSFileManager defaultManager] removeItemAtPath:outputURL.path error:&error];
+    }
+    
+    AVAssetExportSession *exportSession = [[AVAssetExportSession alloc] initWithAsset:mixComposition presetName:AVAssetExportPresetMediumQuality];
+    exportSession.videoComposition = mutableVideoComposition;
+    exportSession.outputURL = outputURL;
+    exportSession.outputFileType = AVFileTypeMPEG4;
+    exportSession.shouldOptimizeForNetworkUse = YES;
+    
+    [exportSession exportAsynchronouslyWithCompletionHandler:^{
+        if (exportSession.status == AVAssetExportSessionStatusCompleted) {
+            doneHandler(outputURL,nil);
+        }else {
+            doneHandler(nil,exportSession.error);
+        }
+    }];
+}
+
++ (BOOL)isVideoPortrait:(AVAsset *)asset {
+    BOOL isPortrait = NO;
+    NSArray *tracks = [asset tracksWithMediaType:AVMediaTypeVideo];
+    if([tracks    count] > 0) {
+        AVAssetTrack *videoTrack = [tracks objectAtIndex:0];
+        
+        CGAffineTransform t = videoTrack.preferredTransform;
+        // Portrait
+        if(t.a == 0 && t.b == 1.0 && t.c == -1.0 && t.d == 0)
+        {
+            isPortrait = YES;
+        }
+        // PortraitUpsideDown
+        if(t.a == 0 && t.b == -1.0 && t.c == 1.0 && t.d == 0)  {
+            
+            isPortrait = YES;
+        }
+        // LandscapeRight
+        if(t.a == 1.0 && t.b == 0 && t.c == 0 && t.d == 1.0)
+        {
+            isPortrait = NO;
+        }
+        // LandscapeLeft
+        if(t.a == -1.0 && t.b == 0 && t.c == 0 && t.d == -1.0)
+        {
+            isPortrait = NO;
+        }
+    }
+    return isPortrait;
+}
 @end
