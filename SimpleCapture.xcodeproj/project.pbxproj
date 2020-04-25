@@ -103,6 +103,7 @@
 		787F33C51FA8AA38009A5C5F /* KxMovieViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 787F33C01FA8AA38009A5C5F /* KxMovieViewController.m */; };
 		787F33C81FA8AAF1009A5C5F /* KXMovieController.m in Sources */ = {isa = PBXBuildFile; fileRef = 787F33C71FA8AAF1009A5C5F /* KXMovieController.m */; };
 		787F33D11FA8AF7C009A5C5F /* test in Resources */ = {isa = PBXBuildFile; fileRef = 787F33D01FA8AF7C009A5C5F /* test */; };
+		7886A472245432D4008BC678 /* AudioCaptureOrPlay.m in Sources */ = {isa = PBXBuildFile; fileRef = 7886A471245432D4008BC678 /* AudioCaptureOrPlay.m */; };
 		7888278D1EC45AE2002090DA /* FFMPEGDecodeFilter.mm in Sources */ = {isa = PBXBuildFile; fileRef = 7888278C1EC45AE2002090DA /* FFMPEGDecodeFilter.mm */; };
 		789914AA20B7A93100F0E665 /* PCMPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 789914A920B7A93100F0E665 /* PCMPlayer.m */; };
 		789914AC20B7A96400F0E665 /* abc.pcm in Resources */ = {isa = PBXBuildFile; fileRef = 789914AB20B7A94700F0E665 /* abc.pcm */; };
@@ -513,6 +514,8 @@
 		787F33C61FA8AAF1009A5C5F /* KXMovieController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KXMovieController.h; sourceTree = "<group>"; };
 		787F33C71FA8AAF1009A5C5F /* KXMovieController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KXMovieController.m; sourceTree = "<group>"; };
 		787F33D01FA8AF7C009A5C5F /* test */ = {isa = PBXFileReference; lastKnownFileType = folder; path = test; sourceTree = "<group>"; };
+		7886A470245432D4008BC678 /* AudioCaptureOrPlay.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AudioCaptureOrPlay.h; sourceTree = "<group>"; };
+		7886A471245432D4008BC678 /* AudioCaptureOrPlay.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AudioCaptureOrPlay.m; sourceTree = "<group>"; };
 		7888278B1EC45AE2002090DA /* FFMPEGDecodeFilter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FFMPEGDecodeFilter.h; sourceTree = "<group>"; };
 		7888278C1EC45AE2002090DA /* FFMPEGDecodeFilter.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = FFMPEGDecodeFilter.mm; sourceTree = "<group>"; };
 		789914A820B7A93100F0E665 /* PCMPlayer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PCMPlayer.h; sourceTree = "<group>"; };
@@ -1479,6 +1482,8 @@
 		785650FF20984B3C00382E80 /* audio */ = {
 			isa = PBXGroup;
 			children = (
+				7886A470245432D4008BC678 /* AudioCaptureOrPlay.h */,
+				7886A471245432D4008BC678 /* AudioCaptureOrPlay.m */,
 				780BA6EA21100239003CB330 /* AudioTools.h */,
 				780BA6EB21100239003CB330 /* AudioTools.m */,
 				DA315F9C1C6F57AD008B9AF3 /* AudioCapture.h */,
@@ -2251,7 +2256,7 @@
 					};
 					DA0E7AF31C128164003A8C25 = {
 						CreatedOnToolsVersion = 7.1.1;
-						DevelopmentTeam = 67Q24N9KP5;
+						DevelopmentTeam = RUDNP34A78;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
 								enabled = 1;
@@ -2401,6 +2406,7 @@
 				78DB0C892064DDF6005F87DA /* CameraView.m in Sources */,
 				7811825A223AA3D900FD03ED /* RosyWriterOpenCVRenderer.mm in Sources */,
 				787F33C51FA8AA38009A5C5F /* KxMovieViewController.m in Sources */,
+				7886A472245432D4008BC678 /* AudioCaptureOrPlay.m in Sources */,
 				7811825B223AA3D900FD03ED /* OpenGLPixelBufferView.m in Sources */,
 				78DB0C8C2064DE3D005F87DA /* CameraEAGLLayer.m in Sources */,
 				78118232223AA12200FD03ED /* AVCamPhotoCaptureDelegate.m in Sources */,
@@ -2646,7 +2652,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = 67Q24N9KP5;
+				DEVELOPMENT_TEAM = RUDNP34A78;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -2682,7 +2688,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = 67Q24N9KP5;
+				DEVELOPMENT_TEAM = RUDNP34A78;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",

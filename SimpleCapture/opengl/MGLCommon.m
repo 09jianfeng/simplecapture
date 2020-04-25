@@ -143,7 +143,7 @@ CVPixelBufferRef imageToYUVPixelBuffer(UIImage *image){
     CFDictionarySetValue(attrs, kCVPixelBufferIOSurfacePropertiesKey, (void*)[NSDictionary dictionary]);
     CFDictionarySetValue(attrs, kCVPixelBufferOpenGLESCompatibilityKey, (void*)[NSNumber numberWithBool:YES]);
     
-    CVReturn err = CVPixelBufferCreate(kCFAllocatorDefault, (int)image.size.width, (int)image.size.height, kCVPixelFormatType_420YpCbCr8BiPlanarFullRange, attrs, &yuvPixelBuffer);
+    CVReturn err = CVPixelBufferCreate(kCFAllocatorDefault, (int)image.size.width, (int)image.size.height, kCVPixelFormatType_OneComponent8, attrs, &yuvPixelBuffer);
     if (err) {
         return NULL;
     }

@@ -485,7 +485,14 @@ typedef enum{
         MTLPixelFormat pixelFormat = MTLPixelFormatR8Unorm;
         
         CVMetalTextureRef texture = NULL;
-        CVReturn status = CVMetalTextureCacheCreateTextureFromImage(NULL, _textureCache, pixelBuffer, NULL, pixelFormat, width, height, 0, &texture);
+        CVReturn status = CVMetalTextureCacheCreateTextureFromImage(
+                                            NULL,
+                                            _textureCache,
+                                            pixelBuffer, NULL,
+                                            pixelFormat,
+                                            width, height,
+                                            0,
+                                            &texture);
         if(status == kCVReturnSuccess)
         {
             textureY = CVMetalTextureGetTexture(texture);
