@@ -3,10 +3,62 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
+		7886A4B9245434B2008BC678 /* tabld8cp.c in Sources */ = {isa = PBXBuildFile; fileRef = 7886A474245434B1008BC678 /* tabld8cp.c */; };
+		7886A4BA245434B2008BC678 /* gainpred.c in Sources */ = {isa = PBXBuildFile; fileRef = 7886A475245434B1008BC678 /* gainpred.c */; };
+		7886A4BB245434B2008BC678 /* coderi.c in Sources */ = {isa = PBXBuildFile; fileRef = 7886A477245434B1008BC678 /* coderi.c */; };
+		7886A4BC245434B2008BC678 /* taming.c in Sources */ = {isa = PBXBuildFile; fileRef = 7886A478245434B1008BC678 /* taming.c */; };
+		7886A4BD245434B2008BC678 /* pwf.c in Sources */ = {isa = PBXBuildFile; fileRef = 7886A479245434B1008BC678 /* pwf.c */; };
+		7886A4BE245434B2008BC678 /* q_gaincp.c in Sources */ = {isa = PBXBuildFile; fileRef = 7886A47C245434B1008BC678 /* q_gaincp.c */; };
+		7886A4BF245434B2008BC678 /* dec_sid.c in Sources */ = {isa = PBXBuildFile; fileRef = 7886A47D245434B1008BC678 /* dec_sid.c */; };
+		7886A4C0245434B2008BC678 /* degaincp.c in Sources */ = {isa = PBXBuildFile; fileRef = 7886A47E245434B1008BC678 /* degaincp.c */; };
+		7886A4C1245434B2008BC678 /* codld8cp.c in Sources */ = {isa = PBXBuildFile; fileRef = 7886A47F245434B1008BC678 /* codld8cp.c */; };
+		7886A4C2245434B2008BC678 /* lspdece.c in Sources */ = {isa = PBXBuildFile; fileRef = 7886A481245434B1008BC678 /* lspdece.c */; };
+		7886A4C3245434B2008BC678 /* bitscp.c in Sources */ = {isa = PBXBuildFile; fileRef = 7886A482245434B1008BC678 /* bitscp.c */; };
+		7886A4C4245434B2008BC678 /* p_parity.c in Sources */ = {isa = PBXBuildFile; fileRef = 7886A483245434B1008BC678 /* p_parity.c */; };
+		7886A4C5245434B2008BC678 /* dtx.c in Sources */ = {isa = PBXBuildFile; fileRef = 7886A484245434B1008BC678 /* dtx.c */; };
+		7886A4C6245434B2008BC678 /* filtere.c in Sources */ = {isa = PBXBuildFile; fileRef = 7886A485245434B1008BC678 /* filtere.c */; };
+		7886A4C7245434B2008BC678 /* pstcp.c in Sources */ = {isa = PBXBuildFile; fileRef = 7886A486245434B1008BC678 /* pstcp.c */; };
+		7886A4C8245434B2008BC678 /* tab_ld8k.c in Sources */ = {isa = PBXBuildFile; fileRef = 7886A487245434B1008BC678 /* tab_ld8k.c */; };
+		7886A4C9245434B2008BC678 /* decoderi.c in Sources */ = {isa = PBXBuildFile; fileRef = 7886A48A245434B1008BC678 /* decoderi.c */; };
+		7886A4CA245434B2008BC678 /* qsidlsf.c in Sources */ = {isa = PBXBuildFile; fileRef = 7886A48B245434B1008BC678 /* qsidlsf.c */; };
+		7886A4CB245434B2008BC678 /* oper_32b.c in Sources */ = {isa = PBXBuildFile; fileRef = 7886A48C245434B1008BC678 /* oper_32b.c */; };
+		7886A4CC245434B2008BC678 /* bitstrea.txt in Resources */ = {isa = PBXBuildFile; fileRef = 7886A48D245434B1008BC678 /* bitstrea.txt */; };
+		7886A4CD245434B2008BC678 /* name.txt in Resources */ = {isa = PBXBuildFile; fileRef = 7886A48E245434B1008BC678 /* name.txt */; };
+		7886A4CE245434B2008BC678 /* phdisp.c in Sources */ = {isa = PBXBuildFile; fileRef = 7886A48F245434B1008BC678 /* phdisp.c */; };
+		7886A4CF245434B2008BC678 /* utilcp.c in Sources */ = {isa = PBXBuildFile; fileRef = 7886A490245434B1008BC678 /* utilcp.c */; };
+		7886A4D0245434B2008BC678 /* basic_op.c in Sources */ = {isa = PBXBuildFile; fileRef = 7886A491245434B1008BC678 /* basic_op.c */; };
+		7886A4D1245434B2008BC678 /* qsidgain.c in Sources */ = {isa = PBXBuildFile; fileRef = 7886A493245434B1008BC678 /* qsidgain.c */; };
+		7886A4D2245434B2008BC678 /* decld8cp.c in Sources */ = {isa = PBXBuildFile; fileRef = 7886A494245434B1008BC678 /* decld8cp.c */; };
+		7886A4D3245434B2008BC678 /* mus_dtct.c in Sources */ = {isa = PBXBuildFile; fileRef = 7886A495245434B1008BC678 /* mus_dtct.c */; };
+		7886A4D4245434B2008BC678 /* pitchcp.c in Sources */ = {isa = PBXBuildFile; fileRef = 7886A496245434B1008BC678 /* pitchcp.c */; };
+		7886A4D5245434B2008BC678 /* dspfunc.c in Sources */ = {isa = PBXBuildFile; fileRef = 7886A497245434B1008BC678 /* dspfunc.c */; };
+		7886A4D6245434B2008BC678 /* pwfe.c in Sources */ = {isa = PBXBuildFile; fileRef = 7886A498245434B1008BC678 /* pwfe.c */; };
+		7886A4D7245434B2008BC678 /* coderi.mak in Sources */ = {isa = PBXBuildFile; fileRef = 7886A499245434B1008BC678 /* coderi.mak */; };
+		7886A4D8245434B2008BC678 /* decoderi.mak in Sources */ = {isa = PBXBuildFile; fileRef = 7886A49A245434B1008BC678 /* decoderi.mak */; };
+		7886A4D9245434B2008BC678 /* track_pi.c in Sources */ = {isa = PBXBuildFile; fileRef = 7886A49C245434B1008BC678 /* track_pi.c */; };
+		7886A4DA245434B2008BC678 /* dacelpcp.c in Sources */ = {isa = PBXBuildFile; fileRef = 7886A49D245434B1008BC678 /* dacelpcp.c */; };
+		7886A4DB245434B2008BC678 /* readme.txt in Resources */ = {isa = PBXBuildFile; fileRef = 7886A49F245434B1008BC678 /* readme.txt */; };
+		7886A4DC245434B2008BC678 /* post_pro.c in Sources */ = {isa = PBXBuildFile; fileRef = 7886A4A0245434B1008BC678 /* post_pro.c */; };
+		7886A4DD245434B2008BC678 /* bwfwfunc.c in Sources */ = {isa = PBXBuildFile; fileRef = 7886A4A1245434B1008BC678 /* bwfwfunc.c */; };
+		7886A4DE245434B2008BC678 /* acelp_cp.c in Sources */ = {isa = PBXBuildFile; fileRef = 7886A4A2245434B1008BC678 /* acelp_cp.c */; };
+		7886A4DF245434B2008BC678 /* declagcp.c in Sources */ = {isa = PBXBuildFile; fileRef = 7886A4A4245434B1008BC678 /* declagcp.c */; };
+		7886A4E0245434B2008BC678 /* qua_lspe.c in Sources */ = {isa = PBXBuildFile; fileRef = 7886A4A5245434B1008BC678 /* qua_lspe.c */; };
+		7886A4E1245434B2008BC678 /* SelfDefineQua.c in Sources */ = {isa = PBXBuildFile; fileRef = 7886A4A6245434B1008BC678 /* SelfDefineQua.c */; };
+		7886A4E2245434B2008BC678 /* calcexc.c in Sources */ = {isa = PBXBuildFile; fileRef = 7886A4A8245434B1008BC678 /* calcexc.c */; };
+		7886A4E3245434B2008BC678 /* pred_lt3.c in Sources */ = {isa = PBXBuildFile; fileRef = 7886A4A9245434B1008BC678 /* pred_lt3.c */; };
+		7886A4E4245434B2008BC678 /* tab_dtx.c in Sources */ = {isa = PBXBuildFile; fileRef = 7886A4AA245434B1008BC678 /* tab_dtx.c */; };
+		7886A4E5245434B2008BC678 /* pre_proc.c in Sources */ = {isa = PBXBuildFile; fileRef = 7886A4AB245434B1008BC678 /* pre_proc.c */; };
+		7886A4E6245434B2008BC678 /* vad.c in Sources */ = {isa = PBXBuildFile; fileRef = 7886A4AC245434B1008BC678 /* vad.c */; };
+		7886A4E7245434B2008BC678 /* lpccp.c in Sources */ = {isa = PBXBuildFile; fileRef = 7886A4AD245434B1008BC678 /* lpccp.c */; };
+		7886A4E8245434B2008BC678 /* lspgetqe.c in Sources */ = {isa = PBXBuildFile; fileRef = 7886A4AE245434B1008BC678 /* lspgetqe.c */; };
+		7886A4E9245434B2008BC678 /* bwfw.c in Sources */ = {isa = PBXBuildFile; fileRef = 7886A4B1245434B1008BC678 /* bwfw.c */; };
+		7886A4EA245434B2008BC678 /* lpcfunc.c in Sources */ = {isa = PBXBuildFile; fileRef = 7886A4B2245434B1008BC678 /* lpcfunc.c */; };
+		7886A4EB245434B2008BC678 /* waveoperator.cc in Sources */ = {isa = PBXBuildFile; fileRef = 7886A4B4245434B1008BC678 /* waveoperator.cc */; };
+		7886A4EC245434B2008BC678 /* dataserialize.c in Sources */ = {isa = PBXBuildFile; fileRef = 7886A4B5245434B1008BC678 /* dataserialize.c */; };
 		789656422275850600FEB462 /* UtilHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = 789656412275850600FEB462 /* UtilHeader.m */; };
 		78C5AB1E227290090068956D /* BufferManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 78C5AB1D227290090068956D /* BufferManager.m */; };
 		78DF6F072270017D00E02430 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 78DF6F062270017D00E02430 /* AppDelegate.m */; };
@@ -23,59 +75,6 @@
 		78DF6F582270961300E02430 /* GCDAsyncUdpSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = 78DF6F542270961300E02430 /* GCDAsyncUdpSocket.m */; };
 		78DF6F592270961300E02430 /* GCDAsyncSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = 78DF6F552270961300E02430 /* GCDAsyncSocket.m */; };
 		78DF6F5D2270968600E02430 /* DataPackUnPack.m in Sources */ = {isa = PBXBuildFile; fileRef = 78DF6F5C2270968500E02430 /* DataPackUnPack.m */; };
-		78DF709C22715A0F00E02430 /* waveoperator.cc in Sources */ = {isa = PBXBuildFile; fileRef = 78DF705722715A0F00E02430 /* waveoperator.cc */; };
-		78DF709D22715A0F00E02430 /* dataserialize.c in Sources */ = {isa = PBXBuildFile; fileRef = 78DF705822715A0F00E02430 /* dataserialize.c */; };
-		78DF709E22715A0F00E02430 /* 归档.zip in Resources */ = {isa = PBXBuildFile; fileRef = 78DF705922715A0F00E02430 /* 归档.zip */; };
-		78DF709F22715A0F00E02430 /* tabld8cp.c in Sources */ = {isa = PBXBuildFile; fileRef = 78DF705D22715A0F00E02430 /* tabld8cp.c */; };
-		78DF70A022715A0F00E02430 /* gainpred.c in Sources */ = {isa = PBXBuildFile; fileRef = 78DF705E22715A0F00E02430 /* gainpred.c */; };
-		78DF70A122715A0F00E02430 /* coderi.c in Sources */ = {isa = PBXBuildFile; fileRef = 78DF706022715A0F00E02430 /* coderi.c */; };
-		78DF70A222715A0F00E02430 /* taming.c in Sources */ = {isa = PBXBuildFile; fileRef = 78DF706122715A0F00E02430 /* taming.c */; };
-		78DF70A322715A0F00E02430 /* pwf.c in Sources */ = {isa = PBXBuildFile; fileRef = 78DF706222715A0F00E02430 /* pwf.c */; };
-		78DF70A422715A0F00E02430 /* q_gaincp.c in Sources */ = {isa = PBXBuildFile; fileRef = 78DF706522715A0F00E02430 /* q_gaincp.c */; };
-		78DF70A522715A0F00E02430 /* dec_sid.c in Sources */ = {isa = PBXBuildFile; fileRef = 78DF706622715A0F00E02430 /* dec_sid.c */; };
-		78DF70A622715A0F00E02430 /* degaincp.c in Sources */ = {isa = PBXBuildFile; fileRef = 78DF706722715A0F00E02430 /* degaincp.c */; };
-		78DF70A722715A0F00E02430 /* codld8cp.c in Sources */ = {isa = PBXBuildFile; fileRef = 78DF706822715A0F00E02430 /* codld8cp.c */; };
-		78DF70A822715A0F00E02430 /* lspdece.c in Sources */ = {isa = PBXBuildFile; fileRef = 78DF706A22715A0F00E02430 /* lspdece.c */; };
-		78DF70A922715A0F00E02430 /* bitscp.c in Sources */ = {isa = PBXBuildFile; fileRef = 78DF706B22715A0F00E02430 /* bitscp.c */; };
-		78DF70AA22715A0F00E02430 /* p_parity.c in Sources */ = {isa = PBXBuildFile; fileRef = 78DF706C22715A0F00E02430 /* p_parity.c */; };
-		78DF70AB22715A0F00E02430 /* dtx.c in Sources */ = {isa = PBXBuildFile; fileRef = 78DF706D22715A0F00E02430 /* dtx.c */; };
-		78DF70AC22715A0F00E02430 /* filtere.c in Sources */ = {isa = PBXBuildFile; fileRef = 78DF706E22715A0F00E02430 /* filtere.c */; };
-		78DF70AD22715A0F00E02430 /* pstcp.c in Sources */ = {isa = PBXBuildFile; fileRef = 78DF706F22715A0F00E02430 /* pstcp.c */; };
-		78DF70AE22715A0F00E02430 /* tab_ld8k.c in Sources */ = {isa = PBXBuildFile; fileRef = 78DF707022715A0F00E02430 /* tab_ld8k.c */; };
-		78DF70AF22715A0F00E02430 /* decoderi.c in Sources */ = {isa = PBXBuildFile; fileRef = 78DF707322715A0F00E02430 /* decoderi.c */; };
-		78DF70B022715A0F00E02430 /* qsidlsf.c in Sources */ = {isa = PBXBuildFile; fileRef = 78DF707422715A0F00E02430 /* qsidlsf.c */; };
-		78DF70B122715A0F00E02430 /* oper_32b.c in Sources */ = {isa = PBXBuildFile; fileRef = 78DF707522715A0F00E02430 /* oper_32b.c */; };
-		78DF70B222715A0F00E02430 /* bitstrea.txt in Resources */ = {isa = PBXBuildFile; fileRef = 78DF707622715A0F00E02430 /* bitstrea.txt */; };
-		78DF70B322715A0F00E02430 /* name.txt in Resources */ = {isa = PBXBuildFile; fileRef = 78DF707722715A0F00E02430 /* name.txt */; };
-		78DF70B422715A0F00E02430 /* phdisp.c in Sources */ = {isa = PBXBuildFile; fileRef = 78DF707822715A0F00E02430 /* phdisp.c */; };
-		78DF70B522715A0F00E02430 /* utilcp.c in Sources */ = {isa = PBXBuildFile; fileRef = 78DF707922715A0F00E02430 /* utilcp.c */; };
-		78DF70B622715A0F00E02430 /* basic_op.c in Sources */ = {isa = PBXBuildFile; fileRef = 78DF707A22715A0F00E02430 /* basic_op.c */; };
-		78DF70B722715A0F00E02430 /* qsidgain.c in Sources */ = {isa = PBXBuildFile; fileRef = 78DF707C22715A0F00E02430 /* qsidgain.c */; };
-		78DF70B822715A0F00E02430 /* decld8cp.c in Sources */ = {isa = PBXBuildFile; fileRef = 78DF707D22715A0F00E02430 /* decld8cp.c */; };
-		78DF70B922715A0F00E02430 /* mus_dtct.c in Sources */ = {isa = PBXBuildFile; fileRef = 78DF707E22715A0F00E02430 /* mus_dtct.c */; };
-		78DF70BA22715A0F00E02430 /* pitchcp.c in Sources */ = {isa = PBXBuildFile; fileRef = 78DF707F22715A0F00E02430 /* pitchcp.c */; };
-		78DF70BB22715A0F00E02430 /* dspfunc.c in Sources */ = {isa = PBXBuildFile; fileRef = 78DF708022715A0F00E02430 /* dspfunc.c */; };
-		78DF70BC22715A0F00E02430 /* pwfe.c in Sources */ = {isa = PBXBuildFile; fileRef = 78DF708122715A0F00E02430 /* pwfe.c */; };
-		78DF70BD22715A0F00E02430 /* coderi.mak in Sources */ = {isa = PBXBuildFile; fileRef = 78DF708222715A0F00E02430 /* coderi.mak */; };
-		78DF70BE22715A0F00E02430 /* decoderi.mak in Sources */ = {isa = PBXBuildFile; fileRef = 78DF708322715A0F00E02430 /* decoderi.mak */; };
-		78DF70BF22715A0F00E02430 /* track_pi.c in Sources */ = {isa = PBXBuildFile; fileRef = 78DF708522715A0F00E02430 /* track_pi.c */; };
-		78DF70C022715A0F00E02430 /* dacelpcp.c in Sources */ = {isa = PBXBuildFile; fileRef = 78DF708622715A0F00E02430 /* dacelpcp.c */; };
-		78DF70C122715A0F00E02430 /* readme.txt in Resources */ = {isa = PBXBuildFile; fileRef = 78DF708822715A0F00E02430 /* readme.txt */; };
-		78DF70C222715A0F00E02430 /* post_pro.c in Sources */ = {isa = PBXBuildFile; fileRef = 78DF708922715A0F00E02430 /* post_pro.c */; };
-		78DF70C322715A0F00E02430 /* bwfwfunc.c in Sources */ = {isa = PBXBuildFile; fileRef = 78DF708A22715A0F00E02430 /* bwfwfunc.c */; };
-		78DF70C422715A0F00E02430 /* acelp_cp.c in Sources */ = {isa = PBXBuildFile; fileRef = 78DF708B22715A0F00E02430 /* acelp_cp.c */; };
-		78DF70C522715A0F00E02430 /* declagcp.c in Sources */ = {isa = PBXBuildFile; fileRef = 78DF708D22715A0F00E02430 /* declagcp.c */; };
-		78DF70C622715A0F00E02430 /* qua_lspe.c in Sources */ = {isa = PBXBuildFile; fileRef = 78DF708E22715A0F00E02430 /* qua_lspe.c */; };
-		78DF70C722715A0F00E02430 /* SelfDefineQua.c in Sources */ = {isa = PBXBuildFile; fileRef = 78DF708F22715A0F00E02430 /* SelfDefineQua.c */; };
-		78DF70C822715A0F00E02430 /* calcexc.c in Sources */ = {isa = PBXBuildFile; fileRef = 78DF709122715A0F00E02430 /* calcexc.c */; };
-		78DF70C922715A0F00E02430 /* pred_lt3.c in Sources */ = {isa = PBXBuildFile; fileRef = 78DF709222715A0F00E02430 /* pred_lt3.c */; };
-		78DF70CA22715A0F00E02430 /* tab_dtx.c in Sources */ = {isa = PBXBuildFile; fileRef = 78DF709322715A0F00E02430 /* tab_dtx.c */; };
-		78DF70CB22715A0F00E02430 /* pre_proc.c in Sources */ = {isa = PBXBuildFile; fileRef = 78DF709422715A0F00E02430 /* pre_proc.c */; };
-		78DF70CC22715A0F00E02430 /* vad.c in Sources */ = {isa = PBXBuildFile; fileRef = 78DF709522715A0F00E02430 /* vad.c */; };
-		78DF70CD22715A0F00E02430 /* lpccp.c in Sources */ = {isa = PBXBuildFile; fileRef = 78DF709622715A0F00E02430 /* lpccp.c */; };
-		78DF70CE22715A0F00E02430 /* lspgetqe.c in Sources */ = {isa = PBXBuildFile; fileRef = 78DF709722715A0F00E02430 /* lspgetqe.c */; };
-		78DF70CF22715A0F00E02430 /* bwfw.c in Sources */ = {isa = PBXBuildFile; fileRef = 78DF709A22715A0F00E02430 /* bwfw.c */; };
-		78DF70D022715A0F00E02430 /* lpcfunc.c in Sources */ = {isa = PBXBuildFile; fileRef = 78DF709B22715A0F00E02430 /* lpcfunc.c */; };
 		78F2C51322741F80004AC45B /* LogViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 78F2C51122741F80004AC45B /* LogViewController.m */; };
 		791D461AB3D59331943DBB05 /* libPods-MultiCodecDemo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A40B7A2328F09825114DC89 /* libPods-MultiCodecDemo.a */; };
 /* End PBXBuildFile section */
@@ -83,6 +82,73 @@
 /* Begin PBXFileReference section */
 		1A40B7A2328F09825114DC89 /* libPods-MultiCodecDemo.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-MultiCodecDemo.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		30A3996D257D2349E51B8084 /* Pods-MultiCodecDemo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MultiCodecDemo.release.xcconfig"; path = "Target Support Files/Pods-MultiCodecDemo/Pods-MultiCodecDemo.release.xcconfig"; sourceTree = "<group>"; };
+		7886A474245434B1008BC678 /* tabld8cp.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = tabld8cp.c; sourceTree = "<group>"; };
+		7886A475245434B1008BC678 /* gainpred.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = gainpred.c; sourceTree = "<group>"; };
+		7886A476245434B1008BC678 /* basic_op.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = basic_op.h; sourceTree = "<group>"; };
+		7886A477245434B1008BC678 /* coderi.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = coderi.c; sourceTree = "<group>"; };
+		7886A478245434B1008BC678 /* taming.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = taming.c; sourceTree = "<group>"; };
+		7886A479245434B1008BC678 /* pwf.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = pwf.c; sourceTree = "<group>"; };
+		7886A47A245434B1008BC678 /* oper_32b.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = oper_32b.h; sourceTree = "<group>"; };
+		7886A47B245434B1008BC678 /* ld8k.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ld8k.h; sourceTree = "<group>"; };
+		7886A47C245434B1008BC678 /* q_gaincp.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = q_gaincp.c; sourceTree = "<group>"; };
+		7886A47D245434B1008BC678 /* dec_sid.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = dec_sid.c; sourceTree = "<group>"; };
+		7886A47E245434B1008BC678 /* degaincp.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = degaincp.c; sourceTree = "<group>"; };
+		7886A47F245434B1008BC678 /* codld8cp.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = codld8cp.c; sourceTree = "<group>"; };
+		7886A480245434B1008BC678 /* SelfDefineQua.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SelfDefineQua.h; sourceTree = "<group>"; };
+		7886A481245434B1008BC678 /* lspdece.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = lspdece.c; sourceTree = "<group>"; };
+		7886A482245434B1008BC678 /* bitscp.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = bitscp.c; sourceTree = "<group>"; };
+		7886A483245434B1008BC678 /* p_parity.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = p_parity.c; sourceTree = "<group>"; };
+		7886A484245434B1008BC678 /* dtx.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = dtx.c; sourceTree = "<group>"; };
+		7886A485245434B1008BC678 /* filtere.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = filtere.c; sourceTree = "<group>"; };
+		7886A486245434B1008BC678 /* pstcp.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = pstcp.c; sourceTree = "<group>"; };
+		7886A487245434B1008BC678 /* tab_ld8k.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = tab_ld8k.c; sourceTree = "<group>"; };
+		7886A488245434B1008BC678 /* tab_dtx.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = tab_dtx.h; sourceTree = "<group>"; };
+		7886A489245434B1008BC678 /* vad.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = vad.h; sourceTree = "<group>"; };
+		7886A48A245434B1008BC678 /* decoderi.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = decoderi.c; sourceTree = "<group>"; };
+		7886A48B245434B1008BC678 /* qsidlsf.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = qsidlsf.c; sourceTree = "<group>"; };
+		7886A48C245434B1008BC678 /* oper_32b.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = oper_32b.c; sourceTree = "<group>"; };
+		7886A48D245434B1008BC678 /* bitstrea.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = bitstrea.txt; sourceTree = "<group>"; };
+		7886A48E245434B1008BC678 /* name.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = name.txt; sourceTree = "<group>"; };
+		7886A48F245434B1008BC678 /* phdisp.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = phdisp.c; sourceTree = "<group>"; };
+		7886A490245434B1008BC678 /* utilcp.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = utilcp.c; sourceTree = "<group>"; };
+		7886A491245434B1008BC678 /* basic_op.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = basic_op.c; sourceTree = "<group>"; };
+		7886A492245434B1008BC678 /* tabld8cp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = tabld8cp.h; sourceTree = "<group>"; };
+		7886A493245434B1008BC678 /* qsidgain.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = qsidgain.c; sourceTree = "<group>"; };
+		7886A494245434B1008BC678 /* decld8cp.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = decld8cp.c; sourceTree = "<group>"; };
+		7886A495245434B1008BC678 /* mus_dtct.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = mus_dtct.c; sourceTree = "<group>"; };
+		7886A496245434B1008BC678 /* pitchcp.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = pitchcp.c; sourceTree = "<group>"; };
+		7886A497245434B1008BC678 /* dspfunc.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = dspfunc.c; sourceTree = "<group>"; };
+		7886A498245434B1008BC678 /* pwfe.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = pwfe.c; sourceTree = "<group>"; };
+		7886A499245434B1008BC678 /* coderi.mak */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.make; path = coderi.mak; sourceTree = "<group>"; };
+		7886A49A245434B1008BC678 /* decoderi.mak */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.make; path = decoderi.mak; sourceTree = "<group>"; };
+		7886A49B245434B1008BC678 /* octet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = octet.h; sourceTree = "<group>"; };
+		7886A49C245434B1008BC678 /* track_pi.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = track_pi.c; sourceTree = "<group>"; };
+		7886A49D245434B1008BC678 /* dacelpcp.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = dacelpcp.c; sourceTree = "<group>"; };
+		7886A49E245434B1008BC678 /* ld8cp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ld8cp.h; sourceTree = "<group>"; };
+		7886A49F245434B1008BC678 /* readme.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = readme.txt; sourceTree = "<group>"; };
+		7886A4A0245434B1008BC678 /* post_pro.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = post_pro.c; sourceTree = "<group>"; };
+		7886A4A1245434B1008BC678 /* bwfwfunc.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = bwfwfunc.c; sourceTree = "<group>"; };
+		7886A4A2245434B1008BC678 /* acelp_cp.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = acelp_cp.c; sourceTree = "<group>"; };
+		7886A4A3245434B1008BC678 /* dtx.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = dtx.h; sourceTree = "<group>"; };
+		7886A4A4245434B1008BC678 /* declagcp.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = declagcp.c; sourceTree = "<group>"; };
+		7886A4A5245434B1008BC678 /* qua_lspe.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = qua_lspe.c; sourceTree = "<group>"; };
+		7886A4A6245434B1008BC678 /* SelfDefineQua.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = SelfDefineQua.c; sourceTree = "<group>"; };
+		7886A4A7245434B1008BC678 /* sid.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sid.h; sourceTree = "<group>"; };
+		7886A4A8245434B1008BC678 /* calcexc.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = calcexc.c; sourceTree = "<group>"; };
+		7886A4A9245434B1008BC678 /* pred_lt3.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = pred_lt3.c; sourceTree = "<group>"; };
+		7886A4AA245434B1008BC678 /* tab_dtx.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = tab_dtx.c; sourceTree = "<group>"; };
+		7886A4AB245434B1008BC678 /* pre_proc.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = pre_proc.c; sourceTree = "<group>"; };
+		7886A4AC245434B1008BC678 /* vad.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vad.c; sourceTree = "<group>"; };
+		7886A4AD245434B1008BC678 /* lpccp.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = lpccp.c; sourceTree = "<group>"; };
+		7886A4AE245434B1008BC678 /* lspgetqe.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = lspgetqe.c; sourceTree = "<group>"; };
+		7886A4AF245434B1008BC678 /* tab_ld8k.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = tab_ld8k.h; sourceTree = "<group>"; };
+		7886A4B0245434B1008BC678 /* typedef.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = typedef.h; sourceTree = "<group>"; };
+		7886A4B1245434B1008BC678 /* bwfw.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = bwfw.c; sourceTree = "<group>"; };
+		7886A4B2245434B1008BC678 /* lpcfunc.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = lpcfunc.c; sourceTree = "<group>"; };
+		7886A4B4245434B1008BC678 /* waveoperator.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = waveoperator.cc; sourceTree = "<group>"; };
+		7886A4B5245434B1008BC678 /* dataserialize.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = dataserialize.c; sourceTree = "<group>"; };
+		7886A4B7245434B1008BC678 /* waveoperator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = waveoperator.h; sourceTree = "<group>"; };
+		7886A4B8245434B1008BC678 /* dataserialize.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = dataserialize.h; sourceTree = "<group>"; };
 		789656402275850600FEB462 /* UtilHeader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UtilHeader.h; sourceTree = "<group>"; };
 		789656412275850600FEB462 /* UtilHeader.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UtilHeader.m; sourceTree = "<group>"; };
 		78C5AB1C227290090068956D /* BufferManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BufferManager.h; sourceTree = "<group>"; };
@@ -114,74 +180,6 @@
 		78DF6F572270961300E02430 /* GCDAsyncSocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCDAsyncSocket.h; sourceTree = "<group>"; };
 		78DF6F5B2270968500E02430 /* DataPackUnPack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataPackUnPack.h; sourceTree = "<group>"; };
 		78DF6F5C2270968500E02430 /* DataPackUnPack.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DataPackUnPack.m; sourceTree = "<group>"; };
-		78DF705722715A0F00E02430 /* waveoperator.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = waveoperator.cc; sourceTree = "<group>"; };
-		78DF705822715A0F00E02430 /* dataserialize.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = dataserialize.c; sourceTree = "<group>"; };
-		78DF705922715A0F00E02430 /* 归档.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; path = "归档.zip"; sourceTree = "<group>"; };
-		78DF705A22715A0F00E02430 /* waveoperator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = waveoperator.h; sourceTree = "<group>"; };
-		78DF705B22715A0F00E02430 /* dataserialize.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = dataserialize.h; sourceTree = "<group>"; };
-		78DF705D22715A0F00E02430 /* tabld8cp.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = tabld8cp.c; sourceTree = "<group>"; };
-		78DF705E22715A0F00E02430 /* gainpred.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = gainpred.c; sourceTree = "<group>"; };
-		78DF705F22715A0F00E02430 /* basic_op.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = basic_op.h; sourceTree = "<group>"; };
-		78DF706022715A0F00E02430 /* coderi.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = coderi.c; sourceTree = "<group>"; };
-		78DF706122715A0F00E02430 /* taming.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = taming.c; sourceTree = "<group>"; };
-		78DF706222715A0F00E02430 /* pwf.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = pwf.c; sourceTree = "<group>"; };
-		78DF706322715A0F00E02430 /* oper_32b.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = oper_32b.h; sourceTree = "<group>"; };
-		78DF706422715A0F00E02430 /* ld8k.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ld8k.h; sourceTree = "<group>"; };
-		78DF706522715A0F00E02430 /* q_gaincp.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = q_gaincp.c; sourceTree = "<group>"; };
-		78DF706622715A0F00E02430 /* dec_sid.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = dec_sid.c; sourceTree = "<group>"; };
-		78DF706722715A0F00E02430 /* degaincp.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = degaincp.c; sourceTree = "<group>"; };
-		78DF706822715A0F00E02430 /* codld8cp.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = codld8cp.c; sourceTree = "<group>"; };
-		78DF706922715A0F00E02430 /* SelfDefineQua.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SelfDefineQua.h; sourceTree = "<group>"; };
-		78DF706A22715A0F00E02430 /* lspdece.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = lspdece.c; sourceTree = "<group>"; };
-		78DF706B22715A0F00E02430 /* bitscp.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = bitscp.c; sourceTree = "<group>"; };
-		78DF706C22715A0F00E02430 /* p_parity.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = p_parity.c; sourceTree = "<group>"; };
-		78DF706D22715A0F00E02430 /* dtx.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = dtx.c; sourceTree = "<group>"; };
-		78DF706E22715A0F00E02430 /* filtere.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = filtere.c; sourceTree = "<group>"; };
-		78DF706F22715A0F00E02430 /* pstcp.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = pstcp.c; sourceTree = "<group>"; };
-		78DF707022715A0F00E02430 /* tab_ld8k.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = tab_ld8k.c; sourceTree = "<group>"; };
-		78DF707122715A0F00E02430 /* tab_dtx.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = tab_dtx.h; sourceTree = "<group>"; };
-		78DF707222715A0F00E02430 /* vad.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = vad.h; sourceTree = "<group>"; };
-		78DF707322715A0F00E02430 /* decoderi.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = decoderi.c; sourceTree = "<group>"; };
-		78DF707422715A0F00E02430 /* qsidlsf.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = qsidlsf.c; sourceTree = "<group>"; };
-		78DF707522715A0F00E02430 /* oper_32b.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = oper_32b.c; sourceTree = "<group>"; };
-		78DF707622715A0F00E02430 /* bitstrea.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = bitstrea.txt; sourceTree = "<group>"; };
-		78DF707722715A0F00E02430 /* name.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = name.txt; sourceTree = "<group>"; };
-		78DF707822715A0F00E02430 /* phdisp.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = phdisp.c; sourceTree = "<group>"; };
-		78DF707922715A0F00E02430 /* utilcp.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = utilcp.c; sourceTree = "<group>"; };
-		78DF707A22715A0F00E02430 /* basic_op.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = basic_op.c; sourceTree = "<group>"; };
-		78DF707B22715A0F00E02430 /* tabld8cp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = tabld8cp.h; sourceTree = "<group>"; };
-		78DF707C22715A0F00E02430 /* qsidgain.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = qsidgain.c; sourceTree = "<group>"; };
-		78DF707D22715A0F00E02430 /* decld8cp.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = decld8cp.c; sourceTree = "<group>"; };
-		78DF707E22715A0F00E02430 /* mus_dtct.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = mus_dtct.c; sourceTree = "<group>"; };
-		78DF707F22715A0F00E02430 /* pitchcp.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = pitchcp.c; sourceTree = "<group>"; };
-		78DF708022715A0F00E02430 /* dspfunc.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = dspfunc.c; sourceTree = "<group>"; };
-		78DF708122715A0F00E02430 /* pwfe.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = pwfe.c; sourceTree = "<group>"; };
-		78DF708222715A0F00E02430 /* coderi.mak */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.make; path = coderi.mak; sourceTree = "<group>"; };
-		78DF708322715A0F00E02430 /* decoderi.mak */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.make; path = decoderi.mak; sourceTree = "<group>"; };
-		78DF708422715A0F00E02430 /* octet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = octet.h; sourceTree = "<group>"; };
-		78DF708522715A0F00E02430 /* track_pi.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = track_pi.c; sourceTree = "<group>"; };
-		78DF708622715A0F00E02430 /* dacelpcp.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = dacelpcp.c; sourceTree = "<group>"; };
-		78DF708722715A0F00E02430 /* ld8cp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ld8cp.h; sourceTree = "<group>"; };
-		78DF708822715A0F00E02430 /* readme.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = readme.txt; sourceTree = "<group>"; };
-		78DF708922715A0F00E02430 /* post_pro.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = post_pro.c; sourceTree = "<group>"; };
-		78DF708A22715A0F00E02430 /* bwfwfunc.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = bwfwfunc.c; sourceTree = "<group>"; };
-		78DF708B22715A0F00E02430 /* acelp_cp.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = acelp_cp.c; sourceTree = "<group>"; };
-		78DF708C22715A0F00E02430 /* dtx.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = dtx.h; sourceTree = "<group>"; };
-		78DF708D22715A0F00E02430 /* declagcp.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = declagcp.c; sourceTree = "<group>"; };
-		78DF708E22715A0F00E02430 /* qua_lspe.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = qua_lspe.c; sourceTree = "<group>"; };
-		78DF708F22715A0F00E02430 /* SelfDefineQua.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = SelfDefineQua.c; sourceTree = "<group>"; };
-		78DF709022715A0F00E02430 /* sid.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sid.h; sourceTree = "<group>"; };
-		78DF709122715A0F00E02430 /* calcexc.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = calcexc.c; sourceTree = "<group>"; };
-		78DF709222715A0F00E02430 /* pred_lt3.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = pred_lt3.c; sourceTree = "<group>"; };
-		78DF709322715A0F00E02430 /* tab_dtx.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = tab_dtx.c; sourceTree = "<group>"; };
-		78DF709422715A0F00E02430 /* pre_proc.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = pre_proc.c; sourceTree = "<group>"; };
-		78DF709522715A0F00E02430 /* vad.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vad.c; sourceTree = "<group>"; };
-		78DF709622715A0F00E02430 /* lpccp.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = lpccp.c; sourceTree = "<group>"; };
-		78DF709722715A0F00E02430 /* lspgetqe.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = lspgetqe.c; sourceTree = "<group>"; };
-		78DF709822715A0F00E02430 /* tab_ld8k.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = tab_ld8k.h; sourceTree = "<group>"; };
-		78DF709922715A0F00E02430 /* typedef.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = typedef.h; sourceTree = "<group>"; };
-		78DF709A22715A0F00E02430 /* bwfw.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = bwfw.c; sourceTree = "<group>"; };
-		78DF709B22715A0F00E02430 /* lpcfunc.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = lpcfunc.c; sourceTree = "<group>"; };
 		78F2C51122741F80004AC45B /* LogViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LogViewController.m; sourceTree = "<group>"; };
 		78F2C51222741F80004AC45B /* LogViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LogViewController.h; sourceTree = "<group>"; };
 		9A2D553082C1895DB910BA45 /* Pods-MultiCodecDemo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MultiCodecDemo.debug.xcconfig"; path = "Target Support Files/Pods-MultiCodecDemo/Pods-MultiCodecDemo.debug.xcconfig"; sourceTree = "<group>"; };
@@ -215,6 +213,87 @@
 			);
 			path = Pods;
 			sourceTree = "<group>";
+		};
+		7886A473245434B1008BC678 /* g729I */ = {
+			isa = PBXGroup;
+			children = (
+				7886A474245434B1008BC678 /* tabld8cp.c */,
+				7886A475245434B1008BC678 /* gainpred.c */,
+				7886A476245434B1008BC678 /* basic_op.h */,
+				7886A477245434B1008BC678 /* coderi.c */,
+				7886A478245434B1008BC678 /* taming.c */,
+				7886A479245434B1008BC678 /* pwf.c */,
+				7886A47A245434B1008BC678 /* oper_32b.h */,
+				7886A47B245434B1008BC678 /* ld8k.h */,
+				7886A47C245434B1008BC678 /* q_gaincp.c */,
+				7886A47D245434B1008BC678 /* dec_sid.c */,
+				7886A47E245434B1008BC678 /* degaincp.c */,
+				7886A47F245434B1008BC678 /* codld8cp.c */,
+				7886A480245434B1008BC678 /* SelfDefineQua.h */,
+				7886A481245434B1008BC678 /* lspdece.c */,
+				7886A482245434B1008BC678 /* bitscp.c */,
+				7886A483245434B1008BC678 /* p_parity.c */,
+				7886A484245434B1008BC678 /* dtx.c */,
+				7886A485245434B1008BC678 /* filtere.c */,
+				7886A486245434B1008BC678 /* pstcp.c */,
+				7886A487245434B1008BC678 /* tab_ld8k.c */,
+				7886A488245434B1008BC678 /* tab_dtx.h */,
+				7886A489245434B1008BC678 /* vad.h */,
+				7886A48A245434B1008BC678 /* decoderi.c */,
+				7886A48B245434B1008BC678 /* qsidlsf.c */,
+				7886A48C245434B1008BC678 /* oper_32b.c */,
+				7886A48D245434B1008BC678 /* bitstrea.txt */,
+				7886A48E245434B1008BC678 /* name.txt */,
+				7886A48F245434B1008BC678 /* phdisp.c */,
+				7886A490245434B1008BC678 /* utilcp.c */,
+				7886A491245434B1008BC678 /* basic_op.c */,
+				7886A492245434B1008BC678 /* tabld8cp.h */,
+				7886A493245434B1008BC678 /* qsidgain.c */,
+				7886A494245434B1008BC678 /* decld8cp.c */,
+				7886A495245434B1008BC678 /* mus_dtct.c */,
+				7886A496245434B1008BC678 /* pitchcp.c */,
+				7886A497245434B1008BC678 /* dspfunc.c */,
+				7886A498245434B1008BC678 /* pwfe.c */,
+				7886A499245434B1008BC678 /* coderi.mak */,
+				7886A49A245434B1008BC678 /* decoderi.mak */,
+				7886A49B245434B1008BC678 /* octet.h */,
+				7886A49C245434B1008BC678 /* track_pi.c */,
+				7886A49D245434B1008BC678 /* dacelpcp.c */,
+				7886A49E245434B1008BC678 /* ld8cp.h */,
+				7886A49F245434B1008BC678 /* readme.txt */,
+				7886A4A0245434B1008BC678 /* post_pro.c */,
+				7886A4A1245434B1008BC678 /* bwfwfunc.c */,
+				7886A4A2245434B1008BC678 /* acelp_cp.c */,
+				7886A4A3245434B1008BC678 /* dtx.h */,
+				7886A4A4245434B1008BC678 /* declagcp.c */,
+				7886A4A5245434B1008BC678 /* qua_lspe.c */,
+				7886A4A6245434B1008BC678 /* SelfDefineQua.c */,
+				7886A4A7245434B1008BC678 /* sid.h */,
+				7886A4A8245434B1008BC678 /* calcexc.c */,
+				7886A4A9245434B1008BC678 /* pred_lt3.c */,
+				7886A4AA245434B1008BC678 /* tab_dtx.c */,
+				7886A4AB245434B1008BC678 /* pre_proc.c */,
+				7886A4AC245434B1008BC678 /* vad.c */,
+				7886A4AD245434B1008BC678 /* lpccp.c */,
+				7886A4AE245434B1008BC678 /* lspgetqe.c */,
+				7886A4AF245434B1008BC678 /* tab_ld8k.h */,
+				7886A4B0245434B1008BC678 /* typedef.h */,
+				7886A4B1245434B1008BC678 /* bwfw.c */,
+				7886A4B2245434B1008BC678 /* lpcfunc.c */,
+			);
+			path = g729I;
+			sourceTree = SOURCE_ROOT;
+		};
+		7886A4B3245434B1008BC678 /* utils */ = {
+			isa = PBXGroup;
+			children = (
+				7886A4B4245434B1008BC678 /* waveoperator.cc */,
+				7886A4B5245434B1008BC678 /* dataserialize.c */,
+				7886A4B7245434B1008BC678 /* waveoperator.h */,
+				7886A4B8245434B1008BC678 /* dataserialize.h */,
+			);
+			path = utils;
+			sourceTree = SOURCE_ROOT;
 		};
 		7896563F227584E800FEB462 /* util */ = {
 			isa = PBXGroup;
@@ -322,94 +401,10 @@
 		78DF7055227159FD00E02430 /* audioCodec */ = {
 			isa = PBXGroup;
 			children = (
-				78DF705C22715A0F00E02430 /* g729I */,
-				78DF705622715A0F00E02430 /* utils */,
+				7886A473245434B1008BC678 /* g729I */,
+				7886A4B3245434B1008BC678 /* utils */,
 			);
 			name = audioCodec;
-			sourceTree = "<group>";
-		};
-		78DF705622715A0F00E02430 /* utils */ = {
-			isa = PBXGroup;
-			children = (
-				78DF705722715A0F00E02430 /* waveoperator.cc */,
-				78DF705822715A0F00E02430 /* dataserialize.c */,
-				78DF705922715A0F00E02430 /* 归档.zip */,
-				78DF705A22715A0F00E02430 /* waveoperator.h */,
-				78DF705B22715A0F00E02430 /* dataserialize.h */,
-			);
-			name = utils;
-			path = ../../../g729codec/utils;
-			sourceTree = "<group>";
-		};
-		78DF705C22715A0F00E02430 /* g729I */ = {
-			isa = PBXGroup;
-			children = (
-				78DF705D22715A0F00E02430 /* tabld8cp.c */,
-				78DF705E22715A0F00E02430 /* gainpred.c */,
-				78DF705F22715A0F00E02430 /* basic_op.h */,
-				78DF706122715A0F00E02430 /* taming.c */,
-				78DF706222715A0F00E02430 /* pwf.c */,
-				78DF706322715A0F00E02430 /* oper_32b.h */,
-				78DF706422715A0F00E02430 /* ld8k.h */,
-				78DF706522715A0F00E02430 /* q_gaincp.c */,
-				78DF706622715A0F00E02430 /* dec_sid.c */,
-				78DF706722715A0F00E02430 /* degaincp.c */,
-				78DF706822715A0F00E02430 /* codld8cp.c */,
-				78DF706A22715A0F00E02430 /* lspdece.c */,
-				78DF706B22715A0F00E02430 /* bitscp.c */,
-				78DF706C22715A0F00E02430 /* p_parity.c */,
-				78DF706D22715A0F00E02430 /* dtx.c */,
-				78DF706E22715A0F00E02430 /* filtere.c */,
-				78DF706F22715A0F00E02430 /* pstcp.c */,
-				78DF707022715A0F00E02430 /* tab_ld8k.c */,
-				78DF707122715A0F00E02430 /* tab_dtx.h */,
-				78DF707222715A0F00E02430 /* vad.h */,
-				78DF707422715A0F00E02430 /* qsidlsf.c */,
-				78DF707522715A0F00E02430 /* oper_32b.c */,
-				78DF707622715A0F00E02430 /* bitstrea.txt */,
-				78DF707722715A0F00E02430 /* name.txt */,
-				78DF707822715A0F00E02430 /* phdisp.c */,
-				78DF707922715A0F00E02430 /* utilcp.c */,
-				78DF707A22715A0F00E02430 /* basic_op.c */,
-				78DF707B22715A0F00E02430 /* tabld8cp.h */,
-				78DF707C22715A0F00E02430 /* qsidgain.c */,
-				78DF707D22715A0F00E02430 /* decld8cp.c */,
-				78DF707E22715A0F00E02430 /* mus_dtct.c */,
-				78DF707F22715A0F00E02430 /* pitchcp.c */,
-				78DF708022715A0F00E02430 /* dspfunc.c */,
-				78DF708122715A0F00E02430 /* pwfe.c */,
-				78DF708222715A0F00E02430 /* coderi.mak */,
-				78DF708322715A0F00E02430 /* decoderi.mak */,
-				78DF708422715A0F00E02430 /* octet.h */,
-				78DF708522715A0F00E02430 /* track_pi.c */,
-				78DF708622715A0F00E02430 /* dacelpcp.c */,
-				78DF708722715A0F00E02430 /* ld8cp.h */,
-				78DF708822715A0F00E02430 /* readme.txt */,
-				78DF708922715A0F00E02430 /* post_pro.c */,
-				78DF708A22715A0F00E02430 /* bwfwfunc.c */,
-				78DF708B22715A0F00E02430 /* acelp_cp.c */,
-				78DF708C22715A0F00E02430 /* dtx.h */,
-				78DF708D22715A0F00E02430 /* declagcp.c */,
-				78DF708E22715A0F00E02430 /* qua_lspe.c */,
-				78DF709022715A0F00E02430 /* sid.h */,
-				78DF709122715A0F00E02430 /* calcexc.c */,
-				78DF709222715A0F00E02430 /* pred_lt3.c */,
-				78DF709322715A0F00E02430 /* tab_dtx.c */,
-				78DF709422715A0F00E02430 /* pre_proc.c */,
-				78DF709522715A0F00E02430 /* vad.c */,
-				78DF709622715A0F00E02430 /* lpccp.c */,
-				78DF709722715A0F00E02430 /* lspgetqe.c */,
-				78DF709822715A0F00E02430 /* tab_ld8k.h */,
-				78DF709922715A0F00E02430 /* typedef.h */,
-				78DF709A22715A0F00E02430 /* bwfw.c */,
-				78DF709B22715A0F00E02430 /* lpcfunc.c */,
-				78DF707322715A0F00E02430 /* decoderi.c */,
-				78DF706022715A0F00E02430 /* coderi.c */,
-				78DF706922715A0F00E02430 /* SelfDefineQua.h */,
-				78DF708F22715A0F00E02430 /* SelfDefineQua.c */,
-			);
-			name = g729I;
-			path = ../../../g729codec/g729I;
 			sourceTree = "<group>";
 		};
 		78F2C51022741F63004AC45B /* vc */ = {
@@ -487,13 +482,12 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				78DF709E22715A0F00E02430 /* 归档.zip in Resources */,
-				78DF70B322715A0F00E02430 /* name.txt in Resources */,
-				78DF70B222715A0F00E02430 /* bitstrea.txt in Resources */,
+				7886A4DB245434B2008BC678 /* readme.txt in Resources */,
+				7886A4CC245434B2008BC678 /* bitstrea.txt in Resources */,
 				78DF6F122270018000E02430 /* LaunchScreen.storyboard in Resources */,
-				78DF70C122715A0F00E02430 /* readme.txt in Resources */,
 				78DF6F0F2270018000E02430 /* Assets.xcassets in Resources */,
 				78DF6F0D2270017D00E02430 /* Main.storyboard in Resources */,
+				7886A4CD245434B2008BC678 /* name.txt in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -546,69 +540,69 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				78DF70A622715A0F00E02430 /* degaincp.c in Sources */,
-				78DF70D022715A0F00E02430 /* lpcfunc.c in Sources */,
+				7886A4D2245434B2008BC678 /* decld8cp.c in Sources */,
+				7886A4E4245434B2008BC678 /* tab_dtx.c in Sources */,
 				78DF6F0A2270017D00E02430 /* ViewController.m in Sources */,
-				78DF70CB22715A0F00E02430 /* pre_proc.c in Sources */,
-				78DF70C422715A0F00E02430 /* acelp_cp.c in Sources */,
-				78DF70A722715A0F00E02430 /* codld8cp.c in Sources */,
-				78DF70C522715A0F00E02430 /* declagcp.c in Sources */,
+				7886A4BD245434B2008BC678 /* pwf.c in Sources */,
 				78DF6F582270961300E02430 /* GCDAsyncUdpSocket.m in Sources */,
-				78DF70C922715A0F00E02430 /* pred_lt3.c in Sources */,
-				78DF70C022715A0F00E02430 /* dacelpcp.c in Sources */,
-				78DF70CF22715A0F00E02430 /* bwfw.c in Sources */,
-				78DF70CC22715A0F00E02430 /* vad.c in Sources */,
-				78DF70CA22715A0F00E02430 /* tab_dtx.c in Sources */,
+				7886A4E9245434B2008BC678 /* bwfw.c in Sources */,
+				7886A4E1245434B2008BC678 /* SelfDefineQua.c in Sources */,
+				7886A4E0245434B2008BC678 /* qua_lspe.c in Sources */,
 				78DF6F272270050400E02430 /* MultipeerConnectionLink.m in Sources */,
+				7886A4CB245434B2008BC678 /* oper_32b.c in Sources */,
+				7886A4E2245434B2008BC678 /* calcexc.c in Sources */,
+				7886A4DE245434B2008BC678 /* acelp_cp.c in Sources */,
+				7886A4BF245434B2008BC678 /* dec_sid.c in Sources */,
+				7886A4BB245434B2008BC678 /* coderi.c in Sources */,
 				78DF6F2D227067C300E02430 /* AudioCaptureOrPlay.m in Sources */,
 				78F2C51322741F80004AC45B /* LogViewController.m in Sources */,
-				78DF70B822715A0F00E02430 /* decld8cp.c in Sources */,
-				78DF70AD22715A0F00E02430 /* pstcp.c in Sources */,
-				78DF70BF22715A0F00E02430 /* track_pi.c in Sources */,
-				78DF70A822715A0F00E02430 /* lspdece.c in Sources */,
-				78DF70AF22715A0F00E02430 /* decoderi.c in Sources */,
+				7886A4BA245434B2008BC678 /* gainpred.c in Sources */,
 				78DF6F51227095EF00E02430 /* UDPSenderReceiver.m in Sources */,
-				78DF70BD22715A0F00E02430 /* coderi.mak in Sources */,
+				7886A4C2245434B2008BC678 /* lspdece.c in Sources */,
 				78DF6F52227095EF00E02430 /* TCPClient.m in Sources */,
-				78DF709C22715A0F00E02430 /* waveoperator.cc in Sources */,
-				78DF70A422715A0F00E02430 /* q_gaincp.c in Sources */,
-				78DF709D22715A0F00E02430 /* dataserialize.c in Sources */,
-				78DF70A222715A0F00E02430 /* taming.c in Sources */,
-				78DF70AA22715A0F00E02430 /* p_parity.c in Sources */,
-				78DF70AB22715A0F00E02430 /* dtx.c in Sources */,
-				78DF70CD22715A0F00E02430 /* lpccp.c in Sources */,
-				78DF70C622715A0F00E02430 /* qua_lspe.c in Sources */,
+				7886A4E8245434B2008BC678 /* lspgetqe.c in Sources */,
+				7886A4EA245434B2008BC678 /* lpcfunc.c in Sources */,
 				78DF6F5D2270968600E02430 /* DataPackUnPack.m in Sources */,
-				78DF70BC22715A0F00E02430 /* pwfe.c in Sources */,
-				78DF70B622715A0F00E02430 /* basic_op.c in Sources */,
 				78DF6F592270961300E02430 /* GCDAsyncSocket.m in Sources */,
+				7886A4D0245434B2008BC678 /* basic_op.c in Sources */,
+				7886A4D9245434B2008BC678 /* track_pi.c in Sources */,
+				7886A4E3245434B2008BC678 /* pred_lt3.c in Sources */,
 				78DF6F152270018000E02430 /* main.m in Sources */,
-				78DF70CE22715A0F00E02430 /* lspgetqe.c in Sources */,
-				78DF70BE22715A0F00E02430 /* decoderi.mak in Sources */,
-				78DF70AE22715A0F00E02430 /* tab_ld8k.c in Sources */,
-				78DF70C322715A0F00E02430 /* bwfwfunc.c in Sources */,
-				78DF70A522715A0F00E02430 /* dec_sid.c in Sources */,
+				7886A4DA245434B2008BC678 /* dacelpcp.c in Sources */,
+				7886A4C3245434B2008BC678 /* bitscp.c in Sources */,
+				7886A4CA245434B2008BC678 /* qsidlsf.c in Sources */,
+				7886A4BE245434B2008BC678 /* q_gaincp.c in Sources */,
+				7886A4EB245434B2008BC678 /* waveoperator.cc in Sources */,
+				7886A4E5245434B2008BC678 /* pre_proc.c in Sources */,
+				7886A4DC245434B2008BC678 /* post_pro.c in Sources */,
+				7886A4C4245434B2008BC678 /* p_parity.c in Sources */,
+				7886A4B9245434B2008BC678 /* tabld8cp.c in Sources */,
 				78DF6F50227095EF00E02430 /* TCPServer.m in Sources */,
-				78DF70B122715A0F00E02430 /* oper_32b.c in Sources */,
+				7886A4DF245434B2008BC678 /* declagcp.c in Sources */,
+				7886A4C8245434B2008BC678 /* tab_ld8k.c in Sources */,
+				7886A4D6245434B2008BC678 /* pwfe.c in Sources */,
+				7886A4D5245434B2008BC678 /* dspfunc.c in Sources */,
 				78DF6F072270017D00E02430 /* AppDelegate.m in Sources */,
-				78DF70B022715A0F00E02430 /* qsidlsf.c in Sources */,
+				7886A4D1245434B2008BC678 /* qsidgain.c in Sources */,
+				7886A4C6245434B2008BC678 /* filtere.c in Sources */,
+				7886A4CF245434B2008BC678 /* utilcp.c in Sources */,
+				7886A4E7245434B2008BC678 /* lpccp.c in Sources */,
+				7886A4C0245434B2008BC678 /* degaincp.c in Sources */,
+				7886A4C7245434B2008BC678 /* pstcp.c in Sources */,
+				7886A4CE245434B2008BC678 /* phdisp.c in Sources */,
+				7886A4D7245434B2008BC678 /* coderi.mak in Sources */,
+				7886A4BC245434B2008BC678 /* taming.c in Sources */,
 				789656422275850600FEB462 /* UtilHeader.m in Sources */,
-				78DF70AC22715A0F00E02430 /* filtere.c in Sources */,
-				78DF70A022715A0F00E02430 /* gainpred.c in Sources */,
-				78DF70B922715A0F00E02430 /* mus_dtct.c in Sources */,
-				78DF70C722715A0F00E02430 /* SelfDefineQua.c in Sources */,
-				78DF70A322715A0F00E02430 /* pwf.c in Sources */,
-				78DF70B422715A0F00E02430 /* phdisp.c in Sources */,
+				7886A4C9245434B2008BC678 /* decoderi.c in Sources */,
+				7886A4D3245434B2008BC678 /* mus_dtct.c in Sources */,
+				7886A4C5245434B2008BC678 /* dtx.c in Sources */,
+				7886A4E6245434B2008BC678 /* vad.c in Sources */,
+				7886A4EC245434B2008BC678 /* dataserialize.c in Sources */,
+				7886A4D4245434B2008BC678 /* pitchcp.c in Sources */,
+				7886A4C1245434B2008BC678 /* codld8cp.c in Sources */,
+				7886A4DD245434B2008BC678 /* bwfwfunc.c in Sources */,
+				7886A4D8245434B2008BC678 /* decoderi.mak in Sources */,
 				78C5AB1E227290090068956D /* BufferManager.m in Sources */,
-				78DF70B722715A0F00E02430 /* qsidgain.c in Sources */,
-				78DF70B522715A0F00E02430 /* utilcp.c in Sources */,
-				78DF70BA22715A0F00E02430 /* pitchcp.c in Sources */,
-				78DF709F22715A0F00E02430 /* tabld8cp.c in Sources */,
-				78DF70BB22715A0F00E02430 /* dspfunc.c in Sources */,
-				78DF70C222715A0F00E02430 /* post_pro.c in Sources */,
-				78DF70C822715A0F00E02430 /* calcexc.c in Sources */,
-				78DF70A922715A0F00E02430 /* bitscp.c in Sources */,
-				78DF70A122715A0F00E02430 /* coderi.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
