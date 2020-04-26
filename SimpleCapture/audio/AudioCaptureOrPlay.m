@@ -9,6 +9,7 @@
 #import "AudioCaptureOrPlay.h"
 #import <AVFoundation/AVFoundation.h>
 #import <AudioUnit/AudioUnit.h>
+#import <UIKit/UIKit.h>
 
 #define INPUT_BUS 1
 #define OUTPUT_BUS 0
@@ -19,6 +20,7 @@
     AudioBufferList *buffList;
     uint32_t numberBuffers;
     uint32_t sampleRate;
+    AVAudioSession *session;
 }
 
 - (instancetype)init{
@@ -27,14 +29,49 @@
         numberBuffers = 1; //channel number
         sampleRate = 8000;
         
+        session = [AVAudioSession sharedInstance];
         [ self initAudioUnit];
+        
+        NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
+        [center addObserver:self
+                   selector:@selector(handleInterruptionNotificationYYAudio:)
+                       name:AVAudioSessionInterruptionNotification
+                     object:nil];
+        [center addObserver:self
+                   selector:@selector(handleRouteChangeNotificationYYAudio:)
+                       name:AVAudioSessionRouteChangeNotification
+                     object:nil];
+        // TODO(tkchin): Maybe listen to SilenceSecondaryAudioHintNotification.
+        [center addObserver:self
+                   selector:@selector(handleMediaServicesWereLostYYAudio:)
+                       name:AVAudioSessionMediaServicesWereLostNotification
+                     object:nil];
+        [center addObserver:self
+                   selector:@selector(handleMediaServicesWereResetYYAudio:)
+                       name:AVAudioSessionMediaServicesWereResetNotification
+                     object:nil];
+          
+              [center addObserver:self
+                   selector:@selector(handleSilenceSecondaryAudioHintNotificationYYAudio:)
+                       name:AVAudioSessionSilenceSecondaryAudioHintNotification
+                     object:nil];
+          
+          [center addObserver:self
+                     selector:@selector(handleApplicationWillEnterForegroundYYAudio:)
+                         name:UIApplicationWillEnterForegroundNotification
+                       object:nil];
+          
+          [center addObserver:self
+                     selector:@selector(handleApplicationWillEnterBackgroundYYAudio:)
+                         name:UIApplicationDidEnterBackgroundNotification
+                       object:nil];
     }
     return self;
 }
 
 + (void)setAudioSessionLouderSpeaker{
     NSError* error = nil;
-    BOOL enable = YES;
+    BOOL enable = NO;
     
     AVAudioSession* session = [AVAudioSession sharedInstance];
     [session setMode:AVAudioSessionModeDefault error:&error];
@@ -51,6 +88,8 @@
     else {
         options &= ~AVAudioSessionCategoryOptionDefaultToSpeaker;
     }
+    options |= AVAudioSessionCategoryOptionAllowBluetooth;
+    
         if (error) {
         NSLog(@"AudioCaptureOrPlay <error> %@",error);
     }
@@ -60,6 +99,36 @@
           error:&error];
 }
 
+
++ (void)setAudioSessionLouderSpeaker2{
+    NSError* error = nil;
+    BOOL enable = NO;
+    
+    AVAudioSession* session = [AVAudioSession sharedInstance];
+    [session setMode:AVAudioSessionModeVoiceChat error:&error];
+    
+    AVAudioSessionCategoryOptions options = session.categoryOptions;
+    if (error != nil) {
+        NSLog(@"AudioCaptureOrPlay Could not set mode2 %@",error);
+    }
+    
+    if (enable) {
+        options |= AVAudioSessionCategoryOptionDefaultToSpeaker;
+        options |= AVAudioSessionCategoryOptionMixWithOthers;
+    }
+    else {
+        options &= ~AVAudioSessionCategoryOptionDefaultToSpeaker;
+    }
+    options |= AVAudioSessionCategoryOptionAllowBluetooth;
+    
+        if (error) {
+        NSLog(@"AudioCaptureOrPlay <error> %@",error);
+    }
+    
+    [session setCategory:AVAudioSessionCategoryPlayAndRecord
+    withOptions:options
+          error:&error];
+}
 - (void)stop{
     AudioOutputUnitStop(audioUnit);
     AudioUnitUninitialize(audioUnit);
@@ -88,7 +157,7 @@
     // audio unit new
     AudioComponentDescription audioDesc;
     audioDesc.componentType = kAudioUnitType_Output;
-    audioDesc.componentSubType = kAudioUnitSubType_RemoteIO;
+    audioDesc.componentSubType = kAudioUnitSubType_VoiceProcessingIO;
     audioDesc.componentManufacturer = kAudioUnitManufacturer_Apple;
     audioDesc.componentFlags = 0;
     audioDesc.componentFlagsMask = 0;
@@ -118,7 +187,7 @@
                     kAudioUnitScope_Global,
                     1,
                     &echoCancellation,
-                	size);
+                    size);
     
     if (status != noErr) {
         NSLog(@"AudioUnitGetProperty error kAUVoiceIOProperty_BypassVoiceProcessing, ret: %d", status);
@@ -243,6 +312,8 @@
     NSLog(@"result %d", result);
     
     AudioOutputUnitStart(audioUnit);
+    
+    [AudioCaptureOrPlay setAudioSessionLouderSpeaker2];
 }
 
 #pragma mark - callback
@@ -300,4 +371,144 @@ static OSStatus PlayCallback(void *inRefCon,
     }
     fwrite(buffer, size, 1, file);
 }
+
+
+
+#pragma mark - Notifications
+
+- (void)handleInterruptionNotificationYYAudio:(NSNotification *)notification
+{
+  NSNumber *typeNumber =
+      notification.userInfo[AVAudioSessionInterruptionTypeKey];
+  AVAudioSessionInterruptionType type =
+      (AVAudioSessionInterruptionType)typeNumber.unsignedIntegerValue;
+  switch (type) {
+    case AVAudioSessionInterruptionTypeBegan:
+          NSLog(@"AudioCapture: inter began");
+      {
+          AudioOutputUnitStop(audioUnit);
+//          AudioComponentInstanceDispose(audioUnit);
+      }
+      break;
+    case AVAudioSessionInterruptionTypeEnded: {
+      //[self updateAudioSessionAfterEvent];
+      NSNumber *optionsNumber =
+          notification.userInfo[AVAudioSessionInterruptionOptionKey];
+      AVAudioSessionInterruptionOptions options =
+          optionsNumber.unsignedIntegerValue;
+      BOOL shouldResume =
+          options & AVAudioSessionInterruptionOptionShouldResume;
+      NSLog(@"AudioSeesion CallBack interrupt end, shouldResume %d.", shouldResume);
+        
+        AudioOutputUnitStart(audioUnit);
+        
+      break;
+    }
+  }
+}
+
+- (void)handleRouteChangeNotificationYYAudio:(NSNotification *)notification
+{
+  // Get reason for current route change.
+  NSNumber *reasonNumber =
+      notification.userInfo[AVAudioSessionRouteChangeReasonKey];
+  AVAudioSessionRouteChangeReason reason =
+      (AVAudioSessionRouteChangeReason)reasonNumber.unsignedIntegerValue;
+  NSLog(@"Audio route changed:");
+  switch (reason) {
+    case AVAudioSessionRouteChangeReasonUnknown:
+      NSLog(@"Audio route changed: ReasonUnknown");
+      break;
+    case AVAudioSessionRouteChangeReasonNewDeviceAvailable:
+      NSLog(@"Audio route changed: NewDeviceAvailable");
+      break;
+    case AVAudioSessionRouteChangeReasonOldDeviceUnavailable:
+      NSLog(@"Audio route changed: OldDeviceUnavailable");
+      break;
+    case AVAudioSessionRouteChangeReasonCategoryChange:
+      NSLog(@"Audio route changed: CategoryChange to :%@",
+             session.category);
+      break;
+    case AVAudioSessionRouteChangeReasonOverride:
+      NSLog(@"Audio route changed: Override");
+      break;
+    case AVAudioSessionRouteChangeReasonWakeFromSleep:
+      NSLog(@"Audio route changed: WakeFromSleep");
+      break;
+    case AVAudioSessionRouteChangeReasonNoSuitableRouteForCategory:
+      NSLog(@"Audio route changed: NoSuitableRouteForCategory");
+      break;
+    case AVAudioSessionRouteChangeReasonRouteConfigurationChange:
+      NSLog(@"Audio route changed: RouteConfigurationChange");
+      break;
+  }
+  AVAudioSessionRouteDescription *previousRoute =
+      notification.userInfo[AVAudioSessionRouteChangePreviousRouteKey];
+  // Log previous route configuration.
+  NSLog(@"Previous route: %@\nCurrent route:%@",
+         previousRoute, session.currentRoute);
+//  [self notifyDidChangeRouteWithReason:reason previousRoute:previousRoute];
+}
+
+- (void)handleMediaServicesWereLostYYAudio:(NSNotification *)notification
+{
+  NSLog(@"Media services were lost.");
+  //[self updateAudioSessionAfterEvent];
+//  [self notifyMediaServicesWereLost];
+}
+
+- (void)handleMediaServicesWereResetYYAudio:(NSNotification *)notification
+{
+  NSLog(@"Media services were reset.");
+  //[self updateAudioSessionAfterEvent];
+//  [self notifyMediaServicesWereReset];
+}
+
+- (void)handleApplicationWillEnterForegroundYYAudio:(UIApplication *)application
+{
+    NSLog(@"Audio will enter foreground");
+//    [self notifyApplicationWillEnterForegroundYYAudio];
+}
+
+- (void)handleApplicationWillEnterBackgroundYYAudio:(UIApplication *)application
+{
+    NSLog(@"Audio did enter background");
+//    [self notifyApplicationWillEnterBackgroundYYAudio];
+    
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        //echo cancellation open
+//        UInt32 echoCancellation = 1;
+//        UInt32 size = sizeof(echoCancellation);
+//        int status = AudioUnitSetProperty(self->audioUnit,
+//                        kAUVoiceIOProperty_BypassVoiceProcessing,
+//                        kAudioUnitScope_Global,
+//                        1,
+//                        &echoCancellation,
+//                        size);
+//
+//        if (status != noErr) {
+//            NSLog(@"AudioUnitGetProperty error kAUVoiceIOProperty_BypassVoiceProcessing, ret: %d", status);
+//        }else{
+//            NSLog(@"Audio close echo");
+//        }
+        
+        [self startCapture];
+    });
+}
+
+- (void)handleSilenceSecondaryAudioHintNotificationYYAudio:(NSNotification *)notification
+{
+    NSNumber *typeNumber =
+      notification.userInfo[AVAudioSessionSilenceSecondaryAudioHintTypeKey];
+  AVAudioSessionSilenceSecondaryAudioHintType type =
+      (AVAudioSessionSilenceSecondaryAudioHintType)typeNumber.unsignedIntegerValue;
+  switch (type) {
+    case AVAudioSessionSilenceSecondaryAudioHintTypeBegin:
+      break;
+    case AVAudioSessionSilenceSecondaryAudioHintTypeEnd:
+      break;
+  }
+}
+
+
 @end
