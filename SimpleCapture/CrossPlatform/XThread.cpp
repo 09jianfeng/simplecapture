@@ -222,6 +222,7 @@ void XThread::onTimerLoop()
 	fd_set fdSetRead;
 	for ( ; ; )
 	{
+        //m_pipeFd,是读的管道
 		FD_ZERO(&fdSetRead);
 		FD_SET(m_pipeFd[0], &fdSetRead);
 		int maxFd = 0;
@@ -233,7 +234,7 @@ void XThread::onTimerLoop()
 		struct timeval tv;
 		tv.tv_sec = 0;
 		tv.tv_usec = m_interval * 1000;
-
+		//以m_interval为超时时间，等待这么长时间。 如果在等待的过程中需要及时唤醒，就通过往管道m_pipeFd[1]里面写数据。就可以立即返回然后执行相应的逻辑
 		int ret = select(maxFd + 1, &fdSetRead, NULL, NULL, m_interval == 0 ? NULL : &tv);
 		if (ret < 0)
 		{

@@ -275,6 +275,14 @@
         inputFormat.mSampleRate = sampleRate;
         inputFormat.mFormatID = kAudioFormatLinearPCM;
         //双声道需要添加 kAudioFormatFlagIsNonInterleaved 这个 flags。
+        /*
+         这个就是bufferlist[1]什么时候用到的解释
+         双声道需要添加 kAudioFormatFlagIsNonInterleaved 这个 flags。如果是这个值，则需要用到bufferlist[1]
+                 inputFormat.mFormatFlags = kAudioFormatFlagIsSignedInteger | kAudioFormatFlagIsNonInterleaved;
+
+         如果只想用buffer[0]，那么就用packed的方式。然后双声道数据交错放进去
+         kLinearPCMFormatFlagIsPacked
+         **/
         inputFormat.mFormatFlags = kAudioFormatFlagIsSignedInteger | kAudioFormatFlagIsNonInterleaved;
         inputFormat.mFramesPerPacket = 1;
         inputFormat.mChannelsPerFrame = numberBuffers; //双声道，设置为2。playCallback中的 ioData bufferDataList才有两个声道。
