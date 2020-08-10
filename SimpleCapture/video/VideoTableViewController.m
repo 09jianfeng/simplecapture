@@ -13,6 +13,7 @@
 #import "KXMovieController.h"
 #import "AVCamManualCameraViewController.h"
 #import "RosyWriterViewController.h"
+#import "M4aPlayer.h"
 
 @interface VideoTableViewController ()
 
@@ -38,6 +39,7 @@
               @"kxController",
               @"ManualCamera",
               @"视频滤镜",
+              @"M4aFileParse",
               ];
     
 }
@@ -109,6 +111,15 @@
             [self.navigationController pushViewController:vc animated:YES];
         }
             break;
+        case 7:
+        {
+            NSString *m4aPath = [[[NSBundle mainBundle] bundlePath] stringByAppendingPathComponent:@"test/testAudio.m4a"];
+            AVAsset *asset = [M4aPlayer getAssetWithPath:[NSURL fileURLWithPath:m4aPath]];
+            int sampleRate = 0;
+            int channel = 0;
+            NSData *pcmData = [M4aPlayer readAudioSamplesFromAsset:asset sampleRate:&sampleRate channel:&channel];
+            NSLog(@"pcmData Len:%td sampleRate:%d channel:%d", pcmData.length, sampleRate, channel);
+        }
 
             
         default:

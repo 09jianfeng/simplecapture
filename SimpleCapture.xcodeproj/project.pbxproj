@@ -49,6 +49,7 @@
 		782D643120DCA3130085FE26 /* MGLTools.m in Sources */ = {isa = PBXBuildFile; fileRef = 782D642F20DCA3120085FE26 /* MGLTools.m */; };
 		782D643620DCEFCC0085FE26 /* MGLFBEAGLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 782D643520DCEFCC0085FE26 /* MGLFBEAGLayer.m */; };
 		782D643920DDF8DB0085FE26 /* MGLFBYUVEAGLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 782D643820DDF8DB0085FE26 /* MGLFBYUVEAGLayer.m */; };
+		782E74CF24E1848B00A31F96 /* M4aPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 782E74CE24E1848B00A31F96 /* M4aPlayer.m */; };
 		782EAB8D20FC9E3E00DBD545 /* Mp4MuxerDemuxer.mm in Sources */ = {isa = PBXBuildFile; fileRef = 782EAB8A20FC9E3E00DBD545 /* Mp4MuxerDemuxer.mm */; };
 		782EAB9120FCA11000DBD545 /* Mp4DemuxerObjc.mm in Sources */ = {isa = PBXBuildFile; fileRef = 782EAB9020FCA11000DBD545 /* Mp4DemuxerObjc.mm */; };
 		782EAB9520FCA4B200DBD545 /* VideoConfiguration.m in Sources */ = {isa = PBXBuildFile; fileRef = 782EAB9420FCA4B200DBD545 /* VideoConfiguration.m */; };
@@ -288,6 +289,8 @@
 		782D643520DCEFCC0085FE26 /* MGLFBEAGLayer.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MGLFBEAGLayer.m; sourceTree = "<group>"; };
 		782D643720DDF8DB0085FE26 /* MGLFBYUVEAGLayer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MGLFBYUVEAGLayer.h; sourceTree = "<group>"; };
 		782D643820DDF8DB0085FE26 /* MGLFBYUVEAGLayer.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MGLFBYUVEAGLayer.m; sourceTree = "<group>"; };
+		782E74CD24E1848B00A31F96 /* M4aPlayer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = M4aPlayer.h; sourceTree = "<group>"; };
+		782E74CE24E1848B00A31F96 /* M4aPlayer.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = M4aPlayer.m; sourceTree = "<group>"; };
 		782EAB8A20FC9E3E00DBD545 /* Mp4MuxerDemuxer.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = Mp4MuxerDemuxer.mm; sourceTree = "<group>"; };
 		782EAB8B20FC9E3E00DBD545 /* Mp4MuxerDemuxer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Mp4MuxerDemuxer.h; sourceTree = "<group>"; };
 		782EAB8F20FCA11000DBD545 /* Mp4DemuxerObjc.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Mp4DemuxerObjc.h; sourceTree = "<group>"; };
@@ -1077,6 +1080,8 @@
 				782EAB9020FCA11000DBD545 /* Mp4DemuxerObjc.mm */,
 				782EAB8B20FC9E3E00DBD545 /* Mp4MuxerDemuxer.h */,
 				782EAB8A20FC9E3E00DBD545 /* Mp4MuxerDemuxer.mm */,
+				782E74CD24E1848B00A31F96 /* M4aPlayer.h */,
+				782E74CE24E1848B00A31F96 /* M4aPlayer.m */,
 			);
 			path = Mp4;
 			sourceTree = "<group>";
@@ -2490,6 +2495,7 @@
 				DA0E7AF91C128164003A8C25 /* main.m in Sources */,
 				780448A0208749C300FAE1DF /* OpenGLTestVCBase.m in Sources */,
 				7811823A223AA1C500FD03ED /* AVCamManualPreviewView.m in Sources */,
+				782E74CF24E1848B00A31F96 /* M4aPlayer.m in Sources */,
 				782EAB9520FCA4B200DBD545 /* VideoConfiguration.m in Sources */,
 				78A0DF5422A66E0F00A5FE1B /* buffer.cpp in Sources */,
 				782D642E20DCA2D80085FE26 /* MGLProgram.m in Sources */,
